@@ -33,7 +33,7 @@ public class MyCoords implements coords_converter {
 
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
-		double polarVec[] = new double[3];
+		double[] polarVec = new double[3];
 		double dY = gps1.y()-gps0.y();
 		double dX = gps1.x()-gps0.x();
 		double dZ = gps1.z()-gps0.z();
@@ -44,6 +44,7 @@ public class MyCoords implements coords_converter {
 		polarVec[1] = Math.acos(dZ);
 		if (polarVec[1]>180) polarVec[1]=360-polarVec[1];
 		polarVec[2] = distance3d(gps0,gps1);
+		return polarVec;
 	}
 
 	@Override
