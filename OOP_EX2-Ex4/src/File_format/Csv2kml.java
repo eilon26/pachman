@@ -8,16 +8,17 @@ import java.util.ArrayList;
 
 public class Csv2kml {
 	public static void main(String[] args) {
-		String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
+		String csvFile = "C:\\Users\\Eilon\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
         String line = "";
         String cvsSplitBy = ",";
-
+        ArrayList<String[]> a = new ArrayList<String[]>();//#########
+        
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
         {
             while ((line = br.readLine()) != null) 
             {
                 String[] userInfo = line.split(cvsSplitBy);
-
+                a.add(userInfo);//#####
 //                for (int i = 0; i < userInfo.length; i++) {
 //					System.out.print(userInfo[i] + " ");
 //				}
@@ -29,6 +30,7 @@ public class Csv2kml {
         {
             e.printStackTrace();
         }
+        writeFileKML(a,"C:\\Users\\Eilon\\Desktop\\Ex2\\data\\pelet.kml");//##
 	}
 	
 	
@@ -42,14 +44,14 @@ public class Csv2kml {
 	    try{
 	        FileWriter fw = new FileWriter(output);
 	        BufferedWriter bw = new BufferedWriter(fw);
-	        for (int i = 1; i < a.size(); i++) {
+	        for (int i = 2; i < a.size(); i++) {
 	            String[] s = a.get(i);
 	            String kmlelement ="<Document>" +
 	            		"<Placemark>\n" +
-	                    "<name>"+s[6]+"</name>\n" +
-	                    "<description>"+s[6]+"</description>\n" +
+	                    "<name>"+s[0]+"</name>\n" +
+	                    "<description>"+s[1]+"</description>\n" +
 	                    "<Point>\n" +
-	                    "<coordinates>"+s[3]+","+s[2]+"</coordinates>" +
+	                    "<coordinates>"+s[2]+","+s[2]+"</coordinates>" +
 	                    "</Point>\n" +
 	                    "</Placemark>\n" +
 	                    "</Document>";
