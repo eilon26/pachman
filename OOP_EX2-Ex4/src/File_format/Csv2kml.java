@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Csv2kml {
 	public static void main(String[] args) {
-		String csvFile = "C:\\Users\\Eilon\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
+		String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
         String line = "";
         String cvsSplitBy = ",";
         ArrayList<String[]> a = new ArrayList<String[]>();//#########
@@ -26,11 +26,10 @@ public class Csv2kml {
                 //System.out.println("ID: " + userInfo[0] + " , Name: " + userInfo[1]);
             }
 
-        } catch (Exception e) 
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        writeFileKML(a,"C:\\Users\\Eilon\\Desktop\\Ex2\\data\\pelet.kml");//##
+        writeFileKML(a,"C:\\Users\\danie\\Desktop\\pelet.kml");//##
 	}
 	
 	
