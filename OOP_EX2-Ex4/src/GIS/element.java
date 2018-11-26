@@ -4,20 +4,20 @@ import java.sql.Time;
 
 import Geom.Geom_element;
 import Geom.Point3D;
+import Geom.geom;
 
 public class element {
-	private Point3D p;
-	String name;
-	Time time;
+	geom ge; 
+	metaData md;
 	
-	public element(Point3D p, String name, Time time) {
-		this.p = p;
-		this.name = name;
-		this.time = time;
+	public element(String[] line,int[] geomIndexes,int[] metaIndexes) {
+		this.ge = new geom(String[] line, int[] geomIndexes);
+		this.md= new metaData(String[] line, int[] metaIndexes);
+		
 	}
 	
 	public Geom_element getGeom() {
-		return p;
+		return null;
 	}
 	
 	public Meta_data getData() {
