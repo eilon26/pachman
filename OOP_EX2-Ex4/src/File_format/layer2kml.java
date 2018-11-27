@@ -3,10 +3,14 @@ package File_format;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+
+import GIS.element;
+import GIS.metaData;
+import Geom.geom;
 //ArrayList<String[]> a = l.e
 public class layer2kml {
 	
-	public layer2kml(geo2layer l, String output) {
+	public layer2kml(mat2layer gl, String output) {
     ArrayList<String> content = new ArrayList<String>();
     String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n";
@@ -16,17 +20,21 @@ public class layer2kml {
     try{
         FileWriter fw = new FileWriter(output);
         BufferedWriter bw = new BufferedWriter(fw);
-        for (int i = 2; i < a.size(); i++) {
-            String[] s = a.get(i);
-            String kmlelement ="<Document>" +
-            		"<Placemark>\n" +
-                    "<name>"+s[0]+"</name>\n" +
-                    "<description>"+s[1]+"</description>\n" +
-                    "<Point>\n" +
-                    "<coordinates>"+s[2]+","+s[2]+"</coordinates>" +
-                    "</Point>\n" +
-                    "</Placemark>\n" +
-                    "</Document>";
+        for (int i = 2; i < gl.l.getEl().size(); i++) {
+            element CurrElement = new element(gl.l.getEl().get(i));
+            String kmlelement =
+            	"<Element>\n" +
+            		"<geom>\n" +
+            			"<lat>"+((geom)(CurrElement.getGeom())).getP().x()+"</lat>\n" +
+            			"<lon>"+((geom)(CurrElement.getGeom())).getP().y()+"</lon>\n" +
+                    	"<alt>"+((geom)(CurrElement.getGeom())).getP().z()+"</alt>" +
+                    "</geom>\n" +
+            		"<metaData>\n" +
+            			"<name>"+((metaData)(CurrElement.getData())).getName()+"</name>\n" +
+            			"<rssi>"+((metaData)(CurrElement.getData())).getRssi()+"</rssi>\n" +
+            			"<utc>"+((metaData)(CurrElement.getData())).getUTC()+"</utc>" +
+            		"</metaData>\n" +
+                "</Element>";
             content.add(kmlelement);
         }
         content.add(kmlend);

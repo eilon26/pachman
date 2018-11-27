@@ -7,7 +7,7 @@ import Geom.Point3D;
 
 public class metaData implements Meta_data{
 	long utc;
-	double Orientation;
+	//double Orientation;
 	String name;
 	int rssi;
 	public metaData(String[] line,int[] metaIndexes) {
@@ -16,9 +16,23 @@ public class metaData implements Meta_data{
 		name = line[metaIndexes[2]];	
 	}
 	
+	public metaData(metaData other) {
+		this.utc = other.utc;
+		this.name=new String(other.name);
+		this.rssi=other.rssi;
+	}
+	
 	@Override
 	public long getUTC() {
 		return utc;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getRssi() {
+		return rssi;
 	}
 
 	@Override

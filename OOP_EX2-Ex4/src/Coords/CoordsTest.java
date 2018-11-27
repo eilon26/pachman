@@ -21,7 +21,7 @@ class CoordsTest {
 		Point3D p = new Point3D(32.103315,35.209039,670);
 		Point3D p2 = new Point3D(32.106352,35.205225,650);
 		MyCoords x = new MyCoords();
-		assertEquals(493.05233183241336, x.distance3d(p, p2));
+		assertEquals(493, (int)(x.distance3d(p, p2)));
 	}
 	@Test
 	void VectorTest() {
@@ -55,7 +55,7 @@ class CoordsTest {
 		polarVec = x.azimuth_elevation_dist(p1,p2);
 		assertEquals(272,(int)(polarVec[0]));
 		assertEquals(-1.7,(double)((int)(polarVec[1]*10))/10);
-		assertEquals(6553,(int)(polarVec[2]/100));
+		assertEquals(655,(int)(polarVec[2]/10));
 //		for (int i=0;i<3;i++) {
 //			System.out.println(polarVec[i]+"  ");
 //		}

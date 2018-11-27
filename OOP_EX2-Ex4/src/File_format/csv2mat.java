@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 import GIS.*;
 
-public class csv2geo {
+public class csv2mat {
 	double length;
 	double width;
 	ArrayList<String[]> g;
 	
-	public csv2geo(String csvFile) {
+	public csv2mat(String csvFile) {
 	//String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
     String line = "";
     String cvsSplitBy = ",";
