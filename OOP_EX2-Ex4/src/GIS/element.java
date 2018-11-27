@@ -6,7 +6,7 @@ import Geom.Geom_element;
 import Geom.Point3D;
 import Geom.geom;
 
-public class element {
+public class element implements GIS_element {
 	geom ge; 
 	metaData md;
 	
@@ -15,22 +15,22 @@ public class element {
 		this.md= new metaData(line, metaIndexes);
 		
 	}
-	
+	public element(element other) {
+		this.ge=new geom(other.ge);
+		this.md=new metaData(other.md);
+	}
+	@Override
 	public Geom_element getGeom() {
-		return null;
+		return ge;
 	}
-	
+	@Override
 	public Meta_data getData() {
-		return null;
+		return md;
 	}
-	
+	@Override
 	public void translate(Point3D vec) {
 		
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-	}
 
 }

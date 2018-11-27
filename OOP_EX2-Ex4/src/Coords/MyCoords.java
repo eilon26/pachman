@@ -18,7 +18,9 @@ public class MyCoords implements coords_converter {
 		double LonNorm = Math.cos(Math.toRadians(gps0.x()));
 		double meterX = earthR*Math.sin(Math.toRadians(gps1.x()-gps0.x()));
 		double meterY = LonNorm*earthR*Math.sin(Math.toRadians(gps1.y()-gps0.y()));
-		return Math.sqrt((meterX*meterX)+(meterY*meterY));
+		double Dis2D = Math.sqrt((meterX*meterX)+(meterY*meterY));
+		double dz = gps1.z()-gps0.z();
+		return  Math.sqrt((Dis2D*Dis2D)+(dz*dz));
 	}
 
 	@Override
