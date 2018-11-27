@@ -36,4 +36,7 @@ public class geom implements Geom_element{
 	public Point3D getP() {
 		return p;
 	}
+	public void setP(Point3D other) {
+		this.p =new Point3D(other);
+	}
 }

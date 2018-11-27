@@ -16,6 +16,7 @@ public class metaData implements Meta_data{
 	private int Channel;
 	private int AccuracyMeters;
 	private String Type;
+	private String color;
 	
 	//done adding new here.
 	public metaData(String[] line,int[] metaIndexes) {
@@ -27,6 +28,8 @@ public class metaData implements Meta_data{
 		Channel = Integer.parseInt(line[metaIndexes[5]]);
 		AccuracyMeters = Integer.parseInt(line[metaIndexes[6]]);
 		Type = line[metaIndexes[7]];
+		if (rssi<-90) color="red";
+		else color = "green";
 	}
 	
 
@@ -42,7 +45,10 @@ public class metaData implements Meta_data{
 	}
 	@Override
 	public String toString() {
-		return null;
+		return "name: "+this.name+", time: "+this.time+", rssi: "+this.rssi+", mac:"+this.mac+", authMode: "+this.AuthMode+", Channel: " + this.Channel +", AccuracyMeters:" +this.AccuracyMeters+", type: "+this.Type;
+	}
+	public String getColor() {
+		return color;
 	}
 	public String getTime() {
 		return time;
