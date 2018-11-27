@@ -13,7 +13,7 @@ public static void main(String[] args) throws ParseException
 {
 	csv2mat a = new csv2mat("C:\\Users\\eilon\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv\\");
 	mat2layer b = new mat2layer(a);
-	layer2kml c = new layer2kml(b, "C:\\Users\\eilon\\Desktop\\Ex2\\data\\output3.kml");
+	layer2kml c = new layer2kml(b, "C:\\Users\\eilon\\Desktop\\Ex2\\data\\output5.kml");
 	
 }
 }
