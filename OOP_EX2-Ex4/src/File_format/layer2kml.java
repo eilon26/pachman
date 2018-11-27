@@ -30,7 +30,7 @@ public class layer2kml {
                             "<name><![CDATA["+((metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
                             "<description><![CDATA[BSSID: <b>"+((metaData)(CurrElement.getData())).getMac()+"</b><br/>Capabilities: <b>"+((metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>2412</b><br/>Timestamp: <b>"+((metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((metaData)(CurrElement.getData())).getTime()+"</b>]]></description>"+color+"\r\n" +
                             "<Point>\r\n"+
-                            "<coordinates>"+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
+                            "<coordinates>"+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
                      "</Placemark>\r\n";
             
 
