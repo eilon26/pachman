@@ -1,14 +1,8 @@
 package Geom;
 
 public class geom implements Geom_element{
-
-
 	private Point3D p;
 	
-	public Point3D getP() {
-		return p;
-	}
-
 	public geom(String[] line,int[] geomIndexes) {
 		double xp = Double.parseDouble(line[geomIndexes[0]]);
 		double yp = Double.parseDouble(line[geomIndexes[1]]);

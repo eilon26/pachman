@@ -7,8 +7,8 @@ import Geom.Point3D;
 import Geom.geom;
 
 public class element implements GIS_element {
-	geom ge; 
-	metaData md;
+	private geom ge; 
+	private metaData md;
 	
 	public element(String[] line,int[] geomIndexes,int[] metaIndexes) {
 		this.ge = new geom(line, geomIndexes);
@@ -22,6 +22,12 @@ public class element implements GIS_element {
 	@Override
 	public Geom_element getGeom() {
 		return ge;
+	}
+	public geom getGe() {
+		return ge;
+	}
+	public metaData getMd() {
+		return md;
 	}
 	@Override
 	public Meta_data getData() {

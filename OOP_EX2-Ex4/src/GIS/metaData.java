@@ -6,16 +6,20 @@ import java.sql.Time;
 import Geom.Point3D;
 
 public class metaData implements Meta_data{
-	long utc;
+	private long utc;
 	//double Orientation;
-	String name;
-	int rssi;
+	private String name;
+	private int rssi;
 	public metaData(String[] line,int[] metaIndexes) {
 		utc = Date.parse(line[metaIndexes[0]]);
 		rssi = Integer.parseInt(line[metaIndexes[1]]);
 		name = line[metaIndexes[2]];	
 	}
 	
+	public long getUtc() {
+		return utc;
+	}
+
 	public metaData(metaData other) {
 		this.utc = other.utc;
 		this.name=new String(other.name);
