@@ -20,8 +20,8 @@ public class layer2kml {
     try{
         FileWriter fw = new FileWriter(output);
         BufferedWriter bw = new BufferedWriter(fw);
-        for (int i = 2; i < gl.l.getEl().size(); i++) {
-            element CurrElement = new element(gl.l.getEl().get(i));
+        for (int i = 2; i < gl.getL().getEl().size(); i++) {
+            element CurrElement = new element(gl.getL().getEl().get(i));
             String kmlelement =
             	"<Element>\n" +
             		"<geom>\n" +

@@ -6,10 +6,22 @@ import java.util.ArrayList;
 import GIS.*;
 
 public class csv2mat {
-	double length;
-	double width;
-	ArrayList<String[]> g;
+	private double length;
+	private double width;
+	private ArrayList<String[]> g;
 	
+	public double getLength() {
+		return length;
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public ArrayList<String[]> getG() {
+		return g;
+	}
+
 	public csv2mat(String csvFile) {
 	//String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
     String line = "";
