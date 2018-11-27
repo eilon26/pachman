@@ -11,8 +11,8 @@ public class element {
 	metaData md;
 	
 	public element(String[] line,int[] geomIndexes,int[] metaIndexes) {
-		this.ge = new geom(String[] line, int[] geomIndexes);
-		this.md= new metaData(String[] line, int[] metaIndexes);
+		this.ge = new geom(line, geomIndexes);
+		this.md= new metaData(line, metaIndexes);
 		
 	}
 	
