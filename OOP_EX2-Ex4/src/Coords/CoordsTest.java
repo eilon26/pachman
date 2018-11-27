@@ -15,6 +15,7 @@ class CoordsTest {
 		Point3D vector = new Point3D(337.698992,-359.249206,-20);
 		Point3D expected = new Point3D(32.10635199999945,35.20522500000997,650.0);
 		assertEquals(expected.toString(),x.add(p, vector).toString());
+		
 	}
 	@Test
 	void DistanceTest() {

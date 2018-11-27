@@ -26,7 +26,7 @@ public class csv2mat {
 	//String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
     String line = "";
     String cvsSplitBy = ",";
-    this.g = new ArrayList<String[]>();//#########
+    this.g = new ArrayList<String[]>();
     
     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
     {
@@ -34,7 +34,7 @@ public class csv2mat {
         {
             String[] userInfo = line.split(cvsSplitBy);
             
-            this.g.add(userInfo);//#####
+            this.g.add(userInfo);
 //            for (int i = 0; i < userInfo.length; i++) {
 //				System.out.print(userInfo[i] + " ");
 //			}

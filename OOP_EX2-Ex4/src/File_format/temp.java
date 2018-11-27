@@ -11,29 +11,35 @@ import java.util.Locale;
 public class temp {
 public static void main(String[] args) throws ParseException
 {
-    String sd = "Thu Aug 14 16:45:37 UTC 2011";
-
-
-    String dp = "EEE MMM dd HH:mm:ss zzz yyyy";
-
-    final SimpleDateFormat sdf = new SimpleDateFormat(dp,Locale.ENGLISH);
-
-    java.util.Date d = null;
-	try {
-		d = sdf.parse(sd);
-	} catch (java.text.ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}//03/12/2017 08:53
+	csv2mat a = new csv2mat("C:\\Users\\eilon\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv\\");
+	mat2layer b = new mat2layer(a);
+	layer2kml c = new layer2kml(b, "C:\\Users\\eilon\\Desktop\\Ex2\\data\\output3.kml");
 	
-	
-    long y = Date.UTC(117,0,3,8,53,0);
-    System.out.println(y);
-    System.out.println(Date.parse("03/12/2017 08:53"));
-    
-    
 }
 }
+//    String sd = "Thu Aug 14 16:45:37 UTC 2011";
+//
+//
+//    String dp = "EEE MMM dd HH:mm:ss zzz yyyy";
+//
+//    final SimpleDateFormat sdf = new SimpleDateFormat(dp,Locale.ENGLISH);
+//
+//    java.util.Date d = null;
+//	try {
+//		d = sdf.parse(sd);
+//	} catch (java.text.ParseException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}//03/12/2017 08:53
+//	
+//	
+//    long y = Date.UTC(117,0,3,8,53,0);
+//    System.out.println(y);
+//    System.out.println(Date.parse("03/12/2017 08:53"));
+//    
+//    
+//}
+//}
 
 
 //

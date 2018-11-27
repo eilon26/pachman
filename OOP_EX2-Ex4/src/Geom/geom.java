@@ -1,7 +1,10 @@
 package Geom;
 
+import Coords.MyCoords;
+
 public class geom implements Geom_element{
 	private Point3D p;
+	private static final int earthR = 6371000;
 	
 	public geom(String[] line,int[] geomIndexes) {
 		double xp = Double.parseDouble(line[geomIndexes[0]]);
@@ -16,14 +19,19 @@ public class geom implements Geom_element{
 
 	@Override
 	public double distance3D(Point3D p) {
-		// TODO Auto-generated method stub
-		return 0;
+		MyCoords x = new MyCoords();
+		return x.distance3d(this.p,p);
 	}
 
 	@Override
 	public double distance2D(Point3D p) {
-		// TODO Auto-generated method stub
-		return 0;
+		double LonNorm = Math.cos(Math.toRadians(p.x()));
+		double meterX = earthR*Math.sin(Math.toRadians(this.p.x()-p.x()));
+		double meterY = LonNorm*earthR*Math.sin(Math.toRadians(this.p.y()-p.y()));
+		double Dis2D = Math.sqrt((meterX*meterX)+(meterY*meterY));
+		if (Dis2D>100000)
+			return Double.NaN;
+		return Dis2D;
 	}
 	public Point3D getP() {
 		return p;

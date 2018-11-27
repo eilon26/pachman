@@ -39,7 +39,7 @@ public class Layers implements  GIS_layer {
 		return GI;
 	}
 	public int[] metaIndexes(String[] line) {
-		int[] MI = new int[3];
+		int[] MI = new int[8];
 		for(int i=0;i<line.length;i++) {
 			if (line[i].contains("FirstSeen")) {
 				MI[0]=i;
@@ -47,8 +47,23 @@ public class Layers implements  GIS_layer {
 			else if (line[i].contains("RSSI")) {
 				MI[1]=i;
 			}
-			else if (line[i].contains("ssid")) {
+			else if (line[i].contains("SSID")) {
 			    MI[2]=i;
+			}
+			else if (line[i].contains("MAC")) {
+			    MI[3]=i;
+			}
+			else if (line[i].contains("AuthMode")) {
+			    MI[4]=i;
+			}
+			else if (line[i].contains("Channel")) {
+			    MI[5]=i;
+			}
+			else if (line[i].contains("AccuracyMeters")) {
+			    MI[6]=i;
+			}
+			else if (line[i].contains("Type")) {
+			    MI[7]=i;
 			}
 		}
 		return MI;

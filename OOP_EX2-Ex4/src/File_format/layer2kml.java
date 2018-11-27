@@ -11,35 +11,34 @@ import Geom.geom;
 public class layer2kml {
 	
 	public layer2kml(mat2layer gl, String output) {
-    ArrayList<String> content = new ArrayList<String>();
-    String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n";
-    content.add(kmlstart);
-
-    String kmlend = "</kml>";
+    
+    String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+    		"<kml xmlns=\"http://www.opengis.net/kml/2.2\"><Document><Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style><Style id=\"yellow\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/yellow-dot.png</href></Icon></IconStyle></Style><Style id=\"green\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/green-dot.png</href></Icon></IconStyle></Style><Folder><name>Wifi Networks</name>\r\n";
+    String content = kmlstart;
+    
+    String kmlend = "</Folder>\r\n" + "</Document></kml>";
     try{
         FileWriter fw = new FileWriter(output);
         BufferedWriter bw = new BufferedWriter(fw);
         for (int i = 2; i < gl.getL().getEl().size(); i++) {
             element CurrElement = new element(gl.getL().getEl().get(i));
+            String color = "";
+            if (((metaData)(CurrElement.getData())).getRssi()<-90) color="<styleUrl>#green</styleUrl>";
+            else color="<styleUrl>#red</styleUrl>";
             String kmlelement =
-            	"<Element>\n" +
-            		"<geom>\n" +
-            			"<lat>"+((geom)(CurrElement.getGeom())).getP().x()+"</lat>\n" +
-            			"<lon>"+((geom)(CurrElement.getGeom())).getP().y()+"</lon>\n" +
-                    	"<alt>"+((geom)(CurrElement.getGeom())).getP().z()+"</alt>" +
-                    "</geom>\n" +
-            		"<metaData>\n" +
-            			"<name>"+((metaData)(CurrElement.getData())).getName()+"</name>\n" +
-            			"<rssi>"+((metaData)(CurrElement.getData())).getRssi()+"</rssi>\n" +
-            			"<utc>"+((metaData)(CurrElement.getData())).getUTC()+"</utc>" +
-            		"</metaData>\n" +
-                "</Element>";
-            content.add(kmlelement);
+                    "<Placemark>\r\n"+
+                            "<name><![CDATA["+((metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
+                            "<description><![CDATA[BSSID: <b>"+((metaData)(CurrElement.getData())).getMac()+"</b><br/>Capabilities: <b>"+((metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>2412</b><br/>Timestamp: <b>"+((metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((metaData)(CurrElement.getData())).getTime()+"</b>]]></description>"+color+"\r\n" +
+                            "<Point>\r\n"+
+                            "<coordinates>"+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
+                     "</Placemark>\r\n";
+            
+
+            content+=kmlelement;
         }
-        content.add(kmlend);
-        String csv = content.toString().replaceAll(",", "").replace("[", "").replace("]", "");
-        bw.write(csv);
+        content+=kmlend;
+        //String csv = content.toString().replaceFirst(", <Placemark>\\r\\n", "<Placemark>\\r\\n");//.replaceAll(",", "").replace("[", "").replace("]", "");
+        bw.write(content);
         bw.close();
     } 
     catch (Exception e) {
@@ -47,3 +46,4 @@ public class layer2kml {
     }
 	}
 }
+

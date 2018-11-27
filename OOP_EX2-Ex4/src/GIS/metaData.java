@@ -1,34 +1,83 @@
 package GIS;
 
-import java.sql.Date;
 import java.sql.Time;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import Geom.Point3D;
 
 public class metaData implements Meta_data{
-	private long utc;
+	private String time;
 	//double Orientation;
-	private String name;
+	private String name;//ssid
 	private int rssi;
+	//start adding new here.
+	private String mac;
+	private String AuthMode;
+	private int Channel;
+	private int AccuracyMeters;
+	private String Type;
+	
+	//done adding new here.
 	public metaData(String[] line,int[] metaIndexes) {
-		utc = Date.parse(line[metaIndexes[0]]);
+		time = line[metaIndexes[0]];
 		rssi = Integer.parseInt(line[metaIndexes[1]]);
 		name = line[metaIndexes[2]];	
+		mac = line[metaIndexes[3]];
+		AuthMode = line[metaIndexes[4]];
+		Channel = Integer.parseInt(line[metaIndexes[5]]);
+		AccuracyMeters = Integer.parseInt(line[metaIndexes[6]]);
+		Type = line[metaIndexes[7]];
 	}
 	
-	public long getUtc() {
-		return utc;
-	}
 
 	public metaData(metaData other) {
-		this.utc = other.utc;
+		this.time = other.time;
 		this.name=new String(other.name);
 		this.rssi=other.rssi;
+		this.mac = other.mac;
+		this.AuthMode = other.AuthMode;
+		this.Channel = other.Channel;
+		this.AccuracyMeters = other.AccuracyMeters;
+		this.Type = other.Type;
 	}
-	
+	@Override
+	public String toString() {
+		return null;
+	}
+	public String getTime() {
+		return time;
+	}
+	public String getMac() {
+		return mac;
+	}
+
+	public String getAuthMode() {
+		return AuthMode;
+	}
+
+	public int getChannel() {
+		return Channel;
+	}
+
+	public int getAccuracyMeters() {
+		return AccuracyMeters;
+	}
+
+	public String getType() {
+		return Type;
+	}
+
 	@Override
 	public long getUTC() {
-		return utc;
+		SimpleDateFormat pattern = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		Date d = null;
+			try {
+				d = pattern.parse(time);
+			} catch (java.text.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return d.getTime();
 	}
 
 	public String getName() {

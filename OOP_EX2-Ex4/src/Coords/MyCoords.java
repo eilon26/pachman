@@ -4,7 +4,8 @@ import Geom.Point3D;
 
 
 public class MyCoords implements coords_converter {
-	public static final int earthR = 6371000;
+	private static final int earthR = 6371000;
+	
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		double LonNorm = Math.cos(Math.toRadians(gps.x()));
@@ -20,7 +21,10 @@ public class MyCoords implements coords_converter {
 		double meterY = LonNorm*earthR*Math.sin(Math.toRadians(gps1.y()-gps0.y()));
 		double Dis2D = Math.sqrt((meterX*meterX)+(meterY*meterY));
 		double dz = gps1.z()-gps0.z();
-		return  Math.sqrt((Dis2D*Dis2D)+(dz*dz));
+		double dis = Math.sqrt((Dis2D*Dis2D)+(dz*dz));
+		if (dis>100000)
+			return Double.NaN;
+		return  dis;
 	}
 
 	@Override
@@ -36,7 +40,7 @@ public class MyCoords implements coords_converter {
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
 		double[] polarVec = new double[3];
-		if (isValid_GPS_Point(gps0)&&isValid_GPS_Point(gps1)&&(distance3d(gps0,gps1)<=100000)) {
+		if (isValid_GPS_Point(gps0)&&isValid_GPS_Point(gps1)) {
 			Point3D vec = vector3D(gps0,gps1);
 			polarVec[2] = distance3d(gps0,gps1);
 			polarVec[0] = Math.toDegrees(Math.atan(Math.abs((vec.y())/(vec.x()))));
