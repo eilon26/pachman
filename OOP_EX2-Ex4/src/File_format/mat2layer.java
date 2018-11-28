@@ -22,6 +22,7 @@ public class mat2layer {
 	 */
 	public mat2layer(csv2mat c2g) {
 		this.l = new Layer(c2g.getG());
+		
 	}
 	
 }

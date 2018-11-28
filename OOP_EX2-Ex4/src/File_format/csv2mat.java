@@ -59,7 +59,6 @@ public class csv2mat {
         }
         this.length = this.g.size();
         this.width=this.g.get(1).length;
-        
     } catch (Exception e) {
         e.printStackTrace();
     }

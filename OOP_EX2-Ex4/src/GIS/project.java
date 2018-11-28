@@ -11,13 +11,17 @@ import File_format.mat2layer;
 
 public class project implements GIS_project {
 	private ArrayList<GIS_layer> layer_set;
-	private Meta_Data md;
+	private project_metaData md;
 	
 	public project(String file_path) {
 		layer_set = new ArrayList<GIS_layer>();
 		file_path_to_layer_set(file_path);
-		md = null;
+		
+		String first_layer_time = ((Layer_metaData)((layer_set.get(0)).get_Meta_data())).getTime();
+		long first_layer_utc = ((Layer_metaData)(layer_set.get(0).get_Meta_data())).getUTC();
+		md = new project_metaData(first_layer_time,first_layer_utc);
 	}
+	
 	private void file_path_to_layer_set(String file_path){
 		File currFile = new File(file_path);
 		String currFileName = currFile.getName();
@@ -27,8 +31,6 @@ public class project implements GIS_project {
 				csv2mat c2m = new csv2mat(file_path);
 				mat2layer m2l = new mat2layer(c2m);
 				layer_set.add(m2l.getL());
-				//layer2kml l2k = new layer2kml(m2l, "C:\\Users\\eilon\\Desktop\\Ex2\\data\\output"+indexOut+".kml");
-				//indexOut++;
 			}
 		}else {
 			File[] files_arr = currFile.listFiles();
@@ -37,14 +39,15 @@ public class project implements GIS_project {
 			}
 		}
 	}
+
 	@Override
-	public boolean add(GIS_layer arg0) {
-		return layer_set.add((Layer)arg0);
+	public boolean add(GIS_layer e) {
+		return layer_set.add(e);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends GIS_layer> arg0) {
-		return layer_set.addAll(arg0);
+	public boolean addAll(Collection<? extends GIS_layer> c) {
+		return layer_set.addAll(c);
 	}
 
 	@Override
@@ -54,13 +57,13 @@ public class project implements GIS_project {
 	}
 
 	@Override
-	public boolean contains(Object arg0) {
-		return layer_set.contains(arg0);
+	public boolean contains(Object o) {
+		return layer_set.contains(o);
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> arg0) {
-		return layer_set.containsAll(arg0);
+	public boolean containsAll(Collection<?> c) {
+		return layer_set.containsAll(c);
 	}
 
 	@Override
@@ -74,18 +77,18 @@ public class project implements GIS_project {
 	}
 
 	@Override
-	public boolean remove(Object arg0) {
-		return layer_set.remove((element)arg0);
+	public boolean remove(Object o) {
+		return remove(o);
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> arg0) {
-		return layer_set.removeAll(arg0);
+	public boolean removeAll(Collection<?> c) {
+		return removeAll(c);
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> arg0) {
-		return layer_set.retainAll(arg0);
+	public boolean retainAll(Collection<?> c) {
+		return layer_set.retainAll(c);
 	}
 
 	@Override
@@ -99,14 +102,16 @@ public class project implements GIS_project {
 	}
 
 	@Override
-	public <T> T[] toArray(T[] arg0) {
-		return layer_set.toArray(arg0);
+	public <T> T[] toArray(T[] a) {
+		return layer_set.toArray(a);
 	}
+
 	@Override
 	public Meta_Data get_Meta_data() {
 		return md;
 	}
 
+	
 
 
 }

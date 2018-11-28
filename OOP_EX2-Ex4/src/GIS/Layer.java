@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
+public class Layer implements GIS_layer  {
 	private ArrayList<GIS_element> element_set;
 	private Layer_metaData md;
 	
@@ -19,10 +19,10 @@ public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
 			element_set.add(PointElement); 
 		}
 		String strat = ((element_metaData)(element_set.get(0).getData())).getName();
-		String finnish = ((element_metaData)(element_set.get(element_set.size()-1))).getName();
+		String finnish = ((element_metaData)(element_set.get(element_set.size()-1).getData())).getName();
 		String StartFinnishPlace = "start location: "+strat+"\n finnish location: "+finnish+"\n";
 		long First_RecordTime = ((element_metaData)(element_set.get(0).getData())).getUTC();
-		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getName(),First_RecordTime);
+		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getTime(),First_RecordTime);
 	}
 	public ArrayList<GIS_element> getElement_Set(){
 		return element_set;
@@ -72,7 +72,60 @@ public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
 		}
 		return MI;
 	}
-
+	@Override
+	public boolean add(GIS_element arg0) {
+		return element_set.add((element)(arg0));
+	}
+	@Override
+	public boolean addAll(Collection<? extends GIS_element> arg0) {
+		
+		return element_set.add((element) arg0);
+	}
+	@Override
+	public void clear() {
+		element_set.clear();
+		
+	}
+	@Override
+	public boolean contains(Object arg0) {
+		return element_set.contains((element)arg0);//add element.equals()
+	}
+	@Override
+	public boolean containsAll(Collection<?> arg0) {
+		return element_set.containsAll(arg0);
+	}
+	@Override
+	public boolean isEmpty() {
+		return element_set.isEmpty();
+	}
+	@Override
+	public Iterator<GIS_element> iterator() {
+		return element_set.iterator();
+	}
+	@Override
+	public boolean remove(Object arg0) {
+		return element_set.remove((element)arg0);
+	}
+	@Override
+	public boolean removeAll(Collection<?> arg0) {
+		return element_set.removeAll(arg0);
+	}
+	@Override
+	public boolean retainAll(Collection<?> arg0) {
+		return element_set.retainAll(arg0);
+	}
+	@Override
+	public int size() {
+		return element_set.size();
+	}
+	@Override
+	public Object[] toArray() {
+		return element_set.toArray();
+	}
+	@Override
+	public <T> T[] toArray(T[] arg0) {
+		return element_set.toArray(arg0);
+	}
 	@Override
 	public Meta_Data get_Meta_data() {
 		return md;

@@ -3,13 +3,17 @@ package GIS;
 import Geom.Point3D;
 
 public class Layer_metaData implements Meta_Data{
-	String time,location;
-	long utc;
+	private String time,location;
+	private long utc;
 
 	public Layer_metaData(String location,String time,long utc) {
 		this.time = time;
 		this.location = location;
 		this.utc = utc;
+	}
+
+	public String getTime() {
+		return time;
 	}
 
 	@Override
