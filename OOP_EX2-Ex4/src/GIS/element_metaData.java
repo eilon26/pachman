@@ -4,13 +4,16 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import Geom.Point3D;
-
+/**
+ * this class takes the information from the line and posts it under
+ * the right subject.
+ * @author Daniel Ventura
+ *
+ */
 public class element_metaData implements Meta_Data{
 	private String time;
-	//double Orientation;
 	private String name;//ssid
 	private int rssi;
-	//start adding new here.
 	private String mac;
 	private String AuthMode;
 	private int Channel;
@@ -18,7 +21,11 @@ public class element_metaData implements Meta_Data{
 	private String Type;
 	private String color;
 	
-	//done adding new here.
+	/**
+	 * this function take out of the line the information and stores it.
+	 * @param line - 1 line from the file.
+	 * @param metaIndexes - the indexes of the information.
+	 */
 	public element_metaData(String[] line,int[] metaIndexes) {
 		time = line[metaIndexes[0]];
 		rssi = Integer.parseInt(line[metaIndexes[1]]);
@@ -32,7 +39,10 @@ public class element_metaData implements Meta_Data{
 		else color = "green";
 	}
 	
-
+	/**
+	 * this function is a copy.copies "other" info into out info
+	 * @param other - the other meta data element.
+	 */
 	public element_metaData(element_metaData other) {
 		this.time = other.time;
 		this.name=new String(other.name);
@@ -44,36 +54,58 @@ public class element_metaData implements Meta_Data{
 		this.Type = other.Type;
 		this.color= other.color;
 	}
+	/**
+	 * @return a String that describes the class.
+	 */
 	@Override
 	public String toString() {
 		return "name: "+this.name+", time: "+this.time+", rssi: "+this.rssi+", mac:"+this.mac+", authMode: "+this.AuthMode+", Channel: " + this.Channel +", AccuracyMeters:" +this.AccuracyMeters+", type: "+this.Type;
 	}
+	/**
+	 * @return color
+	 */
 	public String getColor() {
 		return color;
 	}
+	/**
+	 * @return time
+	 */
 	public String getTime() {
 		return time;
 	}
+	/**
+	 * @return mac
+	 */
 	public String getMac() {
 		return mac;
 	}
-
+	/**
+	 * @return authmode
+	 */
 	public String getAuthMode() {
 		return AuthMode;
 	}
-
+	/**
+	 * @return channel
+	 */
 	public int getChannel() {
 		return Channel;
 	}
-
+	/**
+	 * @return accuracy
+	 */
 	public int getAccuracyMeters() {
 		return AccuracyMeters;
 	}
-
+	/**
+	 * @return type
+	 */
 	public String getType() {
 		return Type;
 	}
-
+	/**
+	 * @return converts the time into utc and returns the time.
+	 */
 	@Override
 	public long getUTC() {
 		SimpleDateFormat pattern = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -86,11 +118,15 @@ public class element_metaData implements Meta_Data{
 			}
 		return d.getTime();
 	}
-
+	/**
+	 * @return name
+	 */
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * @return rssi
+	 */
 	public int getRssi() {
 		return rssi;
 	}

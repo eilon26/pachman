@@ -1,7 +1,7 @@
 csv2kml
 this project let you to convert many csv files into one kml file;
-inorder to do so put all your csv files inside a folder(folder inside folder it is ok).
-and run this comment - new MultiCSV("your folder path").project2kml("the path of thr kml file that you want to make");
+inorder to do so put all your csv files inside a folder(folder inside folder it is ok.
+and run this comment - new MultiCSV("your folder path").project2kml("the path of thr kml file that you want to make";
 
 more over you can use this project to convert csv file into a data structure that organize that by their feature.
 the data structure base is an element that represent a point.  it has the geom fild with all the geometric information on this point
