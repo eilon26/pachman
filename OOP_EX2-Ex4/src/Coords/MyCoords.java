@@ -2,10 +2,21 @@ package Coords;
 
 import Geom.Point3D;
 
-
+/**
+ * 
+ * @author Daniel Ventura
+ *this class implements "coords_converter" and its functions.
+ */
 public class MyCoords implements coords_converter {
-	private static final int earthR = 6371000;
 	
+	private static final int earthR = 6371000;//the radius of planet earth.
+	
+	/**
+	 * this function computes a new point which is the gps point transformed by a 3D vector (in meters)
+	 * @param gps - a gps point with (x,y,z).
+	 * @param local_vector_in_meter - a vector.
+	 * @return the transformed point.
+	 */
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
 		double LonNorm = Math.cos(Math.toRadians(gps.x()));
@@ -14,6 +25,13 @@ public class MyCoords implements coords_converter {
 		double z1 = local_vector_in_meter.z()+gps.z();
 		return new Point3D(x1,y1,z1);
 }
+	
+	/**
+	 * this function computes the 3D distance (in meters) between the two gps like points.
+	 * @param gps0 - the first gps point.
+	 * @param gps1 - the second gps point.
+	 * @return the 3d distance of these two points.	 
+	 */
 	@Override
 	public double distance3d(Point3D gps0, Point3D gps1) {
 		double LonNorm = Math.cos(Math.toRadians(gps0.x()));
@@ -27,6 +45,12 @@ public class MyCoords implements coords_converter {
 		return  dis;
 	}
 
+	/**
+	 * this function computes the 3D vector (in meters) between two gps like points.
+	 * @param gps0 - the first gps point.
+	 * @param gps1 - the second gps point.
+	 * @return the 2d distance of these two points.	 
+	 */
 	@Override
 	public Point3D vector3D(Point3D gps0, Point3D gps1) {
 		double meterY = earthR*Math.sin(Math.toRadians(gps1.y()-gps0.y()));
@@ -37,6 +61,12 @@ public class MyCoords implements coords_converter {
 		return new Point3D(meterX,meterY,meterZ);
 	}
 
+	/**
+	 * this function computes the polar representation of the 3D vector be gps0-->gps1.
+	 * @param gps0 - the first gps point.
+	 * @param gps1 - the second gps point.
+	 * @return the polar representation.
+	 */
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
 		double[] polarVec = new double[3];
@@ -64,6 +94,11 @@ public class MyCoords implements coords_converter {
 		}
 	}
 
+	/**
+	 * return true iff this point is a valid lat, lon , lat coordinate: [-180,+180],[-90,+90],[-450, +inf]
+	 * @param p - a gps point.
+	 * @return true if the point is indeed a gps point and false if not.
+	 */
 	@Override
 	public boolean isValid_GPS_Point(Point3D p) {
 		if (p.y()>=-180 && p.y()<=180) {

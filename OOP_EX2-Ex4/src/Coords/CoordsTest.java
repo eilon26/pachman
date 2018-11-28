@@ -8,6 +8,13 @@ import Geom.Point3D;
 
 class CoordsTest {
 
+	/**
+	 * this test tests if we get the correct transformed point.
+	 * @param p - a new point
+	 * @param x - a new MyCoords variable.
+	 * @param vector - a new vector.
+	 * @param expected - the expected transformed point.
+	 */
 	@Test
 	void AddTest() {
 		Point3D p = new Point3D(32.103315,35.209039,670);
@@ -17,6 +24,12 @@ class CoordsTest {
 		assertEquals(expected.toString(),x.add(p, vector).toString());
 		
 	}
+	/**
+	 * this test tests if we get the correct 3d vector.
+	 * @param p - a new point
+	 * @param p2 - another new point
+	 * @param x - a new MyCoords variable.
+	 */
 	@Test
 	void DistanceTest() {
 		Point3D p = new Point3D(32.103315,35.209039,670);
@@ -24,6 +37,15 @@ class CoordsTest {
 		MyCoords x = new MyCoords();
 		assertEquals(493, (int)(x.distance3d(p, p2)));
 	}
+	
+	/**
+	 * this function checks if the creation of a vector using 2 gps points is made properly.
+	 * @param p - a new point
+	 * @param p2 - another new point
+	 * @param x - a new MyCoords variable.
+	 * @param expected - the expected vector.
+	 * @param actual - the actual vector we get from the function.
+	 */
 	@Test
 	void VectorTest() {
 		Point3D p = new Point3D(32.103315,35.209039,670);
@@ -40,12 +62,24 @@ class CoordsTest {
 		assertEquals(expected.toString(), new Point3D(actualX,actualY,actualZ).toString());
 	}
 
+	/**
+	 * this function checks if the point is a gps point.
+	 * @param p - a new gps point.
+	 * @param x - a new MyCoords variable.
+	 */
 	@Test
 	void isValidTest() {
 		Point3D p = new Point3D(32.103315,35.209039,670);
 		MyCoords x = new MyCoords();
 		assertTrue(x.isValid_GPS_Point(p));
 	}
+	
+	/**
+	 * this function checks if the azimuth function is made properly.
+	 * @param p - a new point
+	 * @param p2 - another new point
+	 * @param x - a new MyCoords variable.
+	 */
 	@Test
 	void azimuth_elevation_dist_Test() {
 		MyCoords x = new MyCoords();
@@ -57,11 +91,6 @@ class CoordsTest {
 		assertEquals(272,(int)(polarVec[0]));
 		assertEquals(-1.7,(double)((int)(polarVec[1]*10))/10);
 		assertEquals(655,(int)(polarVec[2]/10));
-//		for (int i=0;i<3;i++) {
-//			System.out.println(polarVec[i]+"  ");
-//		}
-		
-
 	}
 	
 	

@@ -9,9 +9,18 @@ import GIS.GIS_element;
 import GIS.element;
 import GIS.metaData;
 import Geom.geom;
-//ArrayList<String[]> a = l.e
+
+/**
+ * this class is the last in the translation of a csv file to kml, it
+ * takes the hole layer that contains a lot of arraylists and turns it into a large kml file.
+ * @author Daniel Ventura
+ */
 public class layer2kml {
-	
+	/**
+	 * this function takes each line in each arraylist and turns it into a kml point.
+	 * @param m2l - the layer.
+	 * @param output - the location to create the new kml file.
+	 */
 	public layer2kml(mat2layer m2l, String output) {
     
     String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
@@ -24,7 +33,6 @@ public class layer2kml {
         BufferedWriter bw = new BufferedWriter(fw);
         Iterator<GIS_element> iterL = m2l.getL().iterator();
         while (iterL.hasNext()) {
-       // for (int i = 2; i < m2l.getL().getElement_Set().size(); i++) {
             element CurrElement = (element) iterL.next();//new element(m2l.getL().getElement_Set().get(i));
             String kmlelement =
                     "<Placemark>\r\n"+
@@ -38,7 +46,6 @@ public class layer2kml {
             content+=kmlelement;
         }
         content+=kmlend;
-        //String csv = content.toString().replaceFirst(", <Placemark>\\r\\n", "<Placemark>\\r\\n");//.replaceAll(",", "").replace("[", "").replace("]", "");
         bw.write(content);
         bw.close();
     } 

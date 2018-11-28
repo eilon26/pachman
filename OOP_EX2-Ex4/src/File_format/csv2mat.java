@@ -5,23 +5,43 @@ import java.util.ArrayList;
 
 import GIS.*;
 
+/**
+ * this class transports the data we have on our file to an arraylist.
+ * @author Daniel Ventura
+ * length - the number of different variables we have in each line.
+ * width - the number of lines there are in the file.
+ * g - the arraylist we will be using to enter the information into.
+ */
 public class csv2mat {
 	private double length;
 	private double width;
 	private ArrayList<String[]> g;
 	
+	/**
+	 * @return the length.
+	 */
 	public double getLength() {
 		return length;
 	}
 
+	/**
+	 * @return the width.
+	 */
 	public double getWidth() {
 		return width;
 	}
 
+	/**
+	 * @return the arraylist.
+	 */
 	public ArrayList<String[]> getG() {
 		return g;
 	}
 
+	/**
+	 * this function reads each line in the file and transport its information to g, an arraylist.
+	 * @param csvFile - the location of the csv file on the computer.
+	 */
 	public csv2mat(String csvFile) {
 	//String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
     String line = "";
@@ -30,16 +50,12 @@ public class csv2mat {
     
     try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
     {
+    	//as long as there are more lines to the file keep on reading.
         while ((line = br.readLine()) != null) 
         {
             String[] userInfo = line.split(cvsSplitBy);
-            
+            //add the info to g.
             this.g.add(userInfo);
-//            for (int i = 0; i < userInfo.length; i++) {
-//				System.out.print(userInfo[i] + " ");
-//			}
-//            System.out.println();
-            //System.out.println("ID: " + userInfo[0] + " , Name: " + userInfo[1]);
         }
         this.length = this.g.size();
         this.width=this.g.get(1).length;
