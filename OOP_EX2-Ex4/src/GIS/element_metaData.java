@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import Geom.Point3D;
 
-public class metaData implements Meta_data{
+public class element_metaData implements Meta_Data{
 	private String time;
 	//double Orientation;
 	private String name;//ssid
@@ -19,7 +19,7 @@ public class metaData implements Meta_data{
 	private String color;
 	
 	//done adding new here.
-	public metaData(String[] line,int[] metaIndexes) {
+	public element_metaData(String[] line,int[] metaIndexes) {
 		time = line[metaIndexes[0]];
 		rssi = Integer.parseInt(line[metaIndexes[1]]);
 		name = line[metaIndexes[2]];	
@@ -33,7 +33,7 @@ public class metaData implements Meta_data{
 	}
 	
 
-	public metaData(metaData other) {
+	public element_metaData(element_metaData other) {
 		this.time = other.time;
 		this.name=new String(other.name);
 		this.rssi=other.rssi;

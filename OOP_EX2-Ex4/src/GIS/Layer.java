@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
 	private ArrayList<GIS_element> element_set;
-	private metaData md;
+	private Layer_metaData md;
 	
 	public Layer(ArrayList<String[]> g){
 		element_set = new ArrayList<GIS_element>();
@@ -18,10 +18,11 @@ public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
 			element PointElement = new element(line,geomIndexes,metaIndexes);
 			element_set.add(PointElement); 
 		}
-		
-		String StartFinnishPlace = "start at: "+((metaData)(element_set.get(0).getData())).getName()+"\n finnish at: "+((metaData)(element_set.get(element_set.size()-1).
-		long RecordTime = ((metaData)(element_set.get(0).getData())).getUTC();
-		
+		String strat = ((element_metaData)(element_set.get(0).getData())).getName();
+		String finnish = ((element_metaData)(element_set.get(element_set.size()-1))).getName();
+		String StartFinnishPlace = "start location: "+strat+"\n finnish location: "+finnish+"\n";
+		long First_RecordTime = ((element_metaData)(element_set.get(0).getData())).getUTC();
+		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getName(),First_RecordTime);
 	}
 	public ArrayList<GIS_element> getElement_Set(){
 		return element_set;
@@ -73,7 +74,7 @@ public class Layer extends ArrayList<GIS_element> implements GIS_layer  {
 	}
 
 	@Override
-	public Meta_data get_Meta_data() {
+	public Meta_Data get_Meta_data() {
 		return md;
 	}
 }

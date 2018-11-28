@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 import GIS.GIS_element;
 import GIS.element;
-import GIS.metaData;
+import GIS.element_metaData;
 import Geom.geom;
 
 /**
@@ -36,8 +36,8 @@ public class layer2kml {
             element CurrElement = (element) iterL.next();//new element(m2l.getL().getElement_Set().get(i));
             String kmlelement =
                     "<Placemark>\r\n"+
-                            "<name><![CDATA["+((metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
-                            "<description><![CDATA[BSSID: <b>"+((metaData)(CurrElement.getData())).getMac()+"</b><br/>Channel: <b>"+((metaData)(CurrElement.getData())).getChannel()+"</b><br/>Type: <b>"+((metaData)(CurrElement.getData())).getType()+"</b><br/>AccuracyMeters: <b>"+((metaData)(CurrElement.getData())).getAccuracyMeters()+"</b><br/>Capabilities: <b>"+((metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>"+((metaData)(CurrElement.getData())).getRssi()+"</b><br/>Timestamp: <b>"+((metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((metaData)(CurrElement.getData())).getTime()+"</b>]]></description><styleUrl>#"+((metaData)(CurrElement.getData())).getColor()+"</styleUrl>\r\n" +
+                            "<name><![CDATA["+((element_metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
+                            "<description><![CDATA[BSSID: <b>"+((element_metaData)(CurrElement.getData())).getMac()+"</b><br/>Channel: <b>"+((element_metaData)(CurrElement.getData())).getChannel()+"</b><br/>Type: <b>"+((element_metaData)(CurrElement.getData())).getType()+"</b><br/>AccuracyMeters: <b>"+((element_metaData)(CurrElement.getData())).getAccuracyMeters()+"</b><br/>Capabilities: <b>"+((element_metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>"+((element_metaData)(CurrElement.getData())).getRssi()+"</b><br/>Timestamp: <b>"+((element_metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((element_metaData)(CurrElement.getData())).getTime()+"</b>]]></description><styleUrl>#"+((element_metaData)(CurrElement.getData())).getColor()+"</styleUrl>\r\n" +
                             "<Point>\r\n"+
                             "<coordinates>"+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
                      "</Placemark>\r\n";

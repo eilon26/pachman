@@ -9,16 +9,16 @@ import Geom.geom;
 
 public class element implements GIS_element {
 	private geom ge; 
-	private metaData md;
+	private element_metaData md;
 	
 	public element(String[] line,int[] geomIndexes,int[] metaIndexes) {
 		this.ge = new geom(line, geomIndexes);
-		this.md= new metaData(line, metaIndexes);
+		this.md= new element_metaData(line, metaIndexes);
 		
 	}
 	public element(GIS_element other) {
 		this.ge=new geom(((element)other).ge);
-		this.md=new metaData(((element)other).md);
+		this.md=new element_metaData(((element)other).md);
 	}
 	@Override
 	public Geom_element getGeom() {
@@ -26,7 +26,7 @@ public class element implements GIS_element {
 	}
 
 	@Override
-	public Meta_data getData() {
+	public Meta_Data getData() {
 		return md;
 	}
 	@Override

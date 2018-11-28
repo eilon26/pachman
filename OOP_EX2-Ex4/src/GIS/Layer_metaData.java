@@ -1,9 +1,30 @@
 package GIS;
 
-public class Layer_metaData implements Meta_data{
-	String time,name;
-	
-	public Layer_metaData() {
+import Geom.Point3D;
+
+public class Layer_metaData implements Meta_Data{
+	String time,location;
+	long utc;
+
+	public Layer_metaData(String location,String time,long utc) {
+		this.time = time;
+		this.location = location;
+		this.utc = utc;
+	}
+
+	@Override
+	public long getUTC() {
+		return utc;
+	}
+
+	@Override
+	public Point3D get_Orientation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String toString() {
+		return location+"start record time: "+time+"\n Coordinated Universal Time: "+utc;
 		
 	}
 	

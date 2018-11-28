@@ -11,7 +11,7 @@ import File_format.mat2layer;
 
 public class project implements GIS_project {
 	private ArrayList<GIS_layer> layer_set;
-	private metaData md;
+	private Meta_Data md;
 	
 	public project(String file_path) {
 		layer_set = new ArrayList<GIS_layer>();
@@ -102,10 +102,11 @@ public class project implements GIS_project {
 	public <T> T[] toArray(T[] arg0) {
 		return layer_set.toArray(arg0);
 	}
-
 	@Override
-	public Meta_data get_Meta_data() {
+	public Meta_Data get_Meta_data() {
 		return md;
 	}
+
+
 
 }
