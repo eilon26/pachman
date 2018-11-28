@@ -42,6 +42,7 @@ public class metaData implements Meta_data{
 		this.Channel = other.Channel;
 		this.AccuracyMeters = other.AccuracyMeters;
 		this.Type = other.Type;
+		this.color= other.color;
 	}
 	@Override
 	public String toString() {

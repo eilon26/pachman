@@ -1,16 +1,16 @@
 package File_format;
 
-import GIS.Layers;
+import GIS.Layer;
 
 public class mat2layer {
-	private Layers l; 
+	private Layer l; 
 	
-	public Layers getL() {
+	public Layer getL() {
 		return l;
 	}
 
 	public mat2layer(csv2mat c2g) {
-		this.l = new Layers(c2g.getG());
+		this.l = new Layer(c2g.getG());
 	}
 	
 }

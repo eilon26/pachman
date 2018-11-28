@@ -20,8 +20,8 @@ public class layer2kml {
     try{
         FileWriter fw = new FileWriter(output);
         BufferedWriter bw = new BufferedWriter(fw);
-        for (int i = 2; i < m2l.getL().getEl().size(); i++) {
-            element CurrElement = new element(m2l.getL().getEl().get(i));
+        for (int i = 2; i < m2l.getL().getElement_Set().size(); i++) {
+            element CurrElement = new element(m2l.getL().getElement_Set().get(i));
             String color = "";
             if (((metaData)(CurrElement.getData())).getRssi()<-90) color="<styleUrl>#green</styleUrl>";
             else color="<styleUrl>#red</styleUrl>";
