@@ -3,7 +3,9 @@ package File_format;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import GIS.GIS_element;
 import GIS.element;
 import GIS.metaData;
 import Geom.geom;
@@ -20,11 +22,10 @@ public class layer2kml {
     try{
         FileWriter fw = new FileWriter(output);
         BufferedWriter bw = new BufferedWriter(fw);
-        for (int i = 2; i < m2l.getL().getElement_Set().size(); i++) {
-            element CurrElement = new element(m2l.getL().getElement_Set().get(i));
-            String color = "";
-            if (((metaData)(CurrElement.getData())).getRssi()<-90) color="<styleUrl>#green</styleUrl>";
-            else color="<styleUrl>#red</styleUrl>";
+        Iterator<GIS_element> iterL = m2l.getL().iterator();
+        while (iterL.hasNext()) {
+       // for (int i = 2; i < m2l.getL().getElement_Set().size(); i++) {
+            element CurrElement = (element) iterL.next();//new element(m2l.getL().getElement_Set().get(i));
             String kmlelement =
                     "<Placemark>\r\n"+
                             "<name><![CDATA["+((metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+

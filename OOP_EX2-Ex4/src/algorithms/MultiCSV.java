@@ -1,12 +1,12 @@
 package algorithms;
 
 import GIS.*;
-import java.io.File;
-import java.util.ArrayList;
+import Geom.geom;
 
-import File_format.csv2mat;
-import File_format.layer2kml;
-import File_format.mat2layer;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.Iterator;
+
 
 public class MultiCSV {
 	private project pr;
@@ -14,7 +14,38 @@ public class MultiCSV {
 	public MultiCSV(String file_path) {
 		pr = new project(file_path);
 	}
-	
 
+	public void project2kml(String output) {
+		String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+				"<kml xmlns=\"http://www.opengis.net/kml/2.2\"><Document><Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style><Style id=\"yellow\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/yellow-dot.png</href></Icon></IconStyle></Style><Style id=\"green\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/green-dot.png</href></Icon></IconStyle></Style><Folder><name>Wifi Networks</name>\r\n";
+		String content = kmlstart;
 
+		String kmlend = "</Folder>\r\n" + "</Document></kml>";
+		try{
+			FileWriter fw = new FileWriter(output);
+			BufferedWriter bw = new BufferedWriter(fw);
+			Iterator<GIS_layer> iterPro = pr.iterator();
+			while (iterPro.hasNext()) {
+				Layer currLayer = (Layer)iterPro.next();
+				Iterator<GIS_element> iterL = currLayer.iterator();
+				while (iterL.hasNext()) {
+					element CurrElement = (element) iterL.next();
+					String kmlelement =
+							"<Placemark>\r\n"+
+									"<name><![CDATA["+((metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
+									"<description><![CDATA[BSSID: <b>"+((metaData)(CurrElement.getData())).getMac()+"</b><br/>Channel: <b>"+((metaData)(CurrElement.getData())).getChannel()+"</b><br/>Type: <b>"+((metaData)(CurrElement.getData())).getType()+"</b><br/>AccuracyMeters: <b>"+((metaData)(CurrElement.getData())).getAccuracyMeters()+"</b><br/>Capabilities: <b>"+((metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>"+((metaData)(CurrElement.getData())).getRssi()+"</b><br/>Timestamp: <b>"+((metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((metaData)(CurrElement.getData())).getTime()+"</b>]]></description><styleUrl>#"+((metaData)(CurrElement.getData())).getColor()+"</styleUrl>\r\n" +
+									"<Point>\r\n"+
+									"<coordinates>"+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
+						    "</Placemark>\r\n";
+					content+=kmlelement;
+				}
+			}
+			content+=kmlend;
+			bw.write(content);
+			bw.close();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
 }
