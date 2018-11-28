@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * this class handles the arraylists and put them under one layer.
  * this class implements gis_layer.
- * @author Daniel Ventura
+ * @author Daniel Ventura and Eilon tsadok
  *
  */
 public class Layer implements GIS_layer  {
@@ -111,7 +111,7 @@ public class Layer implements GIS_layer  {
 		return element_set.add((element) arg0);
 	}
 	/**
-	 * @return true if the set is not cleared.
+	 * clear the set
 	 */
 	@Override
 	public void clear() {

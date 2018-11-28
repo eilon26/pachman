@@ -11,7 +11,7 @@ import File_format.layer2kml;
 import File_format.mat2layer;
 /**
  * this class is responsible for finding csv files and adding it to a layer.
- * @author Daniel Ventura
+ * @author Daniel Ventura Eilon tsadok
  *
  */
 public class project implements GIS_project {
@@ -66,7 +66,7 @@ public class project implements GIS_project {
 		return layer_set.addAll(c);
 	}
 	/**
-	 * @return true if the set was successfully.
+	 * clear the set.
 	 */
 	@Override
 	public void clear() {

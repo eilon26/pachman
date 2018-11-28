@@ -4,7 +4,7 @@ import Geom.Point3D;
 /**
  * this class implements meta_Data, it is responsible for handling the time of creation
  * universal time and location.
- * @author Daniel Ventura
+ * @author Daniel Ventura and Eilon tsadok
  *
  */
 public class Layer_metaData implements Meta_Data{
