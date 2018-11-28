@@ -3,6 +3,7 @@ package GIS;
 import GIS.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 public class Layer implements GIS_layer  {
@@ -21,8 +22,8 @@ public class Layer implements GIS_layer  {
 		String strat = ((element_metaData)(element_set.get(0).getData())).getName();
 		String finnish = ((element_metaData)(element_set.get(element_set.size()-1).getData())).getName();
 		String StartFinnishPlace = "start location: "+strat+"\n finnish location: "+finnish+"\n";
-		long First_RecordTime = ((element_metaData)(element_set.get(0).getData())).getUTC();
-		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getTime(),First_RecordTime);
+		long convert_time = new Date().getTime();
+		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getTime(),convert_time);
 	}
 	public ArrayList<GIS_element> getElement_Set(){
 		return element_set;

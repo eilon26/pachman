@@ -3,6 +3,7 @@ package GIS;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import File_format.csv2mat;
@@ -18,8 +19,8 @@ public class project implements GIS_project {
 		file_path_to_layer_set(file_path);
 		
 		String first_layer_time = ((Layer_metaData)((layer_set.get(0)).get_Meta_data())).getTime();
-		long first_layer_utc = ((Layer_metaData)(layer_set.get(0).get_Meta_data())).getUTC();
-		md = new project_metaData(first_layer_time,first_layer_utc);
+		long convert_time = new Date().getTime();
+		md = new project_metaData(first_layer_time,convert_time);
 	}
 	
 	private void file_path_to_layer_set(String file_path){

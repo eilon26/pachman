@@ -22,7 +22,7 @@ public class project_metaData implements Meta_Data{
 	
 	@Override
 	public String toString() {
-		return time;
+		return "the time of the first record: "+time+"\n the creation of the file in Coordinated Universal Time: "+utc;
 	}
 	
 
