@@ -18,8 +18,8 @@ public class MultiCSV {
 	public void project2kml(String output) {
 		String kmlstart = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
 				"<kml xmlns=\"http://www.opengis.net/kml/2.2\"><Document><Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style><Style id=\"yellow\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/yellow-dot.png</href></Icon></IconStyle></Style><Style id=\"green\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/green-dot.png</href></Icon></IconStyle></Style><Folder><name>Wifi Networks</name>\r\n";
-		String content = kmlstart;
-
+		
+		StringBuilder content = new StringBuilder(kmlstart);
 		String kmlend = "</Folder>\r\n" + "</Document></kml>";
 		try{
 			FileWriter fw = new FileWriter(output);
@@ -37,15 +37,21 @@ public class MultiCSV {
 									"<Point>\r\n"+
 									"<coordinates>"+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
 						    "</Placemark>\r\n";
-					content+=kmlelement;
+					
+					content.append(kmlelement);
 				}
 			}
-			content+=kmlend;
-			bw.write(content);
+			
+			content.append(kmlend);
+			bw.write(content.toString());
 			bw.close();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+	
+	public project getPr() {
+		return pr;
 	}
 }
