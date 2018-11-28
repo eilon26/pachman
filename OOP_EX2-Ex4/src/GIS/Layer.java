@@ -17,6 +17,7 @@ public class Layer implements GIS_layer  {
 			element PointElement = new element(line,geomIndexes,metaIndexes);
 			element_set.add(PointElement); 
 		}
+		
 		md = null;
 		
 		
