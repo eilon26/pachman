@@ -39,10 +39,11 @@ public class MultiCSV {
 				Iterator<GIS_element> iterL = currLayer.iterator();
 				while (iterL.hasNext()) {
 					element CurrElement = (element) iterL.next();
+					int Frequency =2407+5*(((element_metaData)(CurrElement.getData())).getChannel());
 					String kmlelement =
 							"<Placemark>\r\n"+
 									"<name><![CDATA["+((element_metaData)(CurrElement.getData())).getName()+"]]></name>\r\n"+
-									"<description><![CDATA[BSSID: <b>"+((element_metaData)(CurrElement.getData())).getMac()+"</b><br/>Channel: <b>"+((element_metaData)(CurrElement.getData())).getChannel()+"</b><br/>Type: <b>"+((element_metaData)(CurrElement.getData())).getType()+"</b><br/>AccuracyMeters: <b>"+((element_metaData)(CurrElement.getData())).getAccuracyMeters()+"</b><br/>Capabilities: <b>"+((element_metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>"+((element_metaData)(CurrElement.getData())).getRssi()+"</b><br/>Timestamp: <b>"+((element_metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((element_metaData)(CurrElement.getData())).getTime()+"</b>]]></description><styleUrl>#"+((element_metaData)(CurrElement.getData())).getColor()+"</styleUrl>\r\n" +
+									"<description><![CDATA[BSSID: <b>"+((element_metaData)(CurrElement.getData())).getMac()+"</b><br/>Type: <b>"+((element_metaData)(CurrElement.getData())).getType()+"</b><br/>AccuracyMeters: <b>"+((element_metaData)(CurrElement.getData())).getAccuracyMeters()+"</b><br/>Capabilities: <b>"+((element_metaData)(CurrElement.getData())).getAuthMode()+"</b><br/>Frequency: <b>"+Frequency+"</b><br/>Timestamp: <b>"+((element_metaData)(CurrElement.getData())).getUTC()+"</b><br/>Date: <b>"+((element_metaData)(CurrElement.getData())).getTime()+"</b>]]></description><styleUrl>#"+((element_metaData)(CurrElement.getData())).getColor()+"</styleUrl>\r\n" +
 									"<Point>\r\n"+
 									"<coordinates>"+((geom)(CurrElement.getGeom())).getP().y()+","+((geom)(CurrElement.getGeom())).getP().x()+","+((geom)(CurrElement.getGeom())).getP().z()+"</coordinates></Point>\r\n"+
 						    "</Placemark>\r\n";
@@ -65,4 +66,6 @@ public class MultiCSV {
 	public project getPr() {
 		return pr;
 	}
+	
+	
 }

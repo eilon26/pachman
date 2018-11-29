@@ -19,12 +19,16 @@ public class MyCoords implements coords_converter {
 	 */
 	@Override
 	public Point3D add(Point3D gps, Point3D local_vector_in_meter) {
-		double LonNorm = Math.cos(Math.toRadians(gps.x()));
-		double y1 = Math.toDegrees(Math.asin(local_vector_in_meter.y()/(earthR*LonNorm)))+gps.y();
-		double x1 = Math.toDegrees(Math.asin(local_vector_in_meter.x()/(earthR)))+gps.x();
-		double z1 = local_vector_in_meter.z()+gps.z();
-		return new Point3D(x1,y1,z1);
-}
+		if (isValid_GPS_Point(gps)) {
+			double LonNorm = Math.cos(Math.toRadians(gps.x()));
+			double y1 = Math.toDegrees(Math.asin(local_vector_in_meter.y()/(earthR*LonNorm)))+gps.y();
+			double x1 = Math.toDegrees(Math.asin(local_vector_in_meter.x()/(earthR)))+gps.x();
+			double z1 = local_vector_in_meter.z()+gps.z();
+			Point3D newPoint = new Point3D(x1,y1,z1);
+			if (isValid_GPS_Point(newPoint)) return newPoint;
+		}
+		return null;
+	}
 	
 	/**
 	 * this function computes the 3D distance (in meters) between the two gps like points.
@@ -34,15 +38,16 @@ public class MyCoords implements coords_converter {
 	 */
 	@Override
 	public double distance3d(Point3D gps0, Point3D gps1) {
+		if ((isValid_GPS_Point(gps0))&&(isValid_GPS_Point(gps1))) {
 		double LonNorm = Math.cos(Math.toRadians(gps0.x()));
 		double meterX = earthR*Math.sin(Math.toRadians(gps1.x()-gps0.x()));
 		double meterY = LonNorm*earthR*Math.sin(Math.toRadians(gps1.y()-gps0.y()));
 		double Dis2D = Math.sqrt((meterX*meterX)+(meterY*meterY));
 		double dz = gps1.z()-gps0.z();
 		double dis = Math.sqrt((Dis2D*Dis2D)+(dz*dz));
-		if (dis>100000)
-			return Double.NaN;
-		return  dis;
+		if (dis<=100000) return  dis;
+		}
+		return Double.NaN;
 	}
 
 	/**
@@ -53,12 +58,15 @@ public class MyCoords implements coords_converter {
 	 */
 	@Override
 	public Point3D vector3D(Point3D gps0, Point3D gps1) {
+		if ((isValid_GPS_Point(gps0))&&(isValid_GPS_Point(gps1))) {
 		double meterY = earthR*Math.sin(Math.toRadians(gps1.y()-gps0.y()));
 		double meterX = earthR*Math.sin(Math.toRadians(gps1.x()-gps0.x()));
 		double LonNorm = Math.cos(Math.toRadians(gps0.x()));
 		meterY *= LonNorm;
 		double meterZ = gps1.z()-gps0.z();
 		return new Point3D(meterX,meterY,meterZ);
+		}
+		return null;
 	}
 
 	/**
@@ -69,6 +77,7 @@ public class MyCoords implements coords_converter {
 	 */
 	@Override
 	public double[] azimuth_elevation_dist(Point3D gps0, Point3D gps1) {
+		
 		double[] polarVec = new double[3];
 		if (isValid_GPS_Point(gps0)&&isValid_GPS_Point(gps1)) {
 			Point3D vec = vector3D(gps0,gps1);
@@ -83,15 +92,8 @@ public class MyCoords implements coords_converter {
 			polarVec[1] = Math.toDegrees(Math.asin(vec.z()/polarVec[2]));
 			
 			return polarVec;
-		} else {
-			try {
-				throw new Exception("illigal value");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
 		}
+		return null;
 	}
 
 	/**

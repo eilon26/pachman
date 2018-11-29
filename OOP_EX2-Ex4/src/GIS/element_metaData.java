@@ -12,7 +12,7 @@ import Geom.Point3D;
  */
 public class element_metaData implements Meta_Data{
 	private String time;
-	private String name;//ssid
+	private String name;
 	private int rssi;
 	private String mac;
 	private String AuthMode;
