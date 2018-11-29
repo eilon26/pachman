@@ -28,11 +28,11 @@ public class Layer implements GIS_layer  {
 			element PointElement = new element(line,geomIndexes,metaIndexes);
 			element_set.add(PointElement); 
 		}
-		String strat = ((element_metaData)(element_set.get(0).getData())).getName();
-		String finnish = ((element_metaData)(element_set.get(element_set.size()-1).getData())).getName();
-		String StartFinnishPlace = "start location: "+strat+"\n finnish location: "+finnish+"\n";
+		String loc = ((element_metaData)(element_set.get(0).getData())).getName();
+		// finnish = ((element_metaData)(element_set.get(element_set.size()-1).getData())).getName();
+		//String StartFinnishPlace = "start location: "+strat+"\n finnish location: "+finnish+"\n";
 		long convert_time = new Date().getTime();
-		this.md = new Layer_metaData(StartFinnishPlace,((element_metaData)(element_set.get(0).getData())).getTime(),convert_time);
+		this.md = new Layer_metaData(loc,((element_metaData)(element_set.get(0).getData())).getTime(),convert_time);
 	}
 	/**
 	 * @return the layer.

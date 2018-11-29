@@ -25,9 +25,8 @@ public class project implements GIS_project {
 		layer_set = new ArrayList<GIS_layer>();
 		file_path_to_layer_set(file_path);
 		
-		String first_layer_time = ((Layer_metaData)((layer_set.get(0)).get_Meta_data())).getTime();
 		long convert_time = new Date().getTime();
-		md = new project_metaData(first_layer_time,convert_time);
+		md = new project_metaData(new File(file_path).getName(),convert_time);
 	}
 	/**
 	 * this function checks if the file is a csv if it is is adds it to a set

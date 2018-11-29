@@ -47,7 +47,7 @@ public class Layer_metaData implements Meta_Data{
 	 */
 	@Override
 	public String toString() {
-		return location+"start record time: "+time+"\n the creation of the file in Coordinated Universal Time: "+utc;
+		return "the record took in the area of: " +location+"\n record time: "+time+"\n the creation of the file in Coordinated Universal Time: "+utc;
 		
 	}
 	

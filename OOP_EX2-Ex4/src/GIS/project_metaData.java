@@ -7,15 +7,15 @@ import Geom.Point3D;
  *
  */
 public class project_metaData implements Meta_Data{
-	private String time;
+	private String folderName;
 	private long utc;
 	/**
 	 * the constructor.
 	 * @param time - creation time.
 	 * @param utc - universal time.
 	 */
-	public project_metaData(String time,long utc) {
-		this.time=time;
+	public project_metaData(String folderName,long utc) {
+		this.folderName=folderName;
 		this.utc=utc;
 	}
 	/**
@@ -35,7 +35,7 @@ public class project_metaData implements Meta_Data{
 	 */
 	@Override
 	public String toString() {
-		return "the time of the first record: "+time+"\n the creation of the file in Coordinated Universal Time: "+utc;
+		return "the name of the source folder(or file) is: "+folderName+"\n the creation of the file in Coordinated Universal Time: "+utc;
 	}
 	
 
