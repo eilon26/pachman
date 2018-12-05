@@ -1,6 +1,7 @@
 package GUI;
 //scaling שינוי גודל חלון
 
+import javax.swing.JFrame;
 import java.awt.Graphics;
 import java.awt.Menu;
 import java.awt.MenuBar;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 
 public class user_panel extends JFrame implements MouseListener
@@ -92,21 +92,15 @@ public class user_panel extends JFrame implements MouseListener
 		// TODO Auto-generated method stub
 		
 	}
-	
-	import javax.swing.JFrame;
 
-
-	public class Main 
-	{
-		public static void main(String[] args)
+	public static void main(String[] args)
 		{
-			MainWindow window = new MainWindow();
-			window.setVisible(true);
-			window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		user_panel window = new user_panel();
+		window.setVisible(true);
+		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 		}
-	}
 
 
 }
