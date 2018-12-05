@@ -1,8 +1,10 @@
-package GIS;
+package GIS.gpsPoint;
 
 import java.sql.Time;
 
 import Coords.MyCoords;
+import GIS.GIS_element;
+import GIS.Meta_Data;
 import Geom.Geom_element;
 import Geom.Point3D;
 import Geom.geom;

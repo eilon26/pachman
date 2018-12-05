@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import GIS.GIS_element;
-import GIS.element;
-import GIS.element_metaData;
+import GIS.gpsPoint.element;
+import GIS.gpsPoint.element_metaData;
 import Geom.geom;
 
 /**

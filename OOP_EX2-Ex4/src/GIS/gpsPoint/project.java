@@ -1,4 +1,4 @@
-package GIS;
+package GIS.gpsPoint;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import java.util.Iterator;
 import File_format.csv2mat;
 import File_format.layer2kml;
 import File_format.mat2layer;
+import GIS.GIS_layer;
+import GIS.GIS_project;
+import GIS.Meta_Data;
 /**
  * this class is responsible for finding csv files and adding it to a layer.
  * @author Daniel Ventura Eilon tsadok

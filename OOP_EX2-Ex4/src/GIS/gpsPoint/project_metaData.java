@@ -1,5 +1,6 @@
-package GIS;
+package GIS.gpsPoint;
 
+import GIS.Meta_Data;
 import Geom.Point3D;
 /**
  * this class is responsible for the time (creation and universal).

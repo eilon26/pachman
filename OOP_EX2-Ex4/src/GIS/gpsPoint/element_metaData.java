@@ -1,8 +1,10 @@
-package GIS;
+package GIS.gpsPoint;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import GIS.Meta_Data;
 import Geom.Point3D;
 /**
  * this class takes the information from the line and posts it under

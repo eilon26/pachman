@@ -1,4 +1,4 @@
-package GIS;
+package GIS.gpsPoint;
 
 import GIS.*;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package File_format;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ import GIS.*;
  * g - the arraylist we will be using to enter the information into.
  */
 public class csv2mat {
+	private File file;
 	private double length;
 	private double width;
 	private ArrayList<String[]> g;
@@ -43,7 +45,7 @@ public class csv2mat {
 	 * @param csvFile - the location of the csv file on the computer.
 	 */
 	public csv2mat(String csvFile) {
-	//String csvFile = "C:\\Users\\danie\\Desktop\\Ex2\\data\\WigleWifi_20171203085618.csv";
+	this.file = new File(csvFile);
     String line = "";
     String cvsSplitBy = ",";
     this.g = new ArrayList<String[]>();
@@ -62,6 +64,10 @@ public class csv2mat {
     } catch (Exception e) {
         e.printStackTrace();
     }
+	}
+
+	public File getFile() {
+		return file;
 	}
     
 }

@@ -1,6 +1,10 @@
 package algorithms;
 
 import GIS.*;
+import GIS.gpsPoint.Layer;
+import GIS.gpsPoint.element;
+import GIS.gpsPoint.element_metaData;
+import GIS.gpsPoint.project;
 import Geom.geom;
 
 import java.io.BufferedWriter;
@@ -9,7 +13,7 @@ import java.util.Iterator;
 
 /**
  * this class writes the actual kml file.
- * @author Daniel Ventura
+ * @author Daniel Ventura and Eilon Tsadok
  *
  */
 public class MultiCSV {

@@ -1,5 +1,6 @@
 package GIS;
 
+import GIS.Meta_Data;
 import Geom.Point3D;
 /**
  * this class implements meta_Data, it is responsible for handling the time of creation
@@ -7,8 +8,8 @@ import Geom.Point3D;
  * @author Daniel Ventura and Eilon tsadok
  *
  */
-public class Layer_metaData implements Meta_Data{
-	private String time,location;
+public class gameBoard_metaData implements Meta_Data{
+	private String fileName;
 	private long utc;
 	/**
 	 * the constructor.
@@ -16,17 +17,12 @@ public class Layer_metaData implements Meta_Data{
 	 * @param time - the start time recorded.
 	 * @param utc - the universal time.
 	 */
-	public Layer_metaData(String location,String time,long utc) {
-		this.time = time;
-		this.location = location;
+	public gameBoard_metaData(String fileName,long utc) {
+		this.fileName = fileName;
+	
 		this.utc = utc;
 	}
-	/**
-	 * @return time.
-	 */
-	public String getTime() {
-		return time;
-	}
+	
 	/**
 	 * @return utc.
 	 */
@@ -47,7 +43,7 @@ public class Layer_metaData implements Meta_Data{
 	 */
 	@Override
 	public String toString() {
-		return "the record took in the area of: " +location+"\n record time: "+time+"\n the creation of the file in Coordinated Universal Time: "+utc;
+		return "the file name is: " +fileName+"\n the creation of the file in Coordinated Universal Time: "+utc;
 		
 	}
 	

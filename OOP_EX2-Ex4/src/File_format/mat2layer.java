@@ -1,6 +1,6 @@
 package File_format;
 
-import GIS.Layer;
+import GIS.gpsPoint.Layer;
 
 /**
  * this class adds the arraylist it gets into the ultimate layer.
