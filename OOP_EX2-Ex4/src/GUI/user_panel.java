@@ -38,7 +38,7 @@ public class user_panel extends JFrame implements MouseListener
 		this.setMenuBar(menuBar);
 		
 		try {
-			 myImage = ImageIO.read(new File("C:\\Users\\danie\\git\\gps2\\OOP_EX2-Ex4\\src\\GUI\\._Ariel1.png"));
+			 myImage = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

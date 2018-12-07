@@ -21,6 +21,10 @@ public class geom implements Geom_element{
 		double zp = Double.parseDouble(line[geomIndexes[2]]);
 		p = new Point3D(xp,yp,zp);
 	}
+	
+	public geom(Point3D p) {
+		this.p = p;
+	}
 	/**
 	 * another constructor, takes a geom element and convert it into a gps point.
 	 * @param ge
