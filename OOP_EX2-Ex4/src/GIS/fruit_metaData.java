@@ -13,6 +13,11 @@ public class fruit_metaData implements Meta_Data {
 		weight = Integer.parseInt(line[metaIndexes[2]]);	
 	}
 
+	public fruit_metaData(fruit_metaData other) {
+		this.id = other.getId();
+		this.weight = other.getweight();
+	}
+
 	public int getId() {
 		return id;
 	}

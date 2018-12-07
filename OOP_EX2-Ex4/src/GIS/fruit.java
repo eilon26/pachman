@@ -14,6 +14,10 @@ public fruit(String[] line,int[] geomIndexes,int[] metaIndexes) {
 		this.ge = new geom(line, geomIndexes);
 		this.md= new fruit_metaData(line, metaIndexes);
 }
+public fruit (fruit other) {
+	this.ge= new geom((geom) other.getGeom());
+	this.md = new fruit_metaData((fruit_metaData) other.getData());
+}
 
 @Override
 public Geom_element getGeom() {
