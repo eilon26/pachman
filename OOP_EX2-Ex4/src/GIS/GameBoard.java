@@ -21,6 +21,15 @@ public class GameBoard implements GIS_layer  {
 	 * element) and an element set to contain all of the elements.
 	 * @param g - the array list.
 	 */
+	public GameBoard() {
+		this.element_set=new ArrayList<GIS_element>();
+		this.md=null;
+	}
+	
+	public void setMd(gameBoard_metaData md) {
+		this.md = md;
+	}
+
 	public GameBoard(csv2mat c2m){
 		element_set = new ArrayList<GIS_element>();
 		int[] geomIndexes = geomIndexes(c2m.getG().get(0));

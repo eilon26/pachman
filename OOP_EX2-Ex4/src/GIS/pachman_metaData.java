@@ -14,6 +14,11 @@ public class pachman_metaData implements Meta_Data {
 		speed = Integer.parseInt(line[metaIndexes[2]]);
 		radius = Integer.parseInt(line[metaIndexes[3]]);	
 	}
+	public pachman_metaData(int id,int speed,int radius) {
+		this.id=id;
+		this.speed=speed;
+		this.radius=radius;
+	}
 
 	public int getId() {
 		return id;

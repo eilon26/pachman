@@ -15,6 +15,10 @@ public class pachman implements GIS_element {
 		this.ge = new geom(line, geomIndexes);
 		this.md= new pachman_metaData(line, metaIndexes);
 	}
+	public pachman(Point3D p,pachman_metaData md) {
+		this.ge = new geom(p);
+		this.md = md;
+	}
 
 @Override
 public Geom_element getGeom() {
