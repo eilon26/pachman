@@ -10,6 +10,7 @@ import File_format.*;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -32,6 +33,7 @@ import javax.imageio.ImageIO;
 
 public class user_panel extends JFrame implements MouseListener
 {
+	public int counter=0;
 	public BufferedImage myImage;
 	public ArrayList <Point> p = new ArrayList<Point>();
 	public user_panel() 
@@ -62,21 +64,13 @@ public class user_panel extends JFrame implements MouseListener
 		this.setMenuBar(menuBar);
 		//add the pic
 		try {
-			 myImage = ImageIO.read(new File("C:\\Users\\danie\\git\\gps2\\OOP_EX2-Ex4\\src\\GUI\\._Ariel1.png"));
+			 myImage = ImageIO.read(new File("C:\\Users\\danie\\git\\gps2\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		//add resize listener
-		this.addComponentListener(new ComponentAdapter()
-		{
-			public void componentResized(ComponentEvent evt) {
-				Component c = (Component)evt.getSource();
-				System.out.println("zaz");
-//				myImage = (BufferedImage) myImage.getScaledInstance(100, 100, 0);
-//				System.out.println(((JFrame)evt.getSource()).getWidth());
-//				repaint();
-			}
-		});
+		
+		
 	}
 
 	int x = -1;
@@ -86,8 +80,7 @@ public class user_panel extends JFrame implements MouseListener
 	{
 		
 		int r = 10;
-		g.drawImage(myImage, 0, 0, this);
-		
+		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(x!=-1 && y!=-1)
 		{
 			x = x - (r / 2);
