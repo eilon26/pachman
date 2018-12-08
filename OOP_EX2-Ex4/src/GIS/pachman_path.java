@@ -19,7 +19,7 @@ public class pachman_path implements GIS_layer{
 		this.my_fruit = new ArrayList<GIS_element>();
 		this.start_point = ((geom)pach.getGeom()).getP();
 		this.md = (pachman_metaData) pach.getData();
-		this.grade = 0;
+		this.grade = 0;//ll
 	}
 	
 	
