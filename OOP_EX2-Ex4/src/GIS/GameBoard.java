@@ -36,7 +36,7 @@ public class GameBoard implements GIS_layer  {
 		int[] metaIndexes = metaIndexes(c2m.getG().get(0));
 		for (int i=1;i<c2m.getG().size();i++) {
 			String[] line = c2m.getG().get(i);
-			if (line[metaIndexes[0]]=="P") {
+			if (line[metaIndexes[0]].contains("P")) {
 				pachman pach = new pachman(line,geomIndexes,metaIndexes);
 				element_set.add(pach);
 			}

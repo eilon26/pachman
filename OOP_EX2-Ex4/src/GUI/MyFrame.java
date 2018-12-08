@@ -31,13 +31,13 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 
-public class user_panel extends JFrame implements MouseListener
+public class MyFrame extends JFrame implements MouseListener
 {
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
 	
-	public user_panel() 
+	public MyFrame() 
 	{
 		GB = new GameBoard();
 		initGUI();		
@@ -59,6 +59,14 @@ public class user_panel extends JFrame implements MouseListener
 	            }
 	        );
 		MenuItem start = new MenuItem("start game");
+		start.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	start(e);
+	                }
+	            }
+	        );
 		MenuItem gameBord2kml = new MenuItem("convert to xml");
 		MenuItem addP = new MenuItem("add pachman");
 		addP.addActionListener(
@@ -91,7 +99,7 @@ public class user_panel extends JFrame implements MouseListener
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//add resize listener
+		
 		
 		
 	}
@@ -102,16 +110,24 @@ public class user_panel extends JFrame implements MouseListener
 	
 	public void paint(Graphics g)
 	{
-		int r = 25;
+		int rP = 25;
+		int rF = 15;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(x!=-1 && y!=-1 && type!='N')
-		{
-			x = x - (r / 2);
-			y = y - (r / 2);
+		{	
 			
-			if (type=='P')
+
+			
+			if (type=='P') {
+				x = x - (rP / 2);
+				y = y - (rP / 2);
 				GB.add(createPach(x,y));
-			else GB.add(createFruit(x,y));
+			}
+			else {
+				x = x - (rF / 2);
+				y = y - (rF / 2);
+				GB.add(createFruit(x,y));
+			}
 			x=y=-1;
 		}
 		Iterator<GIS_element> IterElement = GB.iterator();
@@ -128,8 +144,7 @@ public class user_panel extends JFrame implements MouseListener
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), r, r, null);
-				//g.drawImage(img,20,30, r, r, null);
+				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rP, rP, null);
 			}else {
 				Point3D curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 				try {
@@ -138,8 +153,7 @@ public class user_panel extends JFrame implements MouseListener
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), r, r,null);
-				//g.drawImage(img,57,89, r, r,null);
+				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rF, rF,null);
 			}
 		}
 	}
@@ -187,8 +201,7 @@ public class user_panel extends JFrame implements MouseListener
     		mat2gameBoard m2g = new mat2gameBoard(c2m);
     		GB.addAll(m2g.getGB().getElement_Set());
     		GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
-    		//solution sol = new solution(m2g.getGB());
-    		repaint();
+       		repaint();
     	}
 	}
 	
@@ -200,6 +213,10 @@ public class user_panel extends JFrame implements MouseListener
 		type='F';
 	}
 	
+	public void start(ActionEvent e) {
+		solution sol = new solution(this.GB);
+
+	}
 	private pachman createPach(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
@@ -243,7 +260,7 @@ public class user_panel extends JFrame implements MouseListener
 	}
 	public static void main(String[] args)
 	{
-		user_panel window = new user_panel();
+		MyFrame window = new MyFrame();
 		window.setVisible(true);
 		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

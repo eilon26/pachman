@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import Coords.MyCoords;
-import GUI.user_panel;
+import GUI.MyFrame;
 import Geom.Point3D;
 
 public class map {
