@@ -45,25 +45,25 @@ public class csv2mat {
 	 * @param csvFile - the location of the csv file on the computer.
 	 */
 	public csv2mat(String csvFile) {
-	this.file = new File(csvFile);
-    String line = "";
-    String cvsSplitBy = ",";
-    this.g = new ArrayList<String[]>();
-    
-    try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
-    {
-    	//as long as there are more lines to the file keep on reading.
-        while ((line = br.readLine()) != null) 
-        {
-            String[] userInfo = line.split(cvsSplitBy);
-            //add the info to g.
-            this.g.add(userInfo);
-        }
-        this.length = this.g.size();
-        this.width=this.g.get(1).length;
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+		this.file = new File(csvFile);
+		String line = "";
+		String cvsSplitBy = ",";
+		this.g = new ArrayList<String[]>();
+
+		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) 
+		{
+			//as long as there are more lines to the file keep on reading.
+			while ((line = br.readLine()) != null) 
+			{
+				String[] userInfo = line.split(cvsSplitBy);
+				//add the info to g.
+				this.g.add(userInfo);
+			}
+			this.length = this.g.size();
+			this.width=this.g.get(1).length;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public File getFile() {
