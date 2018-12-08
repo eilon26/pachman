@@ -34,6 +34,7 @@ public class user_panel extends JFrame implements MouseListener
 {
 	public BufferedImage myImage;
 	public ArrayList <Point> p = new ArrayList<Point>();
+	
 	public user_panel() 
 	{
 		initGUI();		
@@ -58,6 +59,7 @@ public class user_panel extends JFrame implements MouseListener
 		menuBar.add(menu);
 		menu.add(load);
 		menu.add(start);
+		
 		menu.add(gameBord2kml);
 		this.setMenuBar(menuBar);
 		//add the pic
@@ -84,7 +86,6 @@ public class user_panel extends JFrame implements MouseListener
 
 	public void paint(Graphics g)
 	{
-		
 		int r = 10;
 		g.drawImage(myImage, 0, 0, this);
 		
@@ -126,14 +127,13 @@ public class user_panel extends JFrame implements MouseListener
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
+	
 	public void load(ActionEvent e) {
     	JFileChooser fileChooser = new JFileChooser();
     	//fileChooser.setCurrentDirectory(new File(System.getProperty("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI")));
@@ -147,13 +147,12 @@ public class user_panel extends JFrame implements MouseListener
 	}
 
 	public static void main(String[] args)
-		{
+	{
 		user_panel window = new user_panel();
 		window.setVisible(true);
 		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		}
+	}
 
 
 }
