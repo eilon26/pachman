@@ -32,14 +32,14 @@ public class map {
 	
 	public Point3D global2pixel(Point3D Global) {
 		double RatioGlobalX = Global.x()/getGlobalDiffX();
-		double RatioGlobalY = Global.y()/getGlobalDiffY();
+		double RatioGlobalY = (getGlobalDiffY()-Global.y())/getGlobalDiffY();
 		double pixelX = frame.getWidth()*RatioGlobalX;
 		double pixelY = frame.getHeight()*RatioGlobalY;
 		return new Point3D(pixelX,pixelY,0);
 	}
 	public Point3D pixel2global(Point3D pixel) {
 		double RatioPixelX = pixel.x()/frame.getWidth();
-		double RatioPixelY = pixel.y()/frame.getHeight();
+		double RatioPixelY = (frame.getHeight()-pixel.y())/frame.getHeight();
 		double GlobalX = getGlobalDiffX()*RatioPixelX;
 		double GlobalY = getGlobalDiffY()*RatioPixelY;
 		return new Point3D(GlobalX,GlobalY,0);
