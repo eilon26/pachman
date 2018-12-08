@@ -35,12 +35,10 @@ public class user_panel extends JFrame implements MouseListener
 {
 	public int counter=0;
 	public BufferedImage myImage;
-	public ArrayList <Point> p;
 	public GameBoard GB; 
 	
 	public user_panel() 
 	{
-		p = new ArrayList<Point>();
 		GB = new GameBoard();
 		initGUI();		
 		this.addMouseListener(this); 
@@ -104,21 +102,45 @@ public class user_panel extends JFrame implements MouseListener
 	
 	public void paint(Graphics g)
 	{
-		int r = 10;
+		int r = 25;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(x!=-1 && y!=-1 && type!='N')
 		{
 			x = x - (r / 2);
 			y = y - (r / 2);
-			p.add(new Point(x,y));
+			
 			if (type=='P')
 				GB.add(createPach(x,y));
 			else GB.add(createFruit(x,y));
+			x=y=-1;
 		}
-		Iterator <Point> IterP = p.iterator();
-		while (IterP.hasNext()) {
-			Point currP = IterP.next();
-			g.fillOval(currP.getX(), currP.getY(), r, r);
+		Iterator<GIS_element> IterElement = GB.iterator();
+		while (IterElement.hasNext()) {
+			map m = new map(this);
+			BufferedImage img=null;
+			GIS_element curr = IterElement.next();
+			if (curr instanceof pachman) {
+				Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
+				
+				try {
+					img = ImageIO.read(new File("C:\\Users\\popeye.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), r, r, null);
+				//g.drawImage(img,20,30, r, r, null);
+			}else {
+				Point3D curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
+				try {
+					img = ImageIO.read(new File("C:\\Users\\spinach.jpg"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), r, r,null);
+				//g.drawImage(img,57,89, r, r,null);
+			}
 		}
 	}
 
@@ -166,6 +188,7 @@ public class user_panel extends JFrame implements MouseListener
     		GB.addAll(m2g.getGB().getElement_Set());
     		GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
     		//solution sol = new solution(m2g.getGB());
+    		repaint();
     	}
 	}
 	
