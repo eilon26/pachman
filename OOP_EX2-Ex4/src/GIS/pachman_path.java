@@ -9,6 +9,7 @@ import Geom.*;
 
 public class pachman_path implements GIS_layer{
 	pachman pach;
+	int grade;
 	private ArrayList<GIS_element> my_fruit;
 	Point3D start_point;
 	private pachman_metaData md;
@@ -18,9 +19,20 @@ public class pachman_path implements GIS_layer{
 		this.my_fruit = new ArrayList<GIS_element>();
 		this.start_point = ((geom)pach.getGeom()).getP();
 		this.md = (pachman_metaData) pach.getData();
+		this.grade = 0;
 	}
 	
 	
+	public int getGrade() {
+		return grade;
+	}
+
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+
 	public pachman getPach() {
 		return pach;
 	}
