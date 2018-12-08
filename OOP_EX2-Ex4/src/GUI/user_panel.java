@@ -91,6 +91,8 @@ public class user_panel extends JFrame implements MouseListener
 		Iterator <Point> IterP = p.iterator();
 		while (IterP.hasNext()) {
 			Point currP = IterP.next();
+			currP.setX(currP.getX()-(myImage.getHeight()-this.getHeight()));
+			currP.setY(currP.getY()-(myImage.getWidth()-this.getWidth()));
 			g.fillOval(currP.getX(), currP.getY(), r, r);
 		}
 	}
