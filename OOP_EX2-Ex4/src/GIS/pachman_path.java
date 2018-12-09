@@ -11,15 +11,17 @@ public class pachman_path implements GIS_layer{
 	pachman pach;
 	int grade;
 	private ArrayList<GIS_element> my_fruit;
+	private ArrayList<Point3D> draw_point;
 	Point3D start_point;
 	private pachman_metaData md;
 	
 	public pachman_path(pachman pach) {
 		this.pach=pach;
 		this.my_fruit = new ArrayList<GIS_element>();
+		this.draw_point = new ArrayList<Point3D>();
 		this.start_point = ((geom)pach.getGeom()).getP();
 		this.md = (pachman_metaData) pach.getData();
-		this.grade = 0;//ll
+		this.grade = 0;
 	}
 	
 	
@@ -74,6 +76,24 @@ public class pachman_path implements GIS_layer{
 	public Iterator<GIS_element> iterator() {
 		return my_fruit.iterator();
 	}
+	public Iterator<Point3D> iterator_Points() {
+		return draw_point.iterator();
+	}
+	public ArrayList<Point3D> getDraw_point() {
+		return draw_point;
+	}
+
+
+	public void setDraw_point(ArrayList<Point3D> draw_point) {
+		this.draw_point = draw_point;
+	}
+
+
+	public void setPachGeom(Point3D p) {
+		this.pach.setGe(new geom(p));
+	}
+
+
 	@Override
 	public boolean remove(Object arg0) {
 		return my_fruit.remove(arg0);

@@ -14,12 +14,14 @@ public class ShortestPathAlgo {
 	private int generalGrade;
 	
 	public ShortestPathAlgo(GameBoard GB) {
+		pathes = new ArrayList<GIS_layer>();
+		fruit = new ArrayList<GIS_element>();
 		Iterator<GIS_element> GBIter = GB.getElement_Set().iterator();
 		while (GBIter.hasNext()) {
 			GIS_element curr = GBIter.next();
 			if (curr instanceof pachman) {
 				pathes.add(new pachman_path((pachman) curr));
-			}else fruit.add(new fruit((fruit)curr));	
+			}else fruit.add((fruit)curr);	
 		}
 		generalGrade=0;
 	}
@@ -35,6 +37,11 @@ public class ShortestPathAlgo {
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
 			((pachman_path)closest_pach_fruit[0]).setGrade(fruitGrade);
 			this.generalGrade+=fruitGrade;
+		}
+		Iterator<GIS_layer> PathesIter = this.pathes.iterator();
+		while (PathesIter.hasNext()) {
+			pachman_path currPath = (pachman_path) PathesIter.next();
+			currPath.setPachGeom(currPath.getStart_point()); 
 		}
 	}
 

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import GIS.*;
 import Geom.*;
+import algorithms.ShortestPathAlgo;
 import File_format.*;
 
 import java.awt.Component;
@@ -36,7 +37,7 @@ public class MyFrame extends JFrame implements MouseListener
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
-	
+	ShortestPathAlgo sol=null;
 	public MyFrame() 
 	{
 		GB = new GameBoard();
@@ -156,6 +157,34 @@ public class MyFrame extends JFrame implements MouseListener
 				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rF, rF,null);
 			}
 		}
+		
+		if (sol!=null) {
+			Iterator<GIS_layer> IterPathes = sol.getPathes().iterator();
+			Point3D prevPoint=null;
+			map m = new map(this);
+			while (IterPathes.hasNext()) {
+				pachman_path currPath = (pachman_path)IterPathes.next();
+				Iterator<Point3D> IterPoints = currPath.iterator_Points();
+				if (IterPoints.hasNext()) {
+					prevPoint = m.global2pixel(IterPoints.next());
+				}
+				while (IterPoints.hasNext()) {
+					Point3D currPoint = m.global2pixel(IterPoints.next());
+					g.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
+					prevPoint = currPoint;
+				}
+				
+				Point3D curr_pixel_point = m.global2pixel(((geom)currPath.getPach().getGeom()).getP());
+				BufferedImage img=null;
+				try {
+					img = ImageIO.read(new File("C:\\Users\\popeye.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rP, rP, null);
+			}
+		}
 	}
 
 	@Override
@@ -214,9 +243,15 @@ public class MyFrame extends JFrame implements MouseListener
 	}
 	
 	public void start(ActionEvent e) {
-		solution sol = new solution(this.GB);
+		this.sol = new ShortestPathAlgo(this.GB);
+		sol.calculate();
+		drawRealTime(sol);
 
 	}
+	public GameBoard getGB() {
+		return GB;
+	}
+
 	private pachman createPach(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
@@ -256,6 +291,14 @@ public class MyFrame extends JFrame implements MouseListener
 					max= Math.max(((fruit_metaData)((fruit)curr).getData()).getId(),max);
 			}
 			return max+1;
+		}
+	}
+	
+	private void drawRealTime(ShortestPathAlgo sol) {
+		Iterator<GIS_layer> IterS = sol.getPathes().iterator();
+		while (IterS.hasNext()) {
+			pachman_path curr = (pachman_path)IterS.next();
+			new draw_thread(this,curr).start();
 		}
 	}
 	public static void main(String[] args)

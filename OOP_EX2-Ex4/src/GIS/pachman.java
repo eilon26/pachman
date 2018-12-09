@@ -20,6 +20,10 @@ public class pachman implements GIS_element {
 		this.md = md;
 	}
 
+	public void setGe(geom ge) {
+		this.ge = ge;
+	}
+
 @Override
 public Geom_element getGeom() {
 	return ge;
