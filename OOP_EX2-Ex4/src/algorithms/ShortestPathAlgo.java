@@ -12,7 +12,7 @@ public class ShortestPathAlgo {
 	private ArrayList<GIS_layer> pathes;
 	private ArrayList<GIS_element> fruit;
 	private int generalGrade;
-	
+	private double generaleTime;
 	public ShortestPathAlgo(GameBoard GB) {
 		pathes = new ArrayList<GIS_layer>();
 		fruit = new ArrayList<GIS_element>();
@@ -23,15 +23,25 @@ public class ShortestPathAlgo {
 				pathes.add(new pachman_path((pachman) curr));
 			}else fruit.add((fruit)curr);	
 		}
-		generalGrade=0;
+		this.generalGrade=0;
+		this.generaleTime=0;
 	}
 	
+
+
 	public void calculate() {
 		Object[] closest_pach_fruit = new Object[2];
 		while (!fruit.isEmpty()) {
+			MyCoords x = new MyCoords();
 			closest_pach_fruit = findClosest();
 			fruit.remove((fruit)closest_pach_fruit[1]);
 			((pachman_path)closest_pach_fruit[0]).add((fruit)closest_pach_fruit[1]);
+			Point3D pach_loc = ((geom)((pachman_path)closest_pach_fruit[0]).getPach().getGeom()).getP();
+			int pach_speed =  ((pachman_metaData)(((pachman_path)closest_pach_fruit[0]).getPach().getData())).getSpeed();
+			Point3D fruit_loc = ((geom)((fruit)closest_pach_fruit[1]).getGeom()).getP();
+			double time = ((pachman_path)closest_pach_fruit[0]).getTime() + (x.distance3d(pach_loc, fruit_loc)/pach_speed);
+			this.generaleTime = Math.max(generaleTime, time);
+			((pachman_path)closest_pach_fruit[0]).setTime(time);
 			Point3D ChosenFruitPoint = ((geom)((fruit)closest_pach_fruit[1]).getGeom()).getP();
 			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(ChosenFruitPoint);
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
@@ -54,20 +64,30 @@ public class ShortestPathAlgo {
 		double minDist = Double.MAX_VALUE;
 		Iterator<GIS_layer> PathesIter = this.pathes.iterator();
 		while (PathesIter.hasNext()) {
+			pachman_path currPath = (pachman_path) PathesIter.next();
 			Iterator<GIS_element> FruitIter = this.fruit.iterator();
 			while (FruitIter.hasNext()) {
-				pachman_path currPath = (pachman_path) PathesIter.next();
 				fruit currFruit = (fruit)FruitIter.next();
 				MyCoords x =new MyCoords();
 				Point3D currPachmanPoint = ((geom)currPath.getPach().getGeom()).getP();
 				Point3D currFruitPoint = ((geom)currFruit.getGeom()).getP();
-				if (x.distance3d(currPachmanPoint,currFruitPoint)<minDist) {
+				double curr_dist = x.distance3d(currPachmanPoint,currFruitPoint);
+				if (curr_dist<minDist) {
+					minDist=curr_dist;
 					min[0] = currPath;
 					min[1] = currFruit;
 				}
 			}
 		}
 		return  min;
+	}
+	
+	public double getGeneraleTime() {
+		return generaleTime;
+	}
+
+	public void setGeneraleTime(double generaleTime) {
+		this.generaleTime = generaleTime;
 	}
 
 	public ArrayList<GIS_layer> getPathes() {

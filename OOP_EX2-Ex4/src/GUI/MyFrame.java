@@ -96,7 +96,7 @@ public class MyFrame extends JFrame implements MouseListener
 		this.setMenuBar(menuBar);
 		//add the pic
 		try {
-			 myImage = ImageIO.read(new File("C:\\Users\\Ariel1.png"));
+			 myImage = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -120,13 +120,9 @@ public class MyFrame extends JFrame implements MouseListener
 
 			
 			if (type=='P') {
-				x = x - (rP / 2);
-				y = y - (rP / 2);
 				GB.add(createPach(x,y));
 			}
 			else {
-				x = x - (rF / 2);
-				y = y - (rF / 2);
 				GB.add(createFruit(x,y));
 			}
 			x=y=-1;
@@ -140,21 +136,21 @@ public class MyFrame extends JFrame implements MouseListener
 				Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
 				
 				try {
-					img = ImageIO.read(new File("C:\\Users\\popeye.png"));
+					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rP, rP, null);
+				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
 				Point3D curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 				try {
-					img = ImageIO.read(new File("C:\\Users\\spinach.jpg"));
+					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rF, rF,null);
+				g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
 			}
 		}
 		
@@ -177,12 +173,12 @@ public class MyFrame extends JFrame implements MouseListener
 				Point3D curr_pixel_point = m.global2pixel(((geom)currPath.getPach().getGeom()).getP());
 				BufferedImage img=null;
 				try {
-					img = ImageIO.read(new File("C:\\Users\\popeye.png"));
+					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				g.drawImage(img,(int)curr_pixel_point.x(),(int) curr_pixel_point.y(), rP, rP, null);
+				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}
 		}
 	}
@@ -246,7 +242,7 @@ public class MyFrame extends JFrame implements MouseListener
 		this.sol = new ShortestPathAlgo(this.GB);
 		sol.calculate();
 		drawRealTime(sol);
-
+		System.out.println(sol.getGeneraleTime());
 	}
 	public GameBoard getGB() {
 		return GB;

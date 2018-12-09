@@ -21,7 +21,7 @@ public class map {
 	public map(JFrame frame) {
 		this.frame = frame;
 	try {
-		this.ArielPic = ImageIO.read(new File("C:\\Users\\Ariel1.png"));
+		this.ArielPic = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

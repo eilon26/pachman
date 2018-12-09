@@ -13,6 +13,7 @@ public class pachman_path implements GIS_layer{
 	private ArrayList<GIS_element> my_fruit;
 	private ArrayList<Point3D> draw_point;
 	Point3D start_point;
+	double time;
 	private pachman_metaData md;
 	
 	public pachman_path(pachman pach) {
@@ -22,9 +23,20 @@ public class pachman_path implements GIS_layer{
 		this.start_point = ((geom)pach.getGeom()).getP();
 		this.md = (pachman_metaData) pach.getData();
 		this.grade = 0;
+		this.time=0;
 	}
 	
 	
+	public double getTime() {
+		return time;
+	}
+
+
+	public void setTime(double time) {
+		this.time = time;
+	}
+
+
 	public int getGrade() {
 		return grade;
 	}
@@ -50,6 +62,10 @@ public class pachman_path implements GIS_layer{
 	@Override
 	public boolean add(GIS_element arg0) {
 		return my_fruit.add(arg0);
+	}
+	
+	public boolean add_to_draw_point(Point3D arg0) {
+		return draw_point.add(arg0);
 	}
 	@Override
 	public boolean addAll(Collection<? extends GIS_element> arg0) {
