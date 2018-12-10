@@ -1,5 +1,4 @@
 package GUI;
-//scaling שינוי גודל חלון
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -9,6 +8,7 @@ import Geom.*;
 import algorithms.ShortestPathAlgo;
 import File_format.*;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,7 +25,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import java.io.File; 
@@ -34,6 +36,7 @@ import javax.imageio.ImageIO;
 
 public class MyFrame extends JFrame implements MouseListener
 {
+	final int S = 20;//init pachman speed
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
@@ -74,7 +77,7 @@ public class MyFrame extends JFrame implements MouseListener
 	            new ActionListener(){
 	                public void actionPerformed(ActionEvent e)
 	                {
-	                	addPachman(e);
+	                	convert(e);
 	                }
 	            }
 	        );
@@ -109,7 +112,7 @@ public class MyFrame extends JFrame implements MouseListener
 	int y = -1;
 	char type = 'N'; 
 	
-	public void paint(Graphics g)
+	public synchronized void paint(Graphics g)
 	{
 		int rP = 25;
 		int rF = 15;
@@ -129,9 +132,9 @@ public class MyFrame extends JFrame implements MouseListener
 		}
 		Iterator<GIS_element> IterElement = GB.iterator();
 		while (IterElement.hasNext()) {
+			GIS_element curr = IterElement.next();
 			map m = new map(this);
 			BufferedImage img=null;
-			GIS_element curr = IterElement.next();
 			if (curr instanceof pachman) {
 				Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
 				
@@ -159,6 +162,14 @@ public class MyFrame extends JFrame implements MouseListener
 			Point3D prevPoint=null;
 			map m = new map(this);
 			while (IterPathes.hasNext()) {
+//				//choose random color
+//				Random rand = new Random();
+//				float r = rand.nextFloat();
+//				float gr = rand.nextFloat();
+//				float b = rand.nextFloat();
+//				Color randomColor = new Color(r, gr, b);
+
+				
 				pachman_path currPath = (pachman_path)IterPathes.next();
 				Iterator<Point3D> IterPoints = currPath.iterator_Points();
 				if (IterPoints.hasNext()) {
@@ -166,6 +177,7 @@ public class MyFrame extends JFrame implements MouseListener
 				}
 				while (IterPoints.hasNext()) {
 					Point3D currPoint = m.global2pixel(IterPoints.next());
+					//g.setColor(randomColor);
 					g.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
 					prevPoint = currPoint;
 				}
@@ -244,6 +256,15 @@ public class MyFrame extends JFrame implements MouseListener
 		drawRealTime(sol);
 		System.out.println(sol.getGeneraleTime());
 	}
+	
+	public void convert(ActionEvent e) {
+		if (this.sol==null) {
+			this.sol = new ShortestPathAlgo(this.GB);
+			sol.calculate();
+		}
+		new sol2kml(this.sol);
+		
+	}
 	public GameBoard getGB() {
 		return GB;
 	}
@@ -251,7 +272,7 @@ public class MyFrame extends JFrame implements MouseListener
 	private pachman createPach(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
-		pachman_metaData newMd = new pachman_metaData(next_pach_id(),1,1);//pachman_metaData by default
+		pachman_metaData newMd = new pachman_metaData(next_pach_id(),S,1);//pachman_metaData by default
 		return new pachman(newPoint,newMd);
 	}
 	
