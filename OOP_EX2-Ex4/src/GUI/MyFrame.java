@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import GIS.*;
 import Geom.*;
 import algorithms.ShortestPathAlgo;
+import algorithms.sol2kml;
 import File_format.*;
 
 import java.awt.Color;
@@ -71,13 +72,21 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
-		MenuItem gameBord2kml = new MenuItem("convert to xml");
+		MenuItem gameBord2kml = new MenuItem("convert to kml");
+		gameBord2kml.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	convert(e);
+	                }
+	            }
+	        );
 		MenuItem addP = new MenuItem("add pachman");
 		addP.addActionListener(
 	            new ActionListener(){
 	                public void actionPerformed(ActionEvent e)
 	                {
-	                	convert(e);
+	                	addPachman(e);
 	                }
 	            }
 	        );
@@ -112,7 +121,7 @@ public class MyFrame extends JFrame implements MouseListener
 	int y = -1;
 	char type = 'N'; 
 	
-	public synchronized void paint(Graphics g)
+	public void paint(Graphics g)
 	{
 		int rP = 25;
 		int rF = 15;
@@ -198,8 +207,6 @@ public class MyFrame extends JFrame implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent arg) {
 		if (type !='N') {
-			System.out.println("mouse Clicked");
-			System.out.println("("+ arg.getX() + "," + arg.getY() +")");
 			x = arg.getX();
 			y = arg.getY();
 			repaint();
@@ -208,8 +215,7 @@ public class MyFrame extends JFrame implements MouseListener
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		System.out.println("mouse entered");
-		
+
 	}
 
 	@Override
@@ -262,8 +268,14 @@ public class MyFrame extends JFrame implements MouseListener
 			this.sol = new ShortestPathAlgo(this.GB);
 			sol.calculate();
 		}
-		new sol2kml(this.sol);
-		
+		System.out.println("convert");
+		JFileChooser fileChooser = new JFileChooser();
+    	//fileChooser.setCurrentDirectory(new File(System.getProperty("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI")));
+    	int result = fileChooser.showOpenDialog((JFrame)this);
+    	if (result == JFileChooser.APPROVE_OPTION) {
+    		File selectedFile = fileChooser.getSelectedFile();
+    		new sol2kml(this.sol,selectedFile.getAbsolutePath());
+    	}
 	}
 	public GameBoard getGB() {
 		return GB;
