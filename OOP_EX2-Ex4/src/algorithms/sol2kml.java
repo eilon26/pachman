@@ -32,7 +32,7 @@ public class sol2kml {
 	            		      "</TimeStamp>\r\n" + 
 	            		      "<styleUrl>#popeye</styleUrl>\r\n" + 
 	            		      "<Point>\r\n" + 
-	            		      		"<coordinates>"+curr_LocByTime.getLocation().y()+","+curr_LocByTime.getLocation().x()+","+curr_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
+	            		      		"<coordinates>"+curr_LocByTime.getLocation().x()+","+curr_LocByTime.getLocation().y()+","+curr_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
 	            		      "</Point>\r\n" + 
 	            		"</Placemark>";
 	            	content.append(kmlelement);
@@ -49,7 +49,7 @@ public class sol2kml {
 		            		      "</TimeStamp>\r\n" + 
 		            		      "<styleUrl>#spinach</styleUrl>\r\n" + 
 		            		      "<Point>\r\n" + 
-		            		      		"<coordinates>"+fruit_LocByTime.getLocation().y()+","+fruit_LocByTime.getLocation().x()+","+fruit_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
+		            		      		"<coordinates>"+fruit_LocByTime.getLocation().x()+","+fruit_LocByTime.getLocation().y()+","+fruit_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
 		            		      "</Point>\r\n" + 
 		            		"</Placemark>";
 	            	content.append(kmlelement);
@@ -62,7 +62,7 @@ public class sol2kml {
 		            		      "</TimeStamp>\r\n" + 
 		            		      "<styleUrl>#no more</styleUrl>\r\n" + 
 		            		      "<Point>\r\n" + 
-		            		      		"<coordinates>"+fruit_LocByTime.getLocation().y()+","+fruit_LocByTime.getLocation().x()+","+fruit_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
+		            		      		"<coordinates>"+fruit_LocByTime.getLocation().x()+","+fruit_LocByTime.getLocation().y()+","+fruit_LocByTime.getLocation().z()+"</coordinates>\r\n" + 
 		            		      "</Point>\r\n" + 
 		            		"</Placemark>";
 	            	content.append(kmlelement);

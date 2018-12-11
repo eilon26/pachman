@@ -63,8 +63,8 @@ public class ShortestPathAlgo {
 //			double[] AED = x.azimuth_elevation_dist(pach_loc, fruit_loc);
 //			Point3D vecForNewPachLoc = new Point3D((Math.cos(Math.toRadians(AED[0]))*(double)closest_pach_fruit[3]),(Math.toDegrees(Math.sin(AED[0]))*(double)closest_pach_fruit[3]),fruit_loc.z()-pach_loc.z());
 //			Point3D newPachLoc = x.add(pach_loc,vecForNewPachLoc);////////////////******************************
-			//((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]));//set new pachman location
-			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(fruit_loc);//set pachman location
+			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]));//set new pachman location
+			//((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(fruit_loc);//set pachman location
 			
 			//set grade
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
@@ -83,9 +83,14 @@ public class ShortestPathAlgo {
 		int pach_radious = ((pachman_metaData)path.getPach().getData()).getRadius();
 		Point3D fruit_loc = ((geom)fruit.getGeom()).getP();
 		MyCoords x = new MyCoords();
-		double[] AED = x.azimuth_elevation_dist(pach_loc, fruit_loc);
-		Point3D vecForNewPachLoc = new Point3D((Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),(Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),fruit_loc.z()-pach_loc.z());
-		Point3D newPachLoc = x.add(pach_loc,vecForNewPachLoc);////////////////******************************
+		double[] AED = x.azimuth_elevation_dist(fruit_loc,pach_loc);
+//		Point3D vecForNewPachLoc = new Point3D((Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),(Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),fruit_loc.z()-pach_loc.z());
+		 Point3D vec;
+		if ((AED[0]>180)&&(AED[0]<270)) vec = new Point3D(-1*pach_radious,-1*pach_radious,0);
+		else if ((AED[0]>270)&&(AED[0]<360)) vec = new Point3D(-1*pach_radious,pach_radious,0);
+		else if ((AED[0]>0)&&(AED[0]<90)) vec = new Point3D(pach_radious,pach_radious,0);
+		else vec = new Point3D(pach_radious,-1*pach_radious,0);
+		Point3D newPachLoc = x.add(fruit_loc,vec);////////////////******************************
 		return newPachLoc;
 	}
 

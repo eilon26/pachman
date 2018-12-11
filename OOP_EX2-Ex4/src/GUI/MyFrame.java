@@ -38,6 +38,7 @@ import javax.imageio.ImageIO;
 public class MyFrame extends JFrame implements MouseListener
 {
 	final int S = 20;//init pachman speed
+	final int R = 20;//init pachman radous
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
@@ -53,7 +54,11 @@ public class MyFrame extends JFrame implements MouseListener
 	private void initGUI() 
 	{
 		MenuBar menuBar = new MenuBar();
-		Menu menu = new Menu("Menu"); 
+		Menu menu = new Menu("file");
+		Menu add = new Menu("add");
+		Menu start = new Menu("start");
+		Menu clear = new Menu("clear");
+
 		MenuItem load = new MenuItem("load csv file");
 		load.addActionListener(
 	            new ActionListener(){
@@ -63,7 +68,7 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
-		MenuItem start = new MenuItem("start game");
+		MenuItem start_game = new MenuItem("start game");
 		start.addActionListener(
 	            new ActionListener(){
 	                public void actionPerformed(ActionEvent e)
@@ -99,12 +104,25 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
+		MenuItem clear_board = new MenuItem("clear board");
+		clear_board.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	clear(e);
+	                }
+	            }
+	        );
 		menuBar.add(menu);
+		menuBar.add(add);
+		menuBar.add(start);
+		menuBar.add(clear);
 		menu.add(load);
-		menu.add(start);
 		menu.add(gameBord2kml);
-		menu.add(addP);
-		menu.add(addF);
+		add.add(addP);
+		add.add(addF);
+		start.add(start_game);
+		clear.add(clear_board);
 		this.setMenuBar(menuBar);
 		//add the pic
 		try {
@@ -127,9 +145,7 @@ public class MyFrame extends JFrame implements MouseListener
 		int rF = 15;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(x!=-1 && y!=-1 && type!='N')
-		{	
-			
-
+		{
 			
 			if (type=='P') {
 				GB.add(createPach(x,y));
@@ -277,6 +293,12 @@ public class MyFrame extends JFrame implements MouseListener
     		new sol2kml(this.sol,selectedFile.getAbsolutePath());
     	}
 	}
+	public void clear(ActionEvent e) {
+		System.out.println("clear");
+		this.GB = new GameBoard();
+		this.sol = null;
+		repaint();
+	}
 	public GameBoard getGB() {
 		return GB;
 	}
@@ -284,7 +306,7 @@ public class MyFrame extends JFrame implements MouseListener
 	private pachman createPach(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
-		pachman_metaData newMd = new pachman_metaData(next_pach_id(),S,1);//pachman_metaData by default
+		pachman_metaData newMd = new pachman_metaData(next_pach_id(),S,R);//pachman_metaData by default
 		return new pachman(newPoint,newMd);
 	}
 	

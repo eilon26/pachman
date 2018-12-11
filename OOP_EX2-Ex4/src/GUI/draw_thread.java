@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import Coords.MyCoords;
 import Geom.*;
+import algorithms.ShortestPathAlgo;
 import GIS.*;
 import GIS.pachman_path;
 
@@ -32,10 +33,10 @@ public class draw_thread extends Thread {
 				Thread.sleep((long) (time2DestFruit*1000));
 			} catch (InterruptedException e) { e.printStackTrace();}
 			path.add_to_draw_point(pach_point);
-			path.add_to_draw_point(destFruit_point);
+			path.add_to_draw_point(ShortestPathAlgo.pachNewPoint(path,destFruit));
 			frame.getGB().remove(destFruit);
 			frame.getGB().remove(path.getPach());
-			path.getPach().setGe(new geom(destFruit_point));//set pachman new point
+			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
 			frame.repaint();
 		}
 		while  (IterF.hasNext()) {
@@ -50,9 +51,9 @@ public class draw_thread extends Thread {
 				Thread.sleep((long) (time2DestFruit*1000));
 			} catch (InterruptedException e) { e.printStackTrace();}
 			
-			path.add_to_draw_point(destFruit_point);
+			path.add_to_draw_point(ShortestPathAlgo.pachNewPoint(path,destFruit));
 			frame.getGB().remove(destFruit);
-			path.getPach().setGe(new geom(destFruit_point));//set pachman new point
+			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
 			frame.repaint();
 		}
 		

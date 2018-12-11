@@ -26,23 +26,23 @@ public class map {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	this.DownLeftP = new Point3D(32.101915,35.202457,0);
-	this.UpRightP = new Point3D(32.105412,35.211975,0);
+	this.DownLeftP = new Point3D(35.202435,32.101940,0);
+	this.UpRightP = new Point3D(35.212400,32.105400,0);
 	
 	}
 	
 	public Point3D global2pixel(Point3D Global) {
 		double RatioGlobalX = (Global.x()-DownLeftP.x())/getGlobalDiffX();
-		double RatioGlobalY = (Global.y()-DownLeftP.y())/getGlobalDiffY();
+		double RatioGlobalY = (UpRightP.y()-Global.y())/getGlobalDiffY();
 		double pixelX = frame.getWidth()*RatioGlobalX;
 		double pixelY = frame.getHeight()*RatioGlobalY;
-		return new Point3D(pixelX,frame.getHeight()-pixelY,0);
+		return new Point3D(pixelX,pixelY,0);
 	}
 	public Point3D pixel2global(Point3D pixel) {
 		double RatioPixelX = pixel.x()/frame.getWidth();
-		double RatioPixelY = (frame.getHeight()-pixel.y())/frame.getHeight();
+		double RatioPixelY = (pixel.y())/frame.getHeight();
 		double GlobalX = DownLeftP.x()+(getGlobalDiffX()*RatioPixelX);
-		double GlobalY = DownLeftP.y()+(getGlobalDiffY()*RatioPixelY);
+		double GlobalY = UpRightP.y()-(getGlobalDiffY()*RatioPixelY);
 		return new Point3D(GlobalX,GlobalY,0);
 	}
 	
@@ -53,38 +53,10 @@ public class map {
 		return x.azimuth_elevation_dist(p0, p1);
 		
 	}
-	private double getGlobalDiffX() {
+	public double getGlobalDiffX() {
 		return UpRightP.x()-DownLeftP.x();
 	}
-	private double getGlobalDiffY() {
+	public double getGlobalDiffY() {
 		return UpRightP.y()-DownLeftP.y();
 	}
-	
-//	public static void main(String[] args) {
-//		GameBoard GB= new GameBoard();
-//		user_panel window = new user_panel();
-//		window.setVisible(true);
-//		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
-//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    	JFileChooser fileChooser = new JFileChooser();
-//    	//fileChooser.setCurrentDirectory(new File(System.getProperty("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI")));
-//    	int result = fileChooser.showOpenDialog((JFrame)window);
-//    	if (result == JFileChooser.APPROVE_OPTION) {
-//    		File selectedFile = fileChooser.getSelectedFile();
-//    		csv2mat c2m = new csv2mat(selectedFile.getAbsolutePath());
-//    		mat2gameBoard m2g = new mat2gameBoard(c2m);
-//    		GB.addAll(m2g.getGB().getElement_Set());
-//    		GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
-//    		GB.getElement_Set().get(2)
-//    	}
-		
-		
-//		user_panel us = new user_panel();
-//		us.setVisible(true);
-//		us.setSize(us.myImage.getWidth(),us.myImage.getHeight());
-//		//Point3D x = new Point3D(32.10451344,35.21019738,0);
-//		Point3D x = new Point3D(1029.8649814117127,119.90250472826938,0);
-//		map m = new map(us);
-//		System.out.println(m.pixel2global(x));
-//	}
 }

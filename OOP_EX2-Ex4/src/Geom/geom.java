@@ -16,8 +16,8 @@ public class geom implements Geom_element{
 	 * @param geomIndexes - the indexes of x, y and z in the line.
 	 */
 	public geom(String[] line,int[] geomIndexes) {
-		double xp = Double.parseDouble(line[geomIndexes[0]]);
-		double yp = Double.parseDouble(line[geomIndexes[1]]);
+		double yp = Double.parseDouble(line[geomIndexes[0]]);
+		double xp = Double.parseDouble(line[geomIndexes[1]]);
 		double zp = Double.parseDouble(line[geomIndexes[2]]);
 		p = new Point3D(xp,yp,zp);
 	}
@@ -47,9 +47,9 @@ public class geom implements Geom_element{
 	 */
 	@Override
 	public double distance2D(Point3D p) {
-		double LonNorm = Math.cos(Math.toRadians(p.x()));
-		double meterX = earthR*Math.sin(Math.toRadians(this.p.x()-p.x()));
-		double meterY = LonNorm*earthR*Math.sin(Math.toRadians(this.p.y()-p.y()));
+		double LonNorm = Math.cos(Math.toRadians(p.y()));
+		double meterX = LonNorm*earthR*Math.sin(Math.toRadians(this.p.x()-p.x()));
+		double meterY = earthR*Math.sin(Math.toRadians(this.p.y()-p.y()));
 		double Dis2D = Math.sqrt((meterX*meterX)+(meterY*meterY));
 		if (Dis2D>100000)
 			return Double.NaN;
