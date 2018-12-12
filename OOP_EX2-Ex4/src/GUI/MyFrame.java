@@ -173,13 +173,15 @@ public class MyFrame extends JFrame implements MouseListener
 				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
 					Point3D curr_pixel_point = null;
+					try{curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());}
+					catch(java.lang.NullPointerException e) {}
 				try {
-					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch(java.lang.NullPointerException e) {}
-				g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
+				try{g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);}
+				catch(java.lang.NullPointerException e) {}
 			}
 		}
 		
