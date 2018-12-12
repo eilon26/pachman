@@ -38,7 +38,7 @@ import javax.imageio.ImageIO;
 public class MyFrame extends JFrame implements MouseListener
 {
 	final int S = 20;//init pachman speed
-	final int R = 20;//init pachman radous
+	final int R = 1;//init pachman radous
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
@@ -139,7 +139,7 @@ public class MyFrame extends JFrame implements MouseListener
 	int y = -1;
 	char type = 'N'; 
 	
-	public void paint(Graphics g)
+	public synchronized void paint(Graphics g)
 	{
 		int rP = 25;
 		int rF = 15;
@@ -157,7 +157,9 @@ public class MyFrame extends JFrame implements MouseListener
 		}
 		Iterator<GIS_element> IterElement = GB.iterator();
 		while (IterElement.hasNext()) {
-			GIS_element curr = IterElement.next();
+			GIS_element curr = null;
+			try {curr = IterElement.next();}
+			catch (java.util.ConcurrentModificationException e) {}
 			map m = new map(this);
 			BufferedImage img=null;
 			if (curr instanceof pachman) {
@@ -166,18 +168,17 @@ public class MyFrame extends JFrame implements MouseListener
 				try {
 					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
-				Point3D curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
+					Point3D curr_pixel_point = null;
 				try {
+					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				} catch(java.lang.NullPointerException e) {}
 				g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
 			}
 		}
@@ -252,7 +253,6 @@ public class MyFrame extends JFrame implements MouseListener
 	
 	public void load(ActionEvent e) {
     	JFileChooser fileChooser = new JFileChooser();
-    	//fileChooser.setCurrentDirectory(new File(System.getProperty("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI")));
     	int result = fileChooser.showOpenDialog((JFrame)this);
     	if (result == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
@@ -276,7 +276,7 @@ public class MyFrame extends JFrame implements MouseListener
 		this.sol = new ShortestPathAlgo(this.GB);
 		sol.calculate();
 		drawRealTime(sol);
-		System.out.println(sol.getGeneraleTime());
+		System.out.println("time to eat all spinach: "+sol.getGeneraleTime()+" sec");
 	}
 	
 	public void convert(ActionEvent e) {
@@ -284,9 +284,8 @@ public class MyFrame extends JFrame implements MouseListener
 			this.sol = new ShortestPathAlgo(this.GB);
 			sol.calculate();
 		}
-		System.out.println("convert");
+		System.out.println("file converted");
 		JFileChooser fileChooser = new JFileChooser();
-    	//fileChooser.setCurrentDirectory(new File(System.getProperty("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI")));
     	int result = fileChooser.showOpenDialog((JFrame)this);
     	if (result == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
@@ -294,7 +293,6 @@ public class MyFrame extends JFrame implements MouseListener
     	}
 	}
 	public void clear(ActionEvent e) {
-		System.out.println("clear");
 		this.GB = new GameBoard();
 		this.sol = null;
 		repaint();

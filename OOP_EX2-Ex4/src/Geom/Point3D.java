@@ -22,6 +22,10 @@ public class Point3D implements Geom_element, Serializable
 		_y=p.y();
 		_z=p.z();
 	}
+	public void set_z(double _z) {
+		this._z = _z;
+	}
+
 	public Point3D(double x,double y) 
 	{this(x,y,0);}
 	public Point3D(String s) {
