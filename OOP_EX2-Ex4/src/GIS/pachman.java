@@ -20,6 +20,10 @@ public class pachman implements GIS_element {
 		this.md = md;
 	}
 
+	public pachman(pachman other) {
+		this.ge = new geom (other.ge);
+		this.md = new pachman_metaData(md);
+	}
 	public void setGe(geom ge) {
 		this.ge = ge;
 	}

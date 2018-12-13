@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import Coords.MyCoords;
 import Geom.*;
 
 
@@ -25,7 +26,19 @@ public class pachman_path implements GIS_layer{
 		this.grade = 0;
 		this.time=0;
 	}
-	
+	public double path_length() {
+		double sum =0;
+		MyCoords x = new MyCoords();
+		Point3D prevP = ((geom)pach.getGeom()).getP();
+		Iterator<GIS_element> IterF = my_fruit.iterator();
+		while (IterF.hasNext()) {
+			fruit currF = (fruit) IterF.next();
+			Point3D currP = ((geom)currF.getGeom()).getP();
+			sum+=x.distance3d(prevP, currP);
+			prevP=currP;
+		}
+		return sum;
+	}
 	
 	public double getTime() {
 		return time;

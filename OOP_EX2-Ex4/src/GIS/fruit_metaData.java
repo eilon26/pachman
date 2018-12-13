@@ -37,6 +37,10 @@ public class fruit_metaData implements Meta_Data {
 		return weight;
 	}
 
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		return "fruit [id=" + id + ", weight=" + weight + "]";

@@ -24,6 +24,12 @@ public class pachman_metaData implements Meta_Data {
 		this.loc_by_time = new ArrayList<LocByTime>();
 	}
 	
+	public pachman_metaData(pachman_metaData md) {
+		this.id=md.id;
+		this.speed=md.speed;
+		this.radius=md.radius;
+		this.loc_by_time = new ArrayList<LocByTime>();
+	}
 	public ArrayList<LocByTime> getLoc_by_time() {
 		return loc_by_time;
 	}
@@ -34,7 +40,11 @@ public class pachman_metaData implements Meta_Data {
 	public int getSpeed() {
 		return speed;
 	}
+	
 
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		return "pachman [id=" + id + ", speed=" + speed + ", radius=" + radius + "]";

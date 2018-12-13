@@ -58,13 +58,10 @@ public class ShortestPathAlgo {
 			((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getLoc_by_time()[1] = (curr_locByTime);
 			
 			//calulate and set the new point
-
 			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]));//set new pachman location
-			//((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(fruit_loc);//set pachman location
-			
 			//set grade
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
-			((pachman_path)closest_pach_fruit[0]).setGrade(fruitGrade);//set pachman grade
+			((pachman_path)closest_pach_fruit[0]).setGrade(((pachman_path)closest_pach_fruit[0]).getGrade()+fruitGrade);//set pachman grade
 			this.generalGrade+=fruitGrade;
 		}
 		//return each pachman to his beginning point

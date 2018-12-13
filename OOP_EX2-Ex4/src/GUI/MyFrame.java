@@ -2,11 +2,11 @@ package GUI;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import GIS.*;
 import Geom.*;
-import algorithms.ShortestPathAlgo;
-import algorithms.sol2kml;
+import algorithms.*;
 import File_format.*;
 
 import java.awt.Color;
@@ -30,6 +30,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.swing.JFileChooser;
 import java.io.File; 
 import javax.imageio.ImageIO;
@@ -37,15 +40,18 @@ import javax.imageio.ImageIO;
 
 public class MyFrame extends JFrame implements MouseListener
 {
-	final int S = 20;//init pachman speed
-	final int R = 1;//init pachman radous
+	int S = 20;//init pachman speed
+	int R = 1;//init pachman radius
+	long wait_for_next_paint = 1500;
 	public int counter=0;
 	public BufferedImage myImage;
 	public GameBoard GB; 
+	public GameBoard GB_copy_csv = null; //copy for save as csv 
 	ShortestPathAlgo sol=null;
 	public MyFrame() 
 	{
-		GB = new GameBoard();
+		this.GB = new GameBoard();
+		this.GB_copy_csv = new GameBoard();
 		initGUI();		
 		this.addMouseListener(this); 
 		
@@ -58,13 +64,23 @@ public class MyFrame extends JFrame implements MouseListener
 		Menu add = new Menu("add");
 		Menu start = new Menu("start");
 		Menu clear = new Menu("clear");
-
+		Menu set = new Menu("set defaults");
+		
 		MenuItem load = new MenuItem("load csv file");
 		load.addActionListener(
 	            new ActionListener(){
 	                public void actionPerformed(ActionEvent e)
 	                {
 	                	load(e);
+	                }
+	            }
+	        );
+		MenuItem csv = new MenuItem("save to csv file");
+		csv.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	save_to_csv(e);
 	                }
 	            }
 	        );
@@ -113,16 +129,48 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
+		MenuItem set_wait = new MenuItem("shows frequency");
+		set_wait.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	set_wait_repaint(e);
+	                }
+	            }
+	        );
+		MenuItem set_radius = new MenuItem("pachman radius");
+		set_radius.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	setRadius(e);
+	                }
+	            }
+	        );
+		MenuItem set_speed = new MenuItem("pachman speed");
+		set_speed.addActionListener(
+	            new ActionListener(){
+	                public void actionPerformed(ActionEvent e)
+	                {
+	                	setSpeed(e);
+	                }
+	            }
+	        );
 		menuBar.add(menu);
 		menuBar.add(add);
 		menuBar.add(start);
 		menuBar.add(clear);
+		menuBar.add(set);
 		menu.add(load);
 		menu.add(gameBord2kml);
+		menu.add(csv);
 		add.add(addP);
 		add.add(addF);
 		start.add(start_game);
 		clear.add(clear_board);
+		set.add(set_wait);
+		set.add(set_speed);
+		set.add(set_radius);
 		this.setMenuBar(menuBar);
 		//add the pic
 		try {
@@ -149,9 +197,11 @@ public class MyFrame extends JFrame implements MouseListener
 			
 			if (type=='P') {
 				GB.add(createPach(x,y));
+				GB_copy_csv.add(createPach(x,y));
 			}
 			else {
 				GB.add(createFruit(x,y));
+				GB_copy_csv.add(createFruit(x,y));
 			}
 			x=y=-1;
 		}
@@ -173,15 +223,14 @@ public class MyFrame extends JFrame implements MouseListener
 				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
 					Point3D curr_pixel_point = null;
-					try{curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());}
-					catch(java.lang.NullPointerException e) {}
-				try {
-					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch(java.lang.NullPointerException e) {}
-				try{g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);}
-				catch(java.lang.NullPointerException e) {}
+					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
+				
+					if (((fruit)curr).isAlive()) {
+						try {
+						img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
+						} catch (IOException e) {}
+						g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
+					}
 			}
 		}
 		
@@ -190,14 +239,6 @@ public class MyFrame extends JFrame implements MouseListener
 			Point3D prevPoint=null;
 			map m = new map(this);
 			while (IterPathes.hasNext()) {
-//				//choose random color
-//				Random rand = new Random();
-//				float r = rand.nextFloat();
-//				float gr = rand.nextFloat();
-//				float b = rand.nextFloat();
-//				Color randomColor = new Color(r, gr, b);
-
-				
 				pachman_path currPath = (pachman_path)IterPathes.next();
 				Iterator<Point3D> IterPoints = currPath.iterator_Points();
 				if (IterPoints.hasNext()) {
@@ -215,7 +256,6 @@ public class MyFrame extends JFrame implements MouseListener
 				try {
 					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
@@ -254,23 +294,46 @@ public class MyFrame extends JFrame implements MouseListener
 	}
 	
 	public void load(ActionEvent e) {
+		if (type=='S') {
+			clear(e);
+			type='N';
+		}
     	JFileChooser fileChooser = new JFileChooser();
     	int result = fileChooser.showOpenDialog((JFrame)this);
     	if (result == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
     		csv2mat c2m = new csv2mat(selectedFile.getAbsolutePath());
     		mat2gameBoard m2g = new mat2gameBoard(c2m);
+    		int old_size = GB.size();
     		GB.addAll(m2g.getGB().getElement_Set());
+    		counter+=m2g.getGB().size();
+    		changeFirstsID(old_size,GB);
+    		GB_copy_csv.addAll(m2g.getGB().getElement_Set());
+    		changeFirstsID(old_size,GB_copy_csv);
     		GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
        		repaint();
     	}
 	}
 	
+	
+	private void changeFirstsID(int size,GameBoard GB) {
+		Iterator<GIS_element> IterE = GB.iterator();
+		int i=0;
+		while (IterE.hasNext()&&(i<size)) {
+			i++;
+			GIS_element curr = IterE.next();
+			if (curr instanceof pachman) {
+				((pachman_metaData)((pachman)curr).getData()).setId(counter++);
+			}else ((fruit_metaData)((fruit)curr).getData()).setId(counter++);
+		}
+	}
 	public void addPachman(ActionEvent e) {
+		if (type=='S') clear(e); 
 		type='P';
 	}
 	
 	public void addFruit(ActionEvent e) {
+		if (type=='S') clear(e); 
 		type='F';
 	}
 	
@@ -278,7 +341,15 @@ public class MyFrame extends JFrame implements MouseListener
 		this.sol = new ShortestPathAlgo(this.GB);
 		sol.calculate();
 		drawRealTime(sol);
-		System.out.println("time to eat all spinach: "+sol.getGeneraleTime()+" sec");
+		StringBuilder content = new StringBuilder("time to eat all spinach: "+sol.getGeneraleTime()+" sec\n");
+		content.append("total grade: "+sol.getGeneralGrade()+"\n");
+		Iterator <GIS_layer> IterPath = sol.getPathes().iterator();
+		while(IterPath.hasNext()) {
+			pachman_path curr = (pachman_path)IterPath.next();
+			content.append("popeye "+((pachman_metaData)curr.getPach().getData()).getId()+" grade is "+curr.getGrade()+" and his route time is "+curr.getTime()+"\n");
+		}
+		JOptionPane.showMessageDialog(null, content.toString());
+		type = 'S';
 	}
 	
 	public void convert(ActionEvent e) {
@@ -286,7 +357,7 @@ public class MyFrame extends JFrame implements MouseListener
 			this.sol = new ShortestPathAlgo(this.GB);
 			sol.calculate();
 		}
-		System.out.println("file converted");
+		JOptionPane.showMessageDialog(null, "file converted");
 		JFileChooser fileChooser = new JFileChooser();
     	int result = fileChooser.showOpenDialog((JFrame)this);
     	if (result == JFileChooser.APPROVE_OPTION) {
@@ -295,9 +366,34 @@ public class MyFrame extends JFrame implements MouseListener
     	}
 	}
 	public void clear(ActionEvent e) {
+		this.counter=0;
 		this.GB = new GameBoard();
+		this.GB_copy_csv =  new GameBoard();
 		this.sol = null;
 		repaint();
+	}
+	
+	public void save_to_csv(ActionEvent e) {
+		JFileChooser fileChooser = new JFileChooser();
+    	int result = fileChooser.showOpenDialog((JFrame)this);
+    	if (result == JFileChooser.APPROVE_OPTION) {
+    		File selectedFile = fileChooser.getSelectedFile();
+    		new GB2csv(GB_copy_csv,selectedFile.getAbsolutePath());
+    	}
+    	JOptionPane.showMessageDialog(null, "file saved as csv!");
+	}
+	
+	public void set_wait_repaint(ActionEvent e) {
+		String input = JOptionPane.showInputDialog(null, "enter sec between the shows:");
+	    this.wait_for_next_paint = (long)(1000*Double.parseDouble(input));
+	}
+	public void setSpeed(ActionEvent e) {
+		String input = JOptionPane.showInputDialog(null, "enter popeye speed in meter/sec:");
+	    this.S = Integer.parseInt(input);
+	}
+	public void setRadius(ActionEvent e) {
+		String input = JOptionPane.showInputDialog(null, "enter popeye radius in meter");
+		this.R = Integer.parseInt(input);
 	}
 	public GameBoard getGB() {
 		return GB;
@@ -306,43 +402,15 @@ public class MyFrame extends JFrame implements MouseListener
 	private pachman createPach(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
-		pachman_metaData newMd = new pachman_metaData(next_pach_id(),S,R);//pachman_metaData by default
+		pachman_metaData newMd = new pachman_metaData(counter++,S,R);//pachman_metaData by default
 		return new pachman(newPoint,newMd);
-	}
-	
-	private int next_pach_id() {
-		if (GB.isEmpty()) return 0;
-		else {
-			int max=-1;
-			Iterator<GIS_element> Iter = GB.iterator();
-			while (Iter.hasNext()) {
-				GIS_element curr = Iter.next();
-				if (curr instanceof pachman) 
-					max= Math.max(((pachman_metaData)((pachman)curr).getData()).getId(),max);
-			}
-			return max+1;
-		}
 	}
 	
 	private fruit createFruit(int x,int y) {
 		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
-		fruit_metaData newMd = new fruit_metaData(next_fruit_id(),1);//pachman_metaData by default
+		fruit_metaData newMd = new fruit_metaData(counter++,1);//pachman_metaData by default
 		return new fruit(newPoint,newMd);
-	}
-	
-	private int next_fruit_id() {
-		if (GB.isEmpty()) return 0;
-		else {
-			int max=-1;
-			Iterator<GIS_element> Iter = GB.iterator();
-			while (Iter.hasNext()) {
-				GIS_element curr = Iter.next();
-				if (curr instanceof fruit) 
-					max= Math.max(((fruit_metaData)((fruit)curr).getData()).getId(),max);
-			}
-			return max+1;
-		}
 	}
 	
 	private void drawRealTime(ShortestPathAlgo sol) {
@@ -351,7 +419,13 @@ public class MyFrame extends JFrame implements MouseListener
 			pachman_path curr = (pachman_path)IterS.next();
 			new draw_thread(this,curr).start();
 		}
+		new repaint_thread(this,wait_for_next_paint).start();//added
 	}
+	
+	public ShortestPathAlgo getSol() {
+		return sol;
+	}
+
 	public static void main(String[] args)
 	{
 		MyFrame window = new MyFrame();

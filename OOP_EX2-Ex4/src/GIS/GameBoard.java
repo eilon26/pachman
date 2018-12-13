@@ -26,6 +26,16 @@ public class GameBoard implements GIS_layer  {
 		this.md=null;
 	}
 	
+	public GameBoard(GameBoard other) {
+		this.element_set = new ArrayList<GIS_element>();
+		Iterator<GIS_element>  IterE = other.iterator();
+		while (IterE.hasNext()) {
+			GIS_element curr = IterE.next();
+			if (curr instanceof pachman)
+				this.element_set.add(new pachman((pachman)curr));
+			else this.element_set.add(new fruit((fruit)curr));
+		}
+	}
 	public void setMd(gameBoard_metaData md) {
 		this.md = md;
 	}
@@ -100,14 +110,14 @@ public class GameBoard implements GIS_layer  {
 	 * @return ture if add a specific element from the set.
 	 */
 	@Override
-	public boolean add(GIS_element arg0) {
+	public synchronized boolean add(GIS_element arg0) {
 		return element_set.add((arg0));
 	}
 	/**
 	 * @return true if add a set of elements to the current set.
 	 */
 	@Override
-	public boolean addAll(Collection<? extends GIS_element> arg0) {
+	public synchronized boolean addAll(Collection<? extends GIS_element> arg0) {
 		
 		return element_set.addAll(arg0);
 	}
@@ -144,14 +154,14 @@ public class GameBoard implements GIS_layer  {
 	 * @return the iterator.
 	 */
 	@Override
-	public Iterator<GIS_element> iterator() {
+	public synchronized  Iterator<GIS_element> iterator() {
 		return element_set.iterator();
 	}
 	/**
 	 * @return true if we could remove the object arg0.
 	 */
 	@Override
-	public boolean remove(Object arg0) {
+	public synchronized boolean remove(Object arg0) {
 		return element_set.remove(arg0);
 	}
 	/**
