@@ -1,6 +1,7 @@
 system  structure : 
 the main class is MyFrame that is responsible for the GUI. 
 during its initialization MyFrame using the class ariel_map that extands the class map. this class is resposible to creat the background image of the GUI and for all the convertations between pixel to global and the opposite during the program is running.
+
 by the user selections the system  build abstract stracture (GameBoard) that contain all the pachman object and fruit object in the game. it can built from manual addition of the user and/or by open csv file that contain pachmans and fruits.
 the pachman/fruit classes include the possition of the pachman/fruit and matadata about it.
 After pressing start the gui use the class ShortestPathAlgo that responsible to calculate the ideal routes and save tham. than the GUI use the method "drawRealTime" to create a Thread "draw_thread" to each pachman. each "draw_thread" is responsible to update on real time 2 stractures (the stractures are myFrame.GameBoard and MyFrame.sol) and calling the method MyFrame.paint() that draw (using those stractures) the position of the players(fruits and pachmans). 
