@@ -14,7 +14,7 @@ import Geom.Point3D;
 
 class test_map {
 	static MyFrame window;
-	static map m;
+	static ariel_map m;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -22,7 +22,7 @@ class test_map {
 		window.setVisible(true);
 		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		m = new map(window);
+		m = new ariel_map(window);
 	}
 
 	@Test

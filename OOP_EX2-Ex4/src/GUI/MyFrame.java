@@ -45,11 +45,12 @@ public class MyFrame extends JFrame implements MouseListener
 	long wait_for_next_paint = 1500;
 	public int counter=0;
 	public BufferedImage myImage;
-	public GameBoard GB; 
-	public GameBoard GB_copy_csv = null; //copy for save as csv 
-	ShortestPathAlgo sol=null;
-	BufferedImage imgP = null;
-	BufferedImage imgF = null;
+	private ariel_map m = null;
+	private GameBoard GB; 
+	private GameBoard GB_copy_csv = null; //copy for save as csv 
+	private ShortestPathAlgo sol=null;
+	private BufferedImage imgP = null;
+	private BufferedImage imgF = null;
 	
 	public MyFrame() 
 	{
@@ -137,15 +138,7 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
-//		MenuItem set_wait = new MenuItem("shows frequency");
-//		set_wait.addActionListener(
-//	            new ActionListener(){
-//	                public void actionPerformed(ActionEvent e)
-//	                {
-//	                	set_wait_repaint(e);
-//	                }
-//	            }
-//	        );
+
 		MenuItem set_radius = new MenuItem("pachman radius");
 		set_radius.addActionListener(
 	            new ActionListener(){
@@ -176,18 +169,11 @@ public class MyFrame extends JFrame implements MouseListener
 		add.add(addF);
 		start.add(start_game);
 		clear.add(clear_board);
-//		set.add(set_wait);
 		set.add(set_speed);
 		set.add(set_radius);
 		this.setMenuBar(menuBar);
 		//add the pic
-		try {
-			 myImage = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
+		this.m = new ariel_map(this);
 		
 	}
 
@@ -214,7 +200,6 @@ public class MyFrame extends JFrame implements MouseListener
 			}
 			x=y=-1;
 		}
-		map m = new map(this);
 		Iterator<GIS_element> IterElement = GB.iterator();
 		while (IterElement.hasNext()) {
 			GIS_element curr = null;
@@ -393,14 +378,12 @@ public class MyFrame extends JFrame implements MouseListener
 	}
 
 	private pachman createPach(int x,int y) {
-		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
 		pachman_metaData newMd = new pachman_metaData(counter++,S,R);//pachman_metaData by default
 		return new pachman(newPoint,newMd);
 	}
 	
 	private fruit createFruit(int x,int y) {
-		map m = new map(this);
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
 		fruit_metaData newMd = new fruit_metaData(counter++,1);//pachman_metaData by default
 		return new fruit(newPoint,newMd);
@@ -412,11 +395,14 @@ public class MyFrame extends JFrame implements MouseListener
 			pachman_path curr = (pachman_path)IterS.next();
 			new draw_thread(this,curr).start();
 		}
-		//new repaint_thread(this,wait_for_next_paint).start();//added
 	}
 	
 	public ShortestPathAlgo getSol() {
 		return sol;
+	}
+
+	public void setMyImage(BufferedImage myImage) {
+		this.myImage = myImage;
 	}
 
 	public static void main(String[] args)

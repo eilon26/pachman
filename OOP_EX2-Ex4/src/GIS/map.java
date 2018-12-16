@@ -12,22 +12,24 @@ import Coords.MyCoords;
 import GUI.MyFrame;
 import Geom.Point3D;
 
-public class map {
-	private BufferedImage ArielPic;
-	private Point3D UpRightP;
-	private Point3D DownLeftP;
+public abstract class map {
+	protected BufferedImage BackgroundPic;
+	protected Point3D UpRightP;
+	protected Point3D DownLeftP;
 	private JFrame frame;
 	
-	public map(JFrame frame) {
+	public map(MyFrame frame) {
 		this.frame = frame;
-	try {
-		this.ArielPic = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	this.DownLeftP = new Point3D(35.202435,32.101940,0);
-	this.UpRightP = new Point3D(35.212400,32.105400,0);
+		
+
+//	try {
+//		this.ArielPic = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//	this.DownLeftP = new Point3D(35.202435,32.101940,0);
+//	this.UpRightP = new Point3D(35.212400,32.105400,0);
 	
 	}
 	
