@@ -3,23 +3,20 @@ package GIS;
 import GIS.Meta_Data;
 import Geom.Point3D;
 /**
- * this class implements meta_Data, it is responsible for handling the time of creation
- * universal time and location.
+ * this class implements meta_Data, and represent the metadata of gameboard
  * @author Daniel Ventura and Eilon tsadok
  *
  */
 public class gameBoard_metaData implements Meta_Data{
 	private String fileName;
 	private long utc;
-	/**
-	 * the constructor.
-	 * @param location - the location (gps).
-	 * @param time - the start time recorded.
-	 * @param utc - the universal time.
-	 */
+/**
+ * the constructor 
+ * @param fileName  
+ * @param utc
+ */
 	public gameBoard_metaData(String fileName,long utc) {
 		this.fileName = fileName;
-	
 		this.utc = utc;
 	}
 	

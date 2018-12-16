@@ -7,17 +7,27 @@ import Geom.*;
 import algorithms.ShortestPathAlgo;
 import GIS.*;
 import GIS.pachman_path;
-
+/**
+ * the class that responsible to draw the progress of the pachman along its path in real time
+ * @author EILON
+ *
+ */
 public class draw_thread extends Thread {
 	MyFrame frame;
 	pachman_path path;
-	
+	/**
+	 * the thread constructor by frame and path
+	 * @param frame MyFrame parameter
+	 * @param path pachman_path parameter
+	 */
 	public draw_thread(MyFrame frame,pachman_path path) {
 		this.frame = frame;
 		this.path = path;
 
 	}
-	
+	/**
+	 * the rum method of the thread that actually responsible to draw the progress of the pachman along its path in real time
+	 */
 	public void run() {
 		Iterator<GIS_element> IterF = path.iterator();
 		MyCoords x = new MyCoords();

@@ -37,12 +37,15 @@ import javax.swing.JFileChooser;
 import java.io.File; 
 import javax.imageio.ImageIO;
 
-
+/**
+ * the class that responsible for the GUI of the game
+ * @author EILON
+ *
+ */
 public class MyFrame extends JFrame implements MouseListener
 {
 	int S = 20;//init pachman speed
 	int R = 1;//init pachman radius
-	long wait_for_next_paint = 1500;
 	public int counter=0;
 	public BufferedImage myImage;
 	private ariel_map m = null;
@@ -51,7 +54,9 @@ public class MyFrame extends JFrame implements MouseListener
 	private ShortestPathAlgo sol=null;
 	private BufferedImage imgP = null;
 	private BufferedImage imgF = null;
-	
+	/**
+	 * the constaructor og the GUI
+	 */
 	public MyFrame() 
 	{
 		this.GB = new GameBoard();
@@ -66,6 +71,9 @@ public class MyFrame extends JFrame implements MouseListener
 		}
 	}
 	
+	/**
+	 * initGUI is responsible to initialize all the components of the GUI and to initialize the ariel_map field
+	 */
 	private void initGUI() 
 	{
 		MenuBar menuBar = new MenuBar();
@@ -180,7 +188,9 @@ public class MyFrame extends JFrame implements MouseListener
 	int x = -1;
 	int y = -1;
 	char type = 'N'; 
-	
+	/**
+	 * responsible to display the game progress on the screen
+	 */
 	public synchronized void paint(Graphics g)
 	{
 		super.paint(g);
@@ -270,7 +280,10 @@ public class MyFrame extends JFrame implements MouseListener
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	}
-	
+	/**
+	 * responsible to load a csv file into th game
+	 * @param e
+	 */
 	public void load(ActionEvent e) {
 		if (type=='S') {
 			clear(e);
@@ -293,7 +306,11 @@ public class MyFrame extends JFrame implements MouseListener
     	}
 	}
 	
-	
+	/**
+	 * responsible to change the id of the first element inside GB 
+	 * @param size the amount of element that need to change their id
+	 * @param GB GameBoard parameter
+	 */
 	private void changeFirstsID(int size,GameBoard GB) {
 		Iterator<GIS_element> IterE = GB.iterator();
 		int i=0;
@@ -305,16 +322,26 @@ public class MyFrame extends JFrame implements MouseListener
 			}else ((fruit_metaData)((fruit)curr).getData()).setId(counter++);
 		}
 	}
+	/**
+	 * responsible to add pachman to the game
+	 * @param e
+	 */
 	public void addPachman(ActionEvent e) {
 		if (type=='S') clear(e); 
 		type='P';
 	}
-	
+	/**
+	 * responsible to add fruit to the game
+	 * @param e
+	 */
 	public void addFruit(ActionEvent e) {
 		if (type=='S') clear(e); 
 		type='F';
 	}
-	
+	/**
+	 * responsible to stast the game
+	 * @param e
+	 */
 	public void start(ActionEvent e) {
 		this.sol = new ShortestPathAlgo(this.GB);
 		sol.calculate();
@@ -329,7 +356,10 @@ public class MyFrame extends JFrame implements MouseListener
 		JOptionPane.showMessageDialog(null, content.toString());
 		type = 'S';
 	}
-	
+	/**
+	 * responsible to convert the solution of the game to kml file and save it
+	 * @param e
+	 */
 	public void convert(ActionEvent e) {
 		if (this.sol==null) {
 			this.sol = new ShortestPathAlgo(this.GB);
@@ -343,6 +373,10 @@ public class MyFrame extends JFrame implements MouseListener
     		new sol2kml(this.sol,selectedFile.getAbsolutePath());
     	}
 	}
+	/**
+	 * responsible to clear the game
+	 * @param e
+	 */
 	public void clear(ActionEvent e) {
 		this.counter=0;
 		this.GB = new GameBoard();
@@ -350,7 +384,10 @@ public class MyFrame extends JFrame implements MouseListener
 		this.sol = null;
 		repaint();
 	}
-	
+	/**
+	 * responsible to convert the starting position of the pachmans and the fruits to csv file
+	 * @param e
+	 */
 	public void save_to_csv(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
     	int result = fileChooser.showOpenDialog((JFrame)this);
@@ -360,35 +397,55 @@ public class MyFrame extends JFrame implements MouseListener
     	}
     	JOptionPane.showMessageDialog(null, "file saved as csv!");
 	}
-	
-	public void set_wait_repaint(ActionEvent e) {
-		String input = JOptionPane.showInputDialog(null, "enter sec between the shows:");
-	    this.wait_for_next_paint = (long)(1000*Double.parseDouble(input));
-	}
+	/**
+	 * let the user set the speed of the new pachman that he want to add to the game
+	 * @param e
+	 */
 	public void setSpeed(ActionEvent e) {
 		String input = JOptionPane.showInputDialog(null, "enter popeye speed in meter/sec:");
 	    this.S = Integer.parseInt(input);
 	}
+	/**
+	 * let the user set the radius of the new pachman that he want to add to the game
+	 * @param e
+	 */
 	public void setRadius(ActionEvent e) {
 		String input = JOptionPane.showInputDialog(null, "enter popeye radius in meter");
 		this.R = Integer.parseInt(input);
 	}
+	/**
+	 * 
+	 * @return this.GB
+	 */
 	public GameBoard getGB() {
 		return GB;
 	}
-
+	/**
+	 * creat new pachman with location x,y
+	 * @param x int parameter
+	 * @param y int parameter
+	 * @return
+	 */
 	private pachman createPach(int x,int y) {
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
 		pachman_metaData newMd = new pachman_metaData(counter++,S,R);//pachman_metaData by default
 		return new pachman(newPoint,newMd);
 	}
-	
+	/**
+	 * creat new fruit with location x,y
+	 * @param x int parameter
+	 * @param y int parameter
+	 * @return
+	 */
 	private fruit createFruit(int x,int y) {
 		Point3D newPoint = m.pixel2global(new Point3D(x,y,0));
 		fruit_metaData newMd = new fruit_metaData(counter++,1);//pachman_metaData by default
 		return new fruit(newPoint,newMd);
 	}
-	
+	/**
+	 * responsible to create the threads that responsible to draw the pachmans path 
+	 * @param sol ShortestPathAlgo parameter
+	 */
 	private void drawRealTime(ShortestPathAlgo sol) {
 		Iterator<GIS_layer> IterS = sol.getPathes().iterator();
 		while (IterS.hasNext()) {
@@ -396,15 +453,24 @@ public class MyFrame extends JFrame implements MouseListener
 			new draw_thread(this,curr).start();
 		}
 	}
-	
+	/**
+	 * 
+	 * @return this.sol
+	 */
 	public ShortestPathAlgo getSol() {
 		return sol;
 	}
-
+	/**
+	 * set this.myImage
+	 * @param myImage BufferedImage parameter
+	 */
 	public void setMyImage(BufferedImage myImage) {
 		this.myImage = myImage;
 	}
-
+	/**
+	 * the main function that start oll the game
+	 * @param args
+	 */
 	public static void main(String[] args)
 	{
 		MyFrame window = new MyFrame();

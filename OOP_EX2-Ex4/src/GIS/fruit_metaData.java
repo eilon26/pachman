@@ -25,37 +25,62 @@ public class fruit_metaData implements Meta_Data {
 		weight = Integer.parseInt(line[metaIndexes[2]]);	
 		this.loc_by_time = new LocByTime[2];
 	}
+	/**
+	 * the constructor of fruit meta data that get id and weight
+	 * @param id 
+	 * @param weight
+	 */
 	public fruit_metaData(int id,int weight) {
 		this.id=id;
 		this.weight=weight;
 		this.loc_by_time = new LocByTime[2];
 	}
+	/**
+	 * the copy constructor of fruit meta data
+	 * @param other
+	 */
 	public fruit_metaData(fruit_metaData other) {
 		this.id = other.getId();
 		this.weight = other.getweight();
 		this.loc_by_time = new LocByTime[2];
 	}
-
+	/**
+	 * 
+	 * @return loc_by_time
+	 */
 	public LocByTime[] getLoc_by_time() {
 		return loc_by_time;
 	}
+    /**
+     * @return the id
+     */
 	public int getId() {
 		return id;
 	}
-
+    /**
+     * @return the weight
+     */
 	public int getweight() {
 		return weight;
 	}
 
-	
+	/**
+	 * set the this.id by the id that is get
+	 * @param id integer parameter
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+    /**
+     * @return the representation of fruit metadata
+     */
 	@Override
 	public String toString() {
 		return "fruit [id=" + id + ", weight=" + weight + "]";
 	}
-
+    /**
+     * @return the accurate time
+     */
 	@Override
 	public long getUTC() {
 		return new Date().getTime();

@@ -11,28 +11,29 @@ import javax.swing.JFrame;
 import Coords.MyCoords;
 import GUI.MyFrame;
 import Geom.Point3D;
-
+/**
+ * this class is resposible to create the background image of the GUI and for all the 
+ * convertations between pixel to global and the opposite during the program is running
+ * @author EILON
+ *
+ */
 public abstract class map {
 	protected BufferedImage BackgroundPic;
 	protected Point3D UpRightP;
 	protected Point3D DownLeftP;
 	private JFrame frame;
-	
+	/**
+	 * map constructor
+	 * @param frame
+	 */
 	public map(MyFrame frame) {
 		this.frame = frame;
-		
-
-//	try {
-//		this.ArielPic = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\Ariel1.png"));
-//	} catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//	this.DownLeftP = new Point3D(35.202435,32.101940,0);
-//	this.UpRightP = new Point3D(35.212400,32.105400,0);
-	
 	}
-	
+	/**
+	 * get global point and convert it to pixel point
+	 * @param Global a Point3D object that represent global point 
+	 * @return pixel point
+	 */
 	public Point3D global2pixel(Point3D Global) {
 		double RatioGlobalX = (Global.x()-DownLeftP.x())/getGlobalDiffX();
 		double RatioGlobalY = (UpRightP.y()-Global.y())/getGlobalDiffY();
@@ -40,6 +41,11 @@ public abstract class map {
 		double pixelY = frame.getHeight()*RatioGlobalY;
 		return new Point3D(pixelX,pixelY,0);
 	}
+	/**
+	 * get pixel point and convert it to global point
+	 * @param pixel a Point3D object that represent pixel point 
+	 * @return global point
+	 */
 	public Point3D pixel2global(Point3D pixel) {
 		double RatioPixelX = pixel.x()/frame.getWidth();
 		double RatioPixelY = (pixel.y())/frame.getHeight();
@@ -47,7 +53,12 @@ public abstract class map {
 		double GlobalY = UpRightP.y()-(getGlobalDiffY()*RatioPixelY);
 		return new Point3D(GlobalX,GlobalY,0);
 	}
-	
+	/**
+	 * find the azimuth and with the distance between pixel0 to pixel1
+	 * @param pixel0 Point3D that represent the first pixel
+	 * @param pixel1 Point3D that represent the second pixel
+	 * @return array with the azimuth and with the distance between pixel0 to pixel1
+	 */
 	public double[] pixelsDistanceAzimuth(Point3D pixel0, Point3D pixel1) {//in meter
 		Point3D p0 = pixel2global(pixel0);
 		Point3D p1 = pixel2global(pixel1);
@@ -55,9 +66,15 @@ public abstract class map {
 		return x.azimuth_elevation_dist(p0, p1);
 		
 	}
+	/** 
+	 * @return the width of the pic in degree 
+	 */
 	public double getGlobalDiffX() {
 		return UpRightP.x()-DownLeftP.x();
 	}
+	/** 
+	 * @return the hight of the pic in degree 
+	 */
 	public double getGlobalDiffY() {
 		return UpRightP.y()-DownLeftP.y();
 	}

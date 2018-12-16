@@ -3,16 +3,27 @@ package GIS;
 
 import java.sql.Timestamp;
 import Geom.Point3D;
-
+/**
+ * the class is responsible for represent location and its suitable time
+ * @author EILON
+ *
+ */
 public class LocByTime {
 	private Point3D location;
 	private String time;
 	
+	/**
+	 * the empty constructor
+	 */
 	public LocByTime() {
 		this.location = null;
 		this.time = null;
 	}
-
+	/**
+	 * constructor that get location and time
+	 * @param location Point3D parameter
+	 * @param time long parameter
+	 */
 	public LocByTime(Point3D location, long time) {
 		this.location = location;
 		this.time = new Timestamp(time).toString();
@@ -20,11 +31,17 @@ public class LocByTime {
 //		String month = (d.getMonth()+1)
 //		this.time = ""+(d.getYear()+1900)+"-"+(d.getMonth()+1)+"-"+(d.getDay())+"T0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"Z";
 	}
-
+	/**
+	 * 
+	 * @return location
+	 */
 	public Point3D getLocation() {
 		return location;
 	}
-
+	/**
+	 * 
+	 * @return time
+	 */
 	public String getTime() {
 		return time;
 	}

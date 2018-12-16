@@ -7,7 +7,11 @@ import java.util.Iterator;
 import Coords.MyCoords;
 import Geom.*;
 
-
+/**
+ * the class represent the path of one pachman
+ * @author EILON
+ *
+ */
 public class pachman_path implements GIS_layer{
 	pachman pach;
 	int grade;
@@ -16,7 +20,10 @@ public class pachman_path implements GIS_layer{
 	Point3D start_point;
 	double time;
 	private pachman_metaData md;
-	
+	/**
+	 * constractor that get pachman object
+	 * @param pach pachman object
+	 */
 	public pachman_path(pachman pach) {
 		this.pach=pach;
 		this.my_fruit = new ArrayList<GIS_element>();
@@ -26,6 +33,10 @@ public class pachman_path implements GIS_layer{
 		this.grade = 0;
 		this.time=0;
 	}
+	/**
+	 * 
+	 * @return the path length in meter
+	 */
 	public double path_length() {
 		double sum =0;
 		MyCoords x = new MyCoords();
@@ -39,35 +50,56 @@ public class pachman_path implements GIS_layer{
 		}
 		return sum;
 	}
-	
+	/**
+	 * 
+	 * @return time
+	 */
 	public double getTime() {
 		return time;
 	}
 
-
+	/**
+	 * set this.time
+	 * @param time double
+	 */
 	public void setTime(double time) {
 		this.time = time;
 	}
 
-
+	/**
+	 * 
+	 * @return grade
+	 */
 	public int getGrade() {
 		return grade;
 	}
 
-
+	/**
+	 * set this.grade
+	 * @param grade int
+	 */
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 
-
+	/**
+	 * 
+	 * @return this.pach
+	 */
 	public pachman getPach() {
 		return pach;
 	}
-
+	/**
+	 * 
+	 * @return my_fruit the ArrayList that contain th fruit that the spesific pachman ate
+	 */
 	public ArrayList<GIS_element> getMy_fruit() {
 		return my_fruit;
 	}
-
+	/**
+	 * 
+	 * @return pachman start point
+	 */
 	public Point3D getStart_point() {
 		return start_point;
 	}
@@ -76,7 +108,11 @@ public class pachman_path implements GIS_layer{
 	public boolean add(GIS_element arg0) {
 		return my_fruit.add(arg0);
 	}
-	
+	/**
+	 * add Point3D to draw_point
+	 * @param arg0
+	 * @return ture if it accomplish the adding
+	 */
 	public boolean add_to_draw_point(Point3D arg0) {
 		return draw_point.add(arg0);
 	}
@@ -108,16 +144,25 @@ public class pachman_path implements GIS_layer{
 	public Iterator<Point3D> iterator_Points() {
 		return draw_point.iterator();
 	}
+	/**
+	 * 
+	 * @return this.draw_point the ArrayList for paint the path of specific pachman
+	 */
 	public ArrayList<Point3D> getDraw_point() {
 		return draw_point;
 	}
 
-
+	/**
+	 * set Draw_point
+	 * @param draw_point ArrayList<Point3D> draw_point
+	 */
 	public void setDraw_point(ArrayList<Point3D> draw_point) {
 		this.draw_point = draw_point;
 	}
-
-
+	/**
+	 * set pachman point
+	 * @param p Point3D
+	 */
 	public void setPachGeom(Point3D p) {
 		this.pach.setGe(new geom(p));
 	}

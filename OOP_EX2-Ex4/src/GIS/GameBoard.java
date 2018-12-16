@@ -8,8 +8,7 @@ import java.util.Iterator;
 
 import File_format.csv2mat;
 /**
- * this class handles the arraylists and put them under one layer.
- * this class implements gis_layer.
+ * the class is contain all the fruit and the pachman objects in the game
  * @author Daniel Ventura and Eilon tsadok
  *
  */
@@ -17,15 +16,16 @@ public class GameBoard implements GIS_layer  {
 	private ArrayList<GIS_element> element_set;
 	private gameBoard_metaData md;
 	/**
-	 * this class gets an array list and creates a new element (point 
-	 * element) and an element set to contain all of the elements.
-	 * @param g - the array list.
+	 * the constructor
 	 */
 	public GameBoard() {
 		this.element_set=new ArrayList<GIS_element>();
 		this.md=null;
 	}
-	
+	/**
+	 * the copy constactor
+	 * @param other GameBoard parameter
+	 */
 	public GameBoard(GameBoard other) {
 		this.element_set = new ArrayList<GIS_element>();
 		Iterator<GIS_element>  IterE = other.iterator();
@@ -36,10 +36,11 @@ public class GameBoard implements GIS_layer  {
 			else this.element_set.add(new fruit((fruit)curr));
 		}
 	}
-	public void setMd(gameBoard_metaData md) {
-		this.md = md;
-	}
 
+/**
+ * constractor that buid GameBoard from mat(after taking the csv file and convert it to mat)
+ * @param c2m csv2mat parameter
+ */
 	public GameBoard(csv2mat c2m){
 		element_set = new ArrayList<GIS_element>();
 		int[] geomIndexes = geomIndexes(c2m.getG().get(0));
@@ -59,14 +60,24 @@ public class GameBoard implements GIS_layer  {
 		long convert_time = new Date().getTime();
 		this.md = new gameBoard_metaData(c2m.getFile().getName(),convert_time);
 	}
-
+	/**
+	 * set md
+	 * @param md gameBoard_metaData parameter
+	 */
+	public void setMd(gameBoard_metaData md) {
+		this.md = md;
+	}
+	/**
+	 * 
+	 * @return element_set
+	 */
 	public ArrayList<GIS_element> getElement_Set(){
 		return element_set;
 	}
 	/**
-	 * this function finds the indexes of the gps point.
-	 * @param line - the current line.
-	 * @return the indexes of x,y and z in an int array.
+	 * this function finds the indexes of the global point.
+	 * @param line the current line
+	 * @return  the indexes of x,y and z in an int array.
 	 */
 	public int[] geomIndexes(String[] line) {
 		int[] GI = new int[3];
@@ -106,103 +117,74 @@ public class GameBoard implements GIS_layer  {
 		}
 		return MI;
 	}
-	/**
-	 * @return ture if add a specific element from the set.
-	 */
+
 	@Override
 	public synchronized boolean add(GIS_element arg0) {
 		return element_set.add((arg0));
 	}
-	/**
-	 * @return true if add a set of elements to the current set.
-	 */
+
 	@Override
 	public synchronized boolean addAll(Collection<? extends GIS_element> arg0) {
 		
 		return element_set.addAll(arg0);
 	}
-	/**
-	 * clear the set
-	 */
+
 	@Override
 	public void clear() {
 		element_set.clear();
 		
 	}
-	/**
-	 * @return true if the object exists in the set.
-	 */
+
 	@Override
 	public boolean contains(Object arg0) {
 		return element_set.contains(arg0);//add element.equals()
 	}
-	/**
-	 * @return true if the collection is contained in the set.
-	 */
+
 	@Override
 	public boolean containsAll(Collection<?> arg0) {
 		return element_set.containsAll(arg0);
 	}
-	/**
-	 * @return true if the set is empty.
-	 */
+
 	@Override
 	public boolean isEmpty() {
 		return element_set.isEmpty();
 	}
-	/**
-	 * @return the iterator.
-	 */
+
 	@Override
 	public synchronized  Iterator<GIS_element> iterator() {
 		return element_set.iterator();
 	}
-	/**
-	 * @return true if we could remove the object arg0.
-	 */
+
 	@Override
 	public synchronized boolean remove(Object arg0) {
 		return element_set.remove(arg0);
 	}
-	/**
-	 * @return true if we could remove collecti
-	 * on of objects arg0.
-	 */
+
 	@Override
 	public boolean removeAll(Collection<?> arg0) {
 		return element_set.removeAll(arg0);
 	}
-	/**
-	 * @return true if its retained.
-	 */
+
 	@Override
 	public boolean retainAll(Collection<?> arg0) {
 		return element_set.retainAll(arg0);
 	}
-	/**
-	 * @return the size of the set.
-	 */
+
 	@Override
 	public int size() {
 		return element_set.size();
 	}
-	/**
-	 * @return an object array of the set.
-	 */
+
 	@Override
 	public Object[] toArray() {
 		return element_set.toArray();
 	}
-	/**
-	 * @return a T array of the set. 
-	 */
+
 	@Override
 	public <T> T[] toArray(T[] arg0) {
 		return element_set.toArray(arg0);
 	}
-	/**
-	 * @return the meta data. 
-	 */
+
 	@Override
 	public Meta_Data get_Meta_data() {
 		return md;
