@@ -38,7 +38,7 @@ public class draw_thread extends Thread {
 			destFruit.setAlive(false);
 			frame.getGB().remove(path.getPach());
 			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
-			//frame.repaint();
+			frame.repaint();
 		}
 		while  (IterF.hasNext()) {
 			fruit destFruit = (fruit)IterF.next();
@@ -56,7 +56,7 @@ public class draw_thread extends Thread {
 			//frame.getGB().remove(destFruit);
 			destFruit.setAlive(false);
 			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
-			//frame.repaint();
+			frame.repaint();
 		}
 		
 

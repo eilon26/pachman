@@ -48,13 +48,21 @@ public class MyFrame extends JFrame implements MouseListener
 	public GameBoard GB; 
 	public GameBoard GB_copy_csv = null; //copy for save as csv 
 	ShortestPathAlgo sol=null;
+	BufferedImage imgP = null;
+	BufferedImage imgF = null;
+	
 	public MyFrame() 
 	{
 		this.GB = new GameBoard();
 		this.GB_copy_csv = new GameBoard();
 		initGUI();		
 		this.addMouseListener(this); 
-		
+		try {
+			imgP = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
+		} catch (IOException e) {}
+		try{ imgF = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
+		} catch (IOException ex) {
+		}
 	}
 	
 	private void initGUI() 
@@ -129,15 +137,15 @@ public class MyFrame extends JFrame implements MouseListener
 	                }
 	            }
 	        );
-		MenuItem set_wait = new MenuItem("shows frequency");
-		set_wait.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	set_wait_repaint(e);
-	                }
-	            }
-	        );
+//		MenuItem set_wait = new MenuItem("shows frequency");
+//		set_wait.addActionListener(
+//	            new ActionListener(){
+//	                public void actionPerformed(ActionEvent e)
+//	                {
+//	                	set_wait_repaint(e);
+//	                }
+//	            }
+//	        );
 		MenuItem set_radius = new MenuItem("pachman radius");
 		set_radius.addActionListener(
 	            new ActionListener(){
@@ -168,7 +176,7 @@ public class MyFrame extends JFrame implements MouseListener
 		add.add(addF);
 		start.add(start_game);
 		clear.add(clear_board);
-		set.add(set_wait);
+//		set.add(set_wait);
 		set.add(set_speed);
 		set.add(set_radius);
 		this.setMenuBar(menuBar);
@@ -189,6 +197,7 @@ public class MyFrame extends JFrame implements MouseListener
 	
 	public synchronized void paint(Graphics g)
 	{
+		super.paint(g);
 		int rP = 25;
 		int rF = 15;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
@@ -205,31 +214,23 @@ public class MyFrame extends JFrame implements MouseListener
 			}
 			x=y=-1;
 		}
+		map m = new map(this);
 		Iterator<GIS_element> IterElement = GB.iterator();
 		while (IterElement.hasNext()) {
 			GIS_element curr = null;
 			try {curr = IterElement.next();}
 			catch (java.util.ConcurrentModificationException e) {}
-			map m = new map(this);
-			BufferedImage img=null;
+
+			
 			if (curr instanceof pachman) {
 				Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
-				
-				try {
-					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
+				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
 					Point3D curr_pixel_point = null;
 					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 				
 					if (((fruit)curr).isAlive()) {
-						try {
-						img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
-						} catch (IOException e) {}
-						g.drawImage(img,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
+						g.drawImage(imgF,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
 					}
 			}
 		}
@@ -237,7 +238,6 @@ public class MyFrame extends JFrame implements MouseListener
 		if (sol!=null) {
 			Iterator<GIS_layer> IterPathes = sol.getPathes().iterator();
 			Point3D prevPoint=null;
-			map m = new map(this);
 			while (IterPathes.hasNext()) {
 				pachman_path currPath = (pachman_path)IterPathes.next();
 				Iterator<Point3D> IterPoints = currPath.iterator_Points();
@@ -246,19 +246,12 @@ public class MyFrame extends JFrame implements MouseListener
 				}
 				while (IterPoints.hasNext()) {
 					Point3D currPoint = m.global2pixel(IterPoints.next());
-					//g.setColor(randomColor);
 					g.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
 					prevPoint = currPoint;
 				}
 				
 				Point3D curr_pixel_point = m.global2pixel(((geom)currPath.getPach().getGeom()).getP());
-				BufferedImage img=null;
-				try {
-					img = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.drawImage(img,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
+				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}
 		}
 	}
@@ -419,7 +412,7 @@ public class MyFrame extends JFrame implements MouseListener
 			pachman_path curr = (pachman_path)IterS.next();
 			new draw_thread(this,curr).start();
 		}
-		new repaint_thread(this,wait_for_next_paint).start();//added
+		//new repaint_thread(this,wait_for_next_paint).start();//added
 	}
 	
 	public ShortestPathAlgo getSol() {

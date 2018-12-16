@@ -8,12 +8,20 @@ import Coords.MyCoords;
 import GIS.*;
 import Geom.Point3D;
 import Geom.geom;
-
+/**
+ * the class is resposible to find the shortest path to all the pachmans
+ * @author EILON
+ *
+ */
 public class ShortestPathAlgo {
 	private ArrayList<GIS_layer> pathes;
 	private ArrayList<GIS_element> fruit;
 	private int generalGrade;
 	private double generaleTime;
+	/**
+	 * the constructor get GameBoard object and create 2 arraylist one of the fruits and one of the pachmans with its future path
+	 * @param GB
+	 */
 	public ShortestPathAlgo(GameBoard GB) {
 		pathes = new ArrayList<GIS_layer>();
 		fruit = new ArrayList<GIS_element>();
@@ -34,7 +42,9 @@ public class ShortestPathAlgo {
 		this.generaleTime=0;
 	}
 	
-
+	/**
+	 * this method find the shortest path to all the pachmans and save it to the suitable path in the pathes arraylist
+	 */
 	public void calculate() {
 		Object[] closest_pach_fruit = new Object[2];
 		while (!fruit.isEmpty()) {
@@ -58,7 +68,8 @@ public class ShortestPathAlgo {
 			((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getLoc_by_time()[1] = (curr_locByTime);
 			
 			//calulate and set the new point
-			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]));//set new pachman location
+			Point3D newPointPach = pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]);
+			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(newPointPach);//set new pachman location
 			//set grade
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
 			((pachman_path)closest_pach_fruit[0]).setGrade(((pachman_path)closest_pach_fruit[0]).getGrade()+fruitGrade);//set pachman grade
