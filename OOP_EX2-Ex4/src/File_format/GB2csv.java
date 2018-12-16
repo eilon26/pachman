@@ -1,4 +1,4 @@
-package algorithms;
+package File_format;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
