@@ -1,7 +1,7 @@
 system  structure : 
 the main class is MyFrame that is responsible for the GUI. 
 by the user selections the system  build abstract stracture (GameBoard) that contain all the pachman and fruit in the game. it can built from manual addition of the user and/or by open csv file that contain pachmans and fruits.
-After pressing start the gui use the class ShortestPathAlgo that responsible to calculate the ideal routes and save tham. than the GUI use the method "drawRealTime" to create a Thread "draw_thread" to each pachman. each "draw_thread" is responsible  to update on real time 2 stractures that the method MyFrame.paint() draw by tham the position of the players(fruits and pachmans). the stractures are myFrame.GameBoard and MyFrame.sol.
+After pressing start the gui use the class ShortestPathAlgo that responsible to calculate the ideal routes and save tham. than the GUI use the method "drawRealTime" to create a Thread "draw_thread" to each pachman. each "draw_thread" is responsible to update on real time 2 stractures and calling the method MyFrame.paint() that draw (using those stractures) the position of the players(fruits and pachmans). the stractures are myFrame.GameBoard and MyFrame.sol.
 additionally MyFrame use sol2kml class to save the routes to kml file. 
 Moreover it use GB2csv to save the starting positions to csv file. GB2csv use GB_copy_csv that saved the starting positions.
 
