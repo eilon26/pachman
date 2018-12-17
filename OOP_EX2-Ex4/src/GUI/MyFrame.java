@@ -64,9 +64,9 @@ public class MyFrame extends JFrame implements MouseListener
 		initGUI();		
 		this.addMouseListener(this); 
 		try {
-			imgP = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\popeye.png"));
+			imgP = ImageIO.read(new File("popeye.png"));
 		} catch (IOException e) {}
-		try{ imgF = ImageIO.read(new File("C:\\Users\\EILON\\Documents\\studies 2.1\\eclipse files\\OOP_EX2-EX4\\OOP_EX2-Ex4\\src\\GUI\\spinach.jpg"));
+		try{ imgF = ImageIO.read(new File("spinach.jpg"));
 		} catch (IOException ex) {
 		}
 	}
@@ -351,7 +351,8 @@ public class MyFrame extends JFrame implements MouseListener
 		Iterator <GIS_layer> IterPath = sol.getPathes().iterator();
 		while(IterPath.hasNext()) {
 			pachman_path curr = (pachman_path)IterPath.next();
-			content.append("popeye "+((pachman_metaData)curr.getPach().getData()).getId()+" grade is "+curr.getGrade()+" and his route time is "+curr.getTime()+"\n");
+			content.append("popeye "+((pachman_metaData)curr.getPach().getData()).getId()+
+					" grade is "+curr.getGrade()+" and his route time is "+curr.getTime()+"\n");
 		}
 		JOptionPane.showMessageDialog(null, content.toString());
 		type = 'S';
