@@ -12,8 +12,8 @@ public class gameBoard_metaData implements Meta_Data{
 	private long utc;
 /**
  * the constructor 
- * @param fileName  
- * @param utc
+ * @param fileName  string
+ * @param utc long
  */
 	public gameBoard_metaData(String fileName,long utc) {
 		this.fileName = fileName;

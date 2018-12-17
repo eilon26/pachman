@@ -154,7 +154,7 @@ public class pachman_path implements GIS_layer{
 
 	/**
 	 * set Draw_point
-	 * @param draw_point ArrayList<Point3D> draw_point
+	 * @param draw_point ArrayList draw_point
 	 */
 	public void setDraw_point(ArrayList<Point3D> draw_point) {
 		this.draw_point = draw_point;

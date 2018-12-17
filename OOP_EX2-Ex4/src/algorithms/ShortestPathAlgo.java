@@ -20,7 +20,7 @@ public class ShortestPathAlgo {
 	private double generaleTime;
 	/**
 	 * the constructor get GameBoard object and create 2 arraylist one of the fruits and one of the pachmans with its future path
-	 * @param GB
+	 * @param GB GameBoard object
 	 */
 	public ShortestPathAlgo(GameBoard GB) {
 		pathes = new ArrayList<GIS_layer>();

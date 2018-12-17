@@ -70,7 +70,7 @@ public class MyCoords implements coords_converter {
 	}
 
 	/**
-	 * this function computes the polar representation of the 3D vector be gps0-->gps1.
+	 * this function computes the polar representation of the 3D vector be gps0 to gps1.
 	 * @param gps0 - the first gps point.
 	 * @param gps1 - the second gps point.
 	 * @return the polar representation.

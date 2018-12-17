@@ -282,7 +282,7 @@ public class MyFrame extends JFrame implements MouseListener
 	}
 	/**
 	 * responsible to load a csv file into th game
-	 * @param e
+	 * @param e ActionEvent object
 	 */
 	public void load(ActionEvent e) {
 		if (type=='S') {
@@ -365,13 +365,13 @@ public class MyFrame extends JFrame implements MouseListener
 			this.sol = new ShortestPathAlgo(this.GB);
 			sol.calculate();
 		}
-		JOptionPane.showMessageDialog(null, "file converted");
 		JFileChooser fileChooser = new JFileChooser();
     	int result = fileChooser.showOpenDialog((JFrame)this);
     	if (result == JFileChooser.APPROVE_OPTION) {
     		File selectedFile = fileChooser.getSelectedFile();
     		new sol2kml(this.sol,selectedFile.getAbsolutePath());
     	}
+    	JOptionPane.showMessageDialog(null, "file converted");
 	}
 	/**
 	 * responsible to clear the game

@@ -27,8 +27,8 @@ public class fruit_metaData implements Meta_Data {
 	}
 	/**
 	 * the constructor of fruit meta data that get id and weight
-	 * @param id 
-	 * @param weight
+	 * @param id  int
+	 * @param weight int
 	 */
 	public fruit_metaData(int id,int weight) {
 		this.id=id;
@@ -37,7 +37,7 @@ public class fruit_metaData implements Meta_Data {
 	}
 	/**
 	 * the copy constructor of fruit meta data
-	 * @param other
+	 * @param other fruit_metaData object
 	 */
 	public fruit_metaData(fruit_metaData other) {
 		this.id = other.getId();

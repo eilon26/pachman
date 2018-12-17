@@ -24,7 +24,7 @@ public abstract class map {
 	private JFrame frame;
 	/**
 	 * map constructor
-	 * @param frame
+	 * @param frame MyFrame object
 	 */
 	public map(MyFrame frame) {
 		this.frame = frame;
