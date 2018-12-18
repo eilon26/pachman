@@ -18,7 +18,7 @@ public class pachman_path implements GIS_layer{
 	private ArrayList<GIS_element> my_fruit;
 	private ArrayList<Point3D> draw_point;
 	Point3D start_point;
-	double time;
+	double time;//the time to go through the path
 	private pachman_metaData md;
 	/**
 	 * constractor that get pachman object

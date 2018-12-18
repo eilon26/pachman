@@ -57,7 +57,7 @@ public class ShortestPathAlgo {
 			Point3D fruit_loc = ((geom)((fruit)closest_pach_fruit[1]).getGeom()).getP();
 			
 			//calculate and set the time to go through the route
-			double time = ((pachman_path)closest_pach_fruit[0]).getTime() + (double)closest_pach_fruit[2];
+			double time = (double)closest_pach_fruit[2];
 			this.generaleTime = Math.max(generaleTime, time);
 			((pachman_path)closest_pach_fruit[0]).setTime(time);//set path time
 			
@@ -123,8 +123,9 @@ public class ShortestPathAlgo {
 				double curr_dist = x.distance3d(currPachmanPoint,currFruitPoint)-((pachman_metaData)currPath.getPach().getData()).getRadius();
 				curr_dist = Math.max(0, curr_dist);
 				double curr_time = curr_dist/((pachman_metaData)currPath.getPach().getData()).getSpeed();
-				if (curr_time < (Double)min[2]) {
-					min[2] = curr_time;
+				double time_so_far = curr_time + currPath.getTime();
+				if (time_so_far < (Double)min[2]) {
+					min[2] = time_so_far;
 					min[0] = currPath;
 					min[1] = currFruit;
 				}

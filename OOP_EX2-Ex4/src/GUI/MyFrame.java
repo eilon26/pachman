@@ -9,6 +9,7 @@ import Geom.*;
 import algorithms.*;
 import File_format.*;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -44,16 +45,17 @@ import javax.imageio.ImageIO;
  */
 public class MyFrame extends JFrame implements MouseListener
 {
-	int S = 20;//init pachman speed
-	int R = 1;//init pachman radius
-	public int counter=0;
-	public BufferedImage myImage;
+	private int S = 20;//init pachman speed
+	private int R = 1;//init pachman radius
+	private int counter=0;
+	private BufferedImage myImage;
 	private ariel_map m = null;
 	private GameBoard GB; 
 	private GameBoard GB_copy_csv = null; //copy for save as csv 
 	private ShortestPathAlgo sol=null;
 	private BufferedImage imgP = null;
 	private BufferedImage imgF = null;
+	private Color[] colors;
 	/**
 	 * the constaructor og the GUI
 	 */
@@ -182,7 +184,23 @@ public class MyFrame extends JFrame implements MouseListener
 		this.setMenuBar(menuBar);
 		//add the pic
 		this.m = new ariel_map(this);
-		
+
+		this.colors = new Color[13];
+		this.colors[0] = Color.BLACK;
+		this.colors[1] = Color.BLUE;
+		this.colors[2] = Color.RED;
+		this.colors[3] = Color.GREEN;
+		this.colors[4] = Color.YELLOW;
+		this.colors[5] = Color.CYAN;
+		this.colors[6] = Color.DARK_GRAY;
+		this.colors[7] = Color.GRAY;
+		this.colors[8] = Color.LIGHT_GRAY;
+		this.colors[9] = Color.MAGENTA;
+		this.colors[10] = Color.ORANGE;
+		this.colors[11] = Color.PINK;
+		this.colors[12] = Color.WHITE;
+
+
 	}
 
 	int x = -1;
@@ -222,8 +240,8 @@ public class MyFrame extends JFrame implements MouseListener
 				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}else {
 					Point3D curr_pixel_point = null;
-					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
-				
+					try{curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());}
+					catch(java.lang.NullPointerException e){}
 					if (((fruit)curr).isAlive()) {
 						g.drawImage(imgF,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
 					}
@@ -231,9 +249,11 @@ public class MyFrame extends JFrame implements MouseListener
 		}
 		
 		if (sol!=null) {
+			int IndexC = 0;
 			Iterator<GIS_layer> IterPathes = sol.getPathes().iterator();
 			Point3D prevPoint=null;
 			while (IterPathes.hasNext()) {
+				g.setColor(colors[IndexC++%13]);
 				pachman_path currPath = (pachman_path)IterPathes.next();
 				Iterator<Point3D> IterPoints = currPath.iterator_Points();
 				if (IterPoints.hasNext()) {
@@ -241,7 +261,9 @@ public class MyFrame extends JFrame implements MouseListener
 				}
 				while (IterPoints.hasNext()) {
 					Point3D currPoint = m.global2pixel(IterPoints.next());
-					g.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
+					Graphics2D g2 = (Graphics2D)g;
+					g2.setStroke(new BasicStroke(2));
+					g2.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
 					prevPoint = currPoint;
 				}
 				
@@ -454,6 +476,14 @@ public class MyFrame extends JFrame implements MouseListener
 			new draw_thread(this,curr).start();
 		}
 	}
+	/**
+	 * 
+	 * @return myImage
+	 */
+	public BufferedImage getMyImage() {
+		return myImage;
+	}
+
 	/**
 	 * 
 	 * @return this.sol

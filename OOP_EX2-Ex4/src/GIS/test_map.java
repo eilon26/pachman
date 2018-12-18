@@ -20,7 +20,7 @@ class test_map {
 	static void setUpBeforeClass() throws Exception {
 		window = new MyFrame();
 		window.setVisible(true);
-		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
+		window.setSize(window.getMyImage().getWidth(),window.getMyImage().getHeight());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		m = new ariel_map(window);
 	}
