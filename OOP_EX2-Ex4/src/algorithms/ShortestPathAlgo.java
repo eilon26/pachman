@@ -61,15 +61,16 @@ public class ShortestPathAlgo {
 			this.generaleTime = Math.max(generaleTime, time);
 			((pachman_path)closest_pach_fruit[0]).setTime(time);//set path time
 			
+			//calulate and set the new point
+			Point3D newPointPach = pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]);
+			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(newPointPach);//set new pachman location
+			
 			//make timestamp pachman and fruit
-			LocByTime curr_locByTime = new LocByTime(fruit_loc,new Date().getTime()+(long)(time*1000));	
+			LocByTime curr_locByTime = new LocByTime(newPointPach,new Date().getTime()+(long)(time*1000));	
 			((pachman_metaData)((pachman_path)closest_pach_fruit[0]).getPach().getData()).getLoc_by_time().add(curr_locByTime);
 			curr_locByTime = new LocByTime(fruit_loc,new Date().getTime()+(long)(time*1000));	
 			((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getLoc_by_time()[1] = (curr_locByTime);
 			
-			//calulate and set the new point
-			Point3D newPointPach = pachNewPoint((pachman_path)closest_pach_fruit[0],(fruit)closest_pach_fruit[1]);
-			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(newPointPach);//set new pachman location
 			//set grade
 			int fruitGrade = ((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getweight();
 			((pachman_path)closest_pach_fruit[0]).setGrade(((pachman_path)closest_pach_fruit[0]).getGrade()+fruitGrade);//set pachman grade
