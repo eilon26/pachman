@@ -8,8 +8,9 @@ After pressing start the gui use the class ShortestPathAlgo that responsible to 
 additionally MyFrame use sol2kml class to save the routes to kml file. 
 Moreover it use GB2csv to save the starting positions to csv file. GB2csv use GB_copy_csv that saved the starting positions.
 
-the algo for calculate pathes for each pachman:
-the class ShortestPathAlgo that responsible for calculate pathes for each pachman get the object GameBoard that contain all the pachman and fruit. it calculate all the all the distance between each pachman to each fruit, then calculate for each pachman how mach time it takes to go through his distance(refer to pachman's speed and radius) that calculate before and at the end choose the shortest time. and take out the fruit that chosen from the GameBord collection and change the pachman position in accordance.
+the algorithem for calculate pathes for each pachman:
+the class ShortestPathAlgo that responsible for calculate pathes for each pachman get the object GameBoard that contain all the pachmans and fruits. until there are no more fruits it perform the following algorithm:
+it goes thruogh all the pachmans for each pachman it goes through all the fruits. then for each fruit the algorithem calculate the time it will take for the pachman to reach to the fruit(refer to pachman's speed and radius). then the algorithem add the time that the pachman went since the game start to the time that it is already calculate. let mark the result of the adding as "time_so_far".  it find the smallest "time_so_far" between all the pachmans and fruis. and take out the fruit that was chosen from the GameBord collection and change the pachman position in accordance.
 
 how to run the game:
 click on setting to choose the pachman radius,speed,and the frequency of the shows on the screen.
