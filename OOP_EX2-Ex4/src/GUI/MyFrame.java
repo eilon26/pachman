@@ -72,7 +72,7 @@ public class MyFrame extends JFrame implements MouseListener
 		} catch (IOException ex) {
 		}
 	}
-	
+
 	/**
 	 * initGUI is responsible to initialize all the components of the GUI and to initialize the ariel_map field
 	 */
@@ -84,89 +84,89 @@ public class MyFrame extends JFrame implements MouseListener
 		Menu start = new Menu("start");
 		Menu clear = new Menu("clear");
 		Menu set = new Menu("set defaults");
-		
+
 		MenuItem load = new MenuItem("load csv file");
 		load.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	load(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						load(e);
+					}
+				}
+				);
 		MenuItem csv = new MenuItem("save to csv file");
 		csv.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	save_to_csv(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						save_to_csv(e);
+					}
+				}
+				);
 		MenuItem start_game = new MenuItem("start game");
 		start.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	start(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						start(e);
+					}
+				}
+				);
 		MenuItem gameBord2kml = new MenuItem("convert to kml");
 		gameBord2kml.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	convert(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						convert(e);
+					}
+				}
+				);
 		MenuItem addP = new MenuItem("add pachman");
 		addP.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	addPachman(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						addPachman(e);
+					}
+				}
+				);
 		MenuItem addF = new MenuItem("add fruit");
 		addF.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	addFruit(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						addFruit(e);
+					}
+				}
+				);
 		MenuItem clear_board = new MenuItem("clear board");
 		clear_board.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	clear(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						clear(e);
+					}
+				}
+				);
 
 		MenuItem set_radius = new MenuItem("pachman radius");
 		set_radius.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	setRadius(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						setRadius(e);
+					}
+				}
+				);
 		MenuItem set_speed = new MenuItem("pachman speed");
 		set_speed.addActionListener(
-	            new ActionListener(){
-	                public void actionPerformed(ActionEvent e)
-	                {
-	                	setSpeed(e);
-	                }
-	            }
-	        );
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e)
+					{
+						setSpeed(e);
+					}
+				}
+				);
 		menuBar.add(menu);
 		menuBar.add(add);
 		menuBar.add(start);
@@ -212,12 +212,12 @@ public class MyFrame extends JFrame implements MouseListener
 	public synchronized void paint(Graphics g)
 	{
 		super.paint(g);
-		int rP = 25;
+		int rP = 35;
 		int rF = 15;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(x!=-1 && y!=-1 && type!='N')
 		{
-			
+
 			if (type=='P') {
 				GB.add(createPach(x,y));
 				GB_copy_csv.add(createPach(x,y));
@@ -228,26 +228,26 @@ public class MyFrame extends JFrame implements MouseListener
 			}
 			x=y=-1;
 		}
-		Iterator<GIS_element> IterElement = GB.iterator();
-		while (IterElement.hasNext()) {
-			GIS_element curr = null;
-			try {curr = IterElement.next();}
-			catch (java.util.ConcurrentModificationException e) {}
+		try {
+			Iterator<GIS_element> IterElement = GB.iterator();
+			while (IterElement.hasNext()) {
+				GIS_element curr = null;
+				try {curr = IterElement.next();}
+				catch (java.util.ConcurrentModificationException e) {}
 
-			
-			if (curr instanceof pachman) {
-				Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
-				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
-			}else {
+
+				if (curr instanceof pachman) {
+					Point3D curr_pixel_point = m.global2pixel(((geom)((pachman)curr).getGeom()).getP());
+					g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
+				}else {
 					Point3D curr_pixel_point = null;
-					try{curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());}
-					catch(java.lang.NullPointerException e){}
+					curr_pixel_point = m.global2pixel(((geom)((fruit)curr).getGeom()).getP());
 					if (((fruit)curr).isAlive()) {
 						g.drawImage(imgF,(int)(curr_pixel_point.x()- (rF / 2)),(int) (curr_pixel_point.y()- (rF / 2)), rF, rF,null);
 					}
+				}
 			}
-		}
-		
+		}catch(java.lang.NullPointerException e){}
 		if (sol!=null) {
 			int IndexC = 0;
 			Iterator<GIS_layer> IterPathes = sol.getPathes().iterator();
@@ -266,7 +266,7 @@ public class MyFrame extends JFrame implements MouseListener
 					g2.drawLine((int)prevPoint.x(),(int) prevPoint.y(), (int)currPoint.x(), (int)currPoint.y());
 					prevPoint = currPoint;
 				}
-				
+
 				Point3D curr_pixel_point = m.global2pixel(((geom)currPath.getPach().getGeom()).getP());
 				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}
@@ -290,7 +290,7 @@ public class MyFrame extends JFrame implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -311,23 +311,23 @@ public class MyFrame extends JFrame implements MouseListener
 			clear(e);
 			type='N';
 		}
-    	JFileChooser fileChooser = new JFileChooser();
-    	int result = fileChooser.showOpenDialog((JFrame)this);
-    	if (result == JFileChooser.APPROVE_OPTION) {
-    		File selectedFile = fileChooser.getSelectedFile();
-    		csv2mat c2m = new csv2mat(selectedFile.getAbsolutePath());
-    		mat2gameBoard m2g = new mat2gameBoard(c2m);
-    		int old_size = GB.size();
-    		GB.addAll(m2g.getGB().getElement_Set());
-    		counter+=m2g.getGB().size();
-    		changeFirstsID(old_size,GB);
-    		GB_copy_csv.addAll(m2g.getGB().getElement_Set());
-    		changeFirstsID(old_size,GB_copy_csv);
-    		GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
-       		repaint();
-    	}
+		JFileChooser fileChooser = new JFileChooser();
+		int result = fileChooser.showOpenDialog((JFrame)this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			csv2mat c2m = new csv2mat(selectedFile.getAbsolutePath());
+			mat2gameBoard m2g = new mat2gameBoard(c2m);
+			int old_size = GB.size();
+			GB.addAll(m2g.getGB().getElement_Set());
+			counter+=m2g.getGB().size();
+			changeFirstsID(old_size,GB);
+			GB_copy_csv.addAll(m2g.getGB().getElement_Set());
+			changeFirstsID(old_size,GB_copy_csv);
+			GB.setMd((gameBoard_metaData) m2g.getGB().get_Meta_data());
+			repaint();
+		}
 	}
-	
+
 	/**
 	 * responsible to change the id of the first element inside GB 
 	 * @param size the amount of element that need to change their id
@@ -389,12 +389,12 @@ public class MyFrame extends JFrame implements MouseListener
 			sol.calculate();
 		}
 		JFileChooser fileChooser = new JFileChooser();
-    	int result = fileChooser.showOpenDialog((JFrame)this);
-    	if (result == JFileChooser.APPROVE_OPTION) {
-    		File selectedFile = fileChooser.getSelectedFile();
-    		new sol2kml(this.sol,selectedFile.getAbsolutePath());
-    	}
-    	JOptionPane.showMessageDialog(null, "file converted");
+		int result = fileChooser.showOpenDialog((JFrame)this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			new sol2kml(this.sol,selectedFile.getAbsolutePath());
+		}
+		JOptionPane.showMessageDialog(null, "file converted");
 	}
 	/**
 	 * responsible to clear the game
@@ -413,12 +413,12 @@ public class MyFrame extends JFrame implements MouseListener
 	 */
 	public void save_to_csv(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
-    	int result = fileChooser.showOpenDialog((JFrame)this);
-    	if (result == JFileChooser.APPROVE_OPTION) {
-    		File selectedFile = fileChooser.getSelectedFile();
-    		new GB2csv(GB_copy_csv,selectedFile.getAbsolutePath());
-    	}
-    	JOptionPane.showMessageDialog(null, "file saved as csv!");
+		int result = fileChooser.showOpenDialog((JFrame)this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			new GB2csv(GB_copy_csv,selectedFile.getAbsolutePath());
+		}
+		JOptionPane.showMessageDialog(null, "file saved as csv!");
 	}
 	/**
 	 * let the user set the speed of the new pachman that he want to add to the game
@@ -426,7 +426,7 @@ public class MyFrame extends JFrame implements MouseListener
 	 */
 	public void setSpeed(ActionEvent e) {
 		String input = JOptionPane.showInputDialog(null, "enter popeye speed in meter/sec:");
-	    this.S = Integer.parseInt(input);
+		this.S = Integer.parseInt(input);
 	}
 	/**
 	 * let the user set the radius of the new pachman that he want to add to the game
@@ -509,8 +509,8 @@ public class MyFrame extends JFrame implements MouseListener
 		window.setSize(window.myImage.getWidth(),window.myImage.getHeight());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	
+
+
 
 
 }
