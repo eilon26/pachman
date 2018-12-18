@@ -82,24 +82,32 @@ public class ShortestPathAlgo {
 			currPath.setPachGeom(currPath.getStart_point()); 
 		}
 	}
+	/**
+	 * calculate the new pachman location
+	 * @param path pachman_path parameter
+	 * @param fruit fruit parameter
+	 * @return the new point of pachman
+	 */
 	public static Point3D pachNewPoint(pachman_path path,fruit fruit) {
 		Point3D pach_loc = ((geom)path.getPach().getGeom()).getP();
 		int pach_radious = ((pachman_metaData)path.getPach().getData()).getRadius();
 		Point3D fruit_loc = ((geom)fruit.getGeom()).getP();
 		MyCoords x = new MyCoords();
 		double[] AED = x.azimuth_elevation_dist(fruit_loc,pach_loc);
-//		Point3D vecForNewPachLoc = new Point3D((Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),(Math.cos(Math.toRadians(AED[0]))*(AED[2]-pach_radious)),fruit_loc.z()-pach_loc.z());
-		 Point3D vec;
+		Point3D vec;
 		if ((AED[0]>180)&&(AED[0]<270)) vec = new Point3D(-1*pach_radious,-1*pach_radious,0);
 		else if ((AED[0]>270)&&(AED[0]<360)) vec = new Point3D(-1*pach_radious,pach_radious,0);
 		else if ((AED[0]>0)&&(AED[0]<90)) vec = new Point3D(pach_radious,pach_radious,0);
 		else vec = new Point3D(pach_radious,-1*pach_radious,0);
 		
-		Point3D newPachLoc = x.add(fruit_loc,vec);////////////////******************************
+		Point3D newPachLoc = x.add(fruit_loc,vec);
 		return newPachLoc;
 	}
 
-
+	/**
+	 * find the closet (by time) pachman and fruit
+	 * @return array with 2 object the first is the pachman that selected and the second is the fruit that selected
+	 */
 	private Object[] findClosest() {
 		Object[] min = new Object[3];//min[0] the pachman in the min distance, min[1] the fruit in the min distance
 		min[2] = Double.MAX_VALUE;
@@ -124,23 +132,38 @@ public class ShortestPathAlgo {
 		}
 		return  min;
 	}
-	
+	/**
+	 * return the general Grade of the all game 
+	 * @return generalGrade
+	 */
 	public int getGeneralGrade() {
 		return generalGrade;
 	}
-	
+	/**
+	 * return the general time of the all game 
+	 * @return generaleTime
+	 */
 	public double getGeneraleTime() {
 		return generaleTime;
 	}
-
+	/**
+	 * set generaleTime
+	 * @param generaleTime double parameter
+	 */
 	public void setGeneraleTime(double generaleTime) {
 		this.generaleTime = generaleTime;
 	}
-
+	/**
+	 * 
+	 * @return  the pathes ArrayList
+	 */
 	public ArrayList<GIS_layer> getPathes() {
 		return pathes;
 	}
-
+	/**
+	 * 
+	 * @return the fruit ArrayList
+	 */
 	public ArrayList<GIS_element> getFruit() {
 		return fruit;
 	}
