@@ -18,11 +18,13 @@ public class ShortestPathAlgo {
 	private ArrayList<GIS_element> fruit;
 	private int generalGrade;
 	private double generaleTime;
+	final long start_of_time;
 	/**
 	 * the constructor get GameBoard object and create 2 arraylist one of the fruits and one of the pachmans with its future path
 	 * @param GB GameBoard object
 	 */
 	public ShortestPathAlgo(GameBoard GB) {
+		this.start_of_time = new Date().getTime();
 		pathes = new ArrayList<GIS_layer>();
 		fruit = new ArrayList<GIS_element>();
 		Iterator<GIS_element> GBIter = GB.getElement_Set().iterator();
@@ -30,11 +32,11 @@ public class ShortestPathAlgo {
 			GIS_element curr = GBIter.next();
 			if (curr instanceof pachman) {
 				pathes.add(new pachman_path((pachman) curr));
-				LocByTime curr_locByTime = new LocByTime(((geom)((pachman) curr).getGeom()).getP(),new Date().getTime());
+				LocByTime curr_locByTime = new LocByTime(((geom)((pachman) curr).getGeom()).getP(),start_of_time);
 				((pachman_metaData)((pachman) curr).getData()).getLoc_by_time().add(curr_locByTime);
 			}else {
 				fruit.add((fruit)curr);	
-				LocByTime curr_locByTime = new LocByTime(((geom)((fruit) curr).getGeom()).getP(),new Date().getTime());
+				LocByTime curr_locByTime = new LocByTime(((geom)((fruit) curr).getGeom()).getP(),start_of_time);
 				((fruit_metaData)((fruit) curr).getData()).getLoc_by_time()[0] = (curr_locByTime);
 			}
 		}
@@ -66,9 +68,9 @@ public class ShortestPathAlgo {
 			((geom)(((pachman_path)closest_pach_fruit[0]).getPach().getGeom())).setP(newPointPach);//set new pachman location
 			
 			//make timestamp pachman and fruit
-			LocByTime curr_locByTime = new LocByTime(newPointPach,new Date().getTime()+(long)(time*1000));	
+			LocByTime curr_locByTime = new LocByTime(newPointPach,start_of_time+(long)(time*1000));	
 			((pachman_metaData)((pachman_path)closest_pach_fruit[0]).getPach().getData()).getLoc_by_time().add(curr_locByTime);
-			curr_locByTime = new LocByTime(fruit_loc,new Date().getTime()+(long)(time*1000));	
+			curr_locByTime = new LocByTime(fruit_loc,start_of_time+(long)(time*1000));	
 			((fruit_metaData)((fruit)closest_pach_fruit[1]).getData()).getLoc_by_time()[1] = (curr_locByTime);
 			
 			//set grade
