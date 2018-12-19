@@ -54,7 +54,7 @@ public class MyCoords implements coords_converter {
 	 * this function computes the 3D vector (in meters) between two gps like points.
 	 * @param gps0 - the first gps point.
 	 * @param gps1 - the second gps point.
-	 * @return the 2d distance of these two points.	 
+	 * @return the 3D vector (in meters) between two gps like points.	 
 	 */
 	@Override
 	public Point3D vector3D(Point3D gps0, Point3D gps1) {

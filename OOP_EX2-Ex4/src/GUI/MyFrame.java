@@ -47,6 +47,7 @@ public class MyFrame extends JFrame implements MouseListener
 {
 	private int S = 20;//init pachman speed
 	private int R = 1;//init pachman radius
+	private double sec = 0.3;//init shows frequency
 	private int counter=0;
 	private BufferedImage myImage;
 	private ariel_map m = null;
@@ -212,6 +213,7 @@ public class MyFrame extends JFrame implements MouseListener
 	public synchronized void paint(Graphics g)
 	{
 		super.paint(g);
+		
 		int rP = 35;
 		int rF = 15;
 		g.drawImage(myImage, 0, 0, this.getWidth(), this.getHeight(), this);
@@ -247,7 +249,7 @@ public class MyFrame extends JFrame implements MouseListener
 					}
 				}
 			}
-		}catch(java.lang.NullPointerException e){}
+		
 		if (sol!=null) {
 			int IndexC = 0;
 			Iterator<GIS_layer> IterPathes = sol.getPathes().iterator();
@@ -271,6 +273,7 @@ public class MyFrame extends JFrame implements MouseListener
 				g.drawImage(imgP,(int)(curr_pixel_point.x()- (rP / 2)),(int) (curr_pixel_point.y()- (rP / 2)), rP, rP, null);
 			}
 		}
+		}catch(Exception e){}
 	}
 
 	@Override
@@ -473,8 +476,9 @@ public class MyFrame extends JFrame implements MouseListener
 		Iterator<GIS_layer> IterS = sol.getPathes().iterator();
 		while (IterS.hasNext()) {
 			pachman_path curr = (pachman_path)IterS.next();
-			new draw_thread(this,curr).start();
+			new draw_thread(this,curr,sec).start();
 		}
+		new paint_thread(this,sec).start();
 	}
 	/**
 	 * 
@@ -498,8 +502,12 @@ public class MyFrame extends JFrame implements MouseListener
 	public void setMyImage(BufferedImage myImage) {
 		this.myImage = myImage;
 	}
+	@Override
+	public void update(Graphics g) {
+		
+	}
 	/**
-	 * the main function that start oll the game
+	 * the main function that start all the game
 	 * @param args
 	 */
 	public static void main(String[] args)

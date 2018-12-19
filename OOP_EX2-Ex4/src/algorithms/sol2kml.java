@@ -25,7 +25,16 @@ public class sol2kml {
 	    		+ "<IconStyle><Icon><href>https://clipartix.com/wp-content/uploads/2018/03/spinach-clipart-2018-24.png</href>"
 	    		+ "</Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style><Style id=\"no more\">"
 	    		+ "<IconStyle><Icon><href>https://www.iconspng.com/images/nosign-x/nosign-x.jpg</href></Icon>"
-	    		+ "<hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\r\n";
+	    		+ "<hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>"
+	    		+ "    <Style id=\"yellow\">\r\n" + 
+	    		"      <LineStyle>\r\n" + 
+	    		"        <color>7f00ffff</color>\r\n" + 
+	    		"        <width>4</width>\r\n" + 
+	    		"      </LineStyle>\r\n" + 
+	    		"      <PolyStyle>\r\n" + 
+	    		"        <color>7f00ff00</color>\r\n" + 
+	    		"      </PolyStyle>\r\n" + 
+	    		"    </Style>\r\n";
 	    
 	    StringBuilder content = new StringBuilder(kmlstart);
 	    String kmlend = "</Document></kml>";
@@ -34,6 +43,7 @@ public class sol2kml {
 	        BufferedWriter bw = new BufferedWriter(fw);
 	        Iterator<GIS_layer> iterPath =sol.getPathes().iterator();
 	        while (iterPath.hasNext()) {
+		    	StringBuilder coordinates = new StringBuilder();
 	            pachman_path curr_path = (pachman_path) iterPath.next();
 	            Iterator<LocByTime> iterLocByTime = ((pachman_metaData)curr_path.getPach().getData()).getLoc_by_time().iterator();
 	            while (iterLocByTime.hasNext()) {
@@ -54,7 +64,21 @@ public class sol2kml {
 	            		      "</Point>\r\n" + 
 	            		"</Placemark>";
 	            	content.append(kmlelement);
+	            	coordinates.append(""+curr_LocByTime.getLocation().x()+","+curr_LocByTime.getLocation().y()+
+	            		      		","+curr_LocByTime.getLocation().z()+"\r\n");
 	            }
+	            String coords = coordinates.toString();
+	            String route = " <Placemark>\r\n" + 
+	            		"      <styleUrl>#yellow</styleUrl>\r\n" + 
+	            		"      <LineString>\r\n" + 
+	            		"        <extrude>1</extrude>\r\n" + 
+	            		"        <tessellate>1</tessellate>\r\n" +  
+	            		"        <coordinates> \r\n" + coords +"\r\n"+
+	            		"        </coordinates>\r\n" + 
+	            		"      </LineString>\r\n" + 
+	            		"    </Placemark>";
+	            content.append(route);
+	            
 	            Iterator<GIS_element> iterFruit = curr_path.iterator();
 	            while (iterFruit.hasNext()) {
 	            	fruit curr_fruit = (fruit)iterFruit.next();

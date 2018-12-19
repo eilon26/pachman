@@ -1,6 +1,9 @@
 package GUI;
 
 import java.util.Iterator;
+import java.util.TimerTask;
+
+import javax.swing.Timer;
 
 import Coords.MyCoords;
 import Geom.*;
@@ -12,17 +15,19 @@ import GIS.pachman_path;
  * @author EILON
  *
  */
-public class draw_thread extends Thread {
-	MyFrame frame;
-	pachman_path path;
+public class draw_thread extends Thread  {
+	private MyFrame frame;
+	private pachman_path path;
+	private double sec;
 	/**
 	 * the thread constructor by frame and path
 	 * @param frame MyFrame parameter
 	 * @param path pachman_path parameter
 	 */
-	public draw_thread(MyFrame frame,pachman_path path) {
+	public draw_thread(MyFrame frame,pachman_path path,double sec) {
 		this.frame = frame;
 		this.path = path;
+		this.sec = sec;
 
 	}
 	/**
@@ -32,41 +37,30 @@ public class draw_thread extends Thread {
 		Iterator<GIS_element> IterF = path.iterator();
 		MyCoords x = new MyCoords();
 		if (IterF.hasNext()) {
-			fruit destFruit = (fruit)IterF.next();
 			Point3D pach_point = ((geom)path.getPach().getGeom()).getP();//global point
-			int pach_speed = ((pachman_metaData)path.getPach().getData()).getSpeed();
-			int pach_radious = ((pachman_metaData)path.getPach().getData()).getRadius();
-			Point3D destFruit_point = ((geom)destFruit.getGeom()).getP();//global point
-			double dest2NewFruit = x.distance3d(pach_point, destFruit_point)-pach_radious;
-			double time2DestFruit = (Math.max(0,dest2NewFruit ))/pach_speed;
-			try {
-				Thread.sleep((long) (time2DestFruit*1000));
-			} catch (InterruptedException e) { e.printStackTrace();}
 			path.add_to_draw_point(pach_point);
-			path.add_to_draw_point(ShortestPathAlgo.pachNewPoint(path,destFruit));
-			//frame.getGB().remove(destFruit);
-			destFruit.setAlive(false);
 			frame.getGB().remove(path.getPach());
-			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
-			frame.repaint();
 		}
 		while  (IterF.hasNext()) {
 			fruit destFruit = (fruit)IterF.next();
 			Point3D pach_point = ((geom)path.getPach().getGeom()).getP();//global point
 			int pach_speed = ((pachman_metaData)path.getPach().getData()).getSpeed();
-			int pach_radious = ((pachman_metaData)path.getPach().getData()).getRadius();
-			Point3D destFruit_point = ((geom)destFruit.getGeom()).getP();//global point
-			double dest2NewFruit = x.distance3d(pach_point, destFruit_point)-pach_radious;
+			Point3D end_session_pachNewPoint = ShortestPathAlgo.pachNewPoint(path,destFruit);
+			double dest2NewFruit = x.distance3d(pach_point, end_session_pachNewPoint);
 			double time2DestFruit = (Math.max(0,dest2NewFruit ))/pach_speed;
-			try {
-				Thread.sleep((long) (time2DestFruit*1000));
-			} catch (InterruptedException e) { e.printStackTrace();}
-			
-			path.add_to_draw_point(ShortestPathAlgo.pachNewPoint(path,destFruit));
-			//frame.getGB().remove(destFruit);
+			Point3D theBigVector = x.vector3D(pach_point, end_session_pachNewPoint);
+			double timeRatio = sec/time2DestFruit;//time ratio set to 1 sec
+			Point3D theLittleVector = new Point3D(timeRatio*theBigVector.x(),timeRatio*theBigVector.y(),timeRatio*theBigVector.z());
+			for (double i=sec;i<=time2DestFruit;i=i+sec) {//refer to the defined time ratio
+				pach_point = x.add(pach_point, theLittleVector);
+				path.add_to_draw_point(pach_point);
+				path.getPach().setGe(new geom(pach_point));//set pachman new point
+				try {Thread.sleep((long) (sec*1000));//refer to the defined time rati
+				} catch (InterruptedException e) {}
+			}
 			destFruit.setAlive(false);
-			path.getPach().setGe(new geom(ShortestPathAlgo.pachNewPoint(path,destFruit)));//set pachman new point
-			frame.repaint();
+			
+			
 		}
 		
 
