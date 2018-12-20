@@ -47,7 +47,7 @@ public class MyFrame extends JFrame implements MouseListener
 {
 	private int S = 20;//init pachman speed
 	private int R = 1;//init pachman radius
-	private double sec = 0.3;//init shows frequency
+	private double sec = 0.4;//init shows frequency
 	private int counter=0;
 	private BufferedImage myImage;
 	private ariel_map m = null;
