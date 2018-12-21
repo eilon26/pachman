@@ -17,8 +17,8 @@ click on setting to choose the pachman radius,speed,and the frequency of the sho
 then click on add. choose to add pachman or fruit. than add then manualy on the image area.
 if you want you can also add a ready csv file. by click on file then load csv file.
 now you can press on "start" to run the game.
-you can click on file then "save to csv file" in order the positions before the running.
-moreover you can save to kml file by click on file then "save to kml".
+In order to save to csv file the positions before running the game you can click on "file" then "save to csv file" then choose the location to save then write- FileName.csv.
+moreover you can save to kml file by click on "file" then "save to kml" then choose the location to save then write- FileName.kml.
 if you want to clear the board you can press on "clear".
 
 made by:Eilon Tsadok 304950645 and Daniel Venture 318875085 
