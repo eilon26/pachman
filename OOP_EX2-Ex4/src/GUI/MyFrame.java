@@ -61,7 +61,7 @@ public class MyFrame extends JFrame implements MouseListener
 	 * the constaructor og the GUI
 	 */
 	public MyFrame() 
-	{
+	{	
 		this.GB = new GameBoard();
 		this.GB_copy_csv = new GameBoard();
 		initGUI();		
@@ -200,7 +200,6 @@ public class MyFrame extends JFrame implements MouseListener
 		this.colors[10] = Color.ORANGE;
 		this.colors[11] = Color.PINK;
 		this.colors[12] = Color.WHITE;
-
 
 	}
 
@@ -392,12 +391,13 @@ public class MyFrame extends JFrame implements MouseListener
 			sol.calculate();
 		}
 		JFileChooser fileChooser = new JFileChooser();
-		int result = fileChooser.showOpenDialog((JFrame)this);
+		int result = fileChooser.showSaveDialog((JFrame)this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			new sol2kml(this.sol,selectedFile.getAbsolutePath());
+			JOptionPane.showMessageDialog(null, "file converted to kml");
 		}
-		JOptionPane.showMessageDialog(null, "file converted");
+		
 	}
 	/**
 	 * responsible to clear the game
@@ -416,7 +416,7 @@ public class MyFrame extends JFrame implements MouseListener
 	 */
 	public void save_to_csv(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
-		int result = fileChooser.showOpenDialog((JFrame)this);
+		int result = fileChooser.showSaveDialog((JFrame)this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File selectedFile = fileChooser.getSelectedFile();
 			new GB2csv(GB_copy_csv,selectedFile.getAbsolutePath());
